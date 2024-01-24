@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_outer_classname = "GameProto";
+option java_package = "Text_Adventure.protobuf";
+
+message Game {
+    Player player = 1;
+    Room room = 2;
+    List<Creatures> allCreaturesList = 3;
+}

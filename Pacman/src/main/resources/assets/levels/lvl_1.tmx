@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="20" tileheight="20" infinite="0" nextlayerid="3" nextobjectid="90">
+ <tileset firstgid="1" name="tilemap" tilewidth="20" tileheight="20" spacing="1" tilecount="238" columns="17">
+  <image source="tilemap.png" width="356" height="293"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="40" height="30">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,177,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,179,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,177,229,229,229,229,229,179,0,177,229,229,229,229,229,179,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,211,229,213,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,0,0,228,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,211,229,229,229,229,229,229,229,229,229,229,229,229,229,213,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,228,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,211,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,213,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="1" name="player" type="player" x="381.5" y="442" width="17" height="17"/>
+  <object id="2" name="coin" type="coin" x="221.5" y="142.5" width="14" height="14"/>
+  <object id="3" name="blinky" type="ghost" x="381" y="321.5" width="17" height="17"/>
+  <object id="4" name="coin" type="coin" x="241.5" y="143" width="14" height="14"/>
+  <object id="5" name="coin" type="coin" x="259.5" y="143" width="14" height="14"/>
+  <object id="6" name="coin" type="coin" x="282" y="144.5" width="14" height="14"/>
+  <object id="7" name="coin" type="coin" x="303.5" y="142" width="14" height="14"/>
+  <object id="8" name="coin" type="coin" x="323" y="143.5" width="14" height="14"/>
+  <object id="9" name="coin" type="coin" x="343.5" y="143" width="14" height="14"/>
+  <object id="10" name="coin" type="coin" x="361" y="142" width="14" height="14"/>
+  <object id="11" name="coin" type="coin" x="380.5" y="142.5" width="14" height="14"/>
+  <object id="12" name="coin" type="coin" x="381.5" y="160" width="14" height="14"/>
+  <object id="13" name="coin" type="coin" x="384.5" y="182" width="14" height="14"/>
+  <object id="14" name="coin" type="coin" x="383" y="202" width="14" height="14"/>
+  <object id="15" name="coin" type="coin" x="382.5" y="223.5" width="14" height="14"/>
+  <object id="16" name="coin" type="coin" x="383.5" y="242.5" width="14" height="14"/>
+  <object id="17" name="coin" type="coin" x="380.5" y="261.5" width="14" height="14"/>
+  <object id="18" name="coin" type="coin" x="381.5" y="283" width="14" height="14"/>
+  <object id="19" name="coin" type="coin" x="381.5" y="301.5" width="14" height="14"/>
+  <object id="20" name="coin" type="coin" x="402" y="141.5" width="14" height="14"/>
+  <object id="21" name="coin" type="coin" x="423" y="142" width="14" height="14"/>
+  <object id="22" name="coin" type="coin" x="441" y="141" width="14" height="14"/>
+  <object id="23" name="coin" type="coin" x="460.5" y="142.5" width="14" height="14"/>
+  <object id="24" name="coin" type="coin" x="481" y="141.5" width="14" height="14"/>
+  <object id="25" name="coin" type="coin" x="498.5" y="141.5" width="14" height="14"/>
+  <object id="26" name="coin" type="coin" x="519.5" y="141" width="14" height="14"/>
+  <object id="27" name="coin" type="coin" x="542" y="143.5" width="14" height="14"/>
+  <object id="28" name="coin" type="coin" x="542" y="163.5" width="14" height="14"/>
+  <object id="29" name="coin" type="coin" x="543.5" y="182" width="14" height="14"/>
+  <object id="30" name="coin" type="coin" x="541.5" y="203" width="14" height="14"/>
+  <object id="31" name="coin" type="coin" x="543.5" y="222" width="14" height="14"/>
+  <object id="32" name="coin" type="coin" x="542.5" y="243.5" width="14" height="14"/>
+  <object id="33" name="coin" type="coin" x="542.5" y="261.5" width="14" height="14"/>
+  <object id="34" name="coin" type="coin" x="543.5" y="284" width="14" height="14"/>
+  <object id="35" name="coin" type="coin" x="540.5" y="302" width="14" height="14"/>
+  <object id="36" name="coin" type="coin" x="543.5" y="322.5" width="14" height="14"/>
+  <object id="37" name="coin" type="coin" x="541.5" y="342.5" width="14" height="14"/>
+  <object id="38" name="coin" type="coin" x="541.5" y="362" width="14" height="14"/>
+  <object id="39" name="coin" type="coin" x="542.5" y="382" width="14" height="14"/>
+  <object id="40" name="coin" type="coin" x="544" y="403" width="14" height="14"/>
+  <object id="41" name="coin" type="coin" x="542.5" y="422.5" width="14" height="14"/>
+  <object id="42" name="coin" type="coin" x="542" y="445" width="14" height="14"/>
+  <object id="43" name="coin" type="coin" x="220.5" y="161.5" width="14" height="14"/>
+  <object id="44" name="coin" type="coin" x="221.5" y="180" width="14" height="14"/>
+  <object id="45" name="coin" type="coin" x="219.5" y="202" width="14" height="14"/>
+  <object id="46" name="coin" type="coin" x="221" y="222.5" width="14" height="14"/>
+  <object id="47" name="coin" type="coin" x="220.5" y="241.5" width="14" height="14"/>
+  <object id="48" name="coin" type="coin" x="221.5" y="263.5" width="14" height="14"/>
+  <object id="49" name="coin" type="coin" x="221.5" y="283" width="14" height="14"/>
+  <object id="50" name="coin" type="coin" x="220.5" y="304.5" width="14" height="14"/>
+  <object id="51" name="coin" type="coin" x="221" y="324" width="14" height="14"/>
+  <object id="52" name="coin" type="coin" x="221.5" y="342.5" width="14" height="14"/>
+  <object id="53" name="coin" type="coin" x="221" y="362.5" width="14" height="14"/>
+  <object id="54" name="coin" type="coin" x="221.5" y="387" width="14" height="14"/>
+  <object id="55" name="coin" type="coin" x="220.5" y="406" width="14" height="14"/>
+  <object id="56" name="coin" type="coin" x="221" y="424.5" width="14" height="14"/>
+  <object id="57" name="coin" type="coin" x="221.5" y="444" width="14" height="14"/>
+  <object id="58" name="coin" type="coin" x="243.5" y="443.5" width="14" height="14"/>
+  <object id="59" name="coin" type="coin" x="263.5" y="445.5" width="14" height="14"/>
+  <object id="60" name="coin" type="coin" x="284" y="444" width="14" height="14"/>
+  <object id="61" name="coin" type="coin" x="303.5" y="444" width="14" height="14"/>
+  <object id="62" name="coin" type="coin" x="324.5" y="443.5" width="14" height="14"/>
+  <object id="63" name="coin" type="coin" x="341.5" y="444" width="14" height="14"/>
+  <object id="64" name="coin" type="coin" x="361" y="444.5" width="14" height="14"/>
+  <object id="65" name="coin" type="coin" x="403" y="444.5" width="14" height="14"/>
+  <object id="66" name="coin" type="coin" x="421.5" y="444.5" width="14" height="14"/>
+  <object id="67" name="coin" type="coin" x="444.5" y="443.5" width="14" height="14"/>
+  <object id="68" name="coin" type="coin" x="461" y="446.5" width="14" height="14"/>
+  <object id="69" name="coin" type="coin" x="480.5" y="444.5" width="14" height="14"/>
+  <object id="70" name="coin" type="coin" x="498.5" y="444.5" width="14" height="14"/>
+  <object id="71" name="coin" type="coin" x="522" y="446" width="14" height="14"/>
+  <object id="72" name="wall" type="wall" x="245" y="163.5" width="130" height="13"/>
+  <object id="73" name="border" type="border" x="194" y="109.5" width="8.5" height="382.5"/>
+  <object id="75" name="border" type="border" x="576.25" y="106.25" width="8.5" height="395.5"/>
+  <object id="76" name="border" type="border" x="178.75" y="477.75" width="426" height="7.5"/>
+  <object id="78" name="border" type="border" x="174.5" y="114.25" width="426" height="7.5"/>
+  <object id="79" name="wall" type="wall" x="404.5" y="164" width="130" height="13"/>
+  <object id="80" name="wall" type="wall" x="204.5" y="124" width="372" height="13"/>
+  <object id="81" name="wall" type="wall" x="363" y="344.5" width="53.5" height="11.5"/>
+  <object id="82" name="wall" type="wall" x="203" y="464" width="370" height="11.5"/>
+  <object id="83" name="wall" type="wall" x="245" y="422.5" width="291.5" height="13"/>
+  <object id="84" name="wall" type="wall" x="244.25" y="165.75" width="12" height="265.5"/>
+  <object id="85" name="wall" type="wall" x="522.5" y="167.75" width="12" height="265.5"/>
+  <object id="86" name="wall" type="wall" x="564" y="124.25" width="12" height="351"/>
+  <object id="87" name="wall" type="wall" x="204.5" y="123.25" width="12" height="353"/>
+  <object id="88" name="wall" type="wall" x="406.5" y="165.25" width="12" height="188.5"/>
+  <object id="89" name="wall" type="wall" x="362" y="166.75" width="12" height="188"/>
+ </objectgroup>
+</map>
