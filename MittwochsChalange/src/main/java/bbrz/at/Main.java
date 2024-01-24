@@ -82,13 +82,13 @@ public class Main {
     }
 
     private static boolean isNegative(int num) {
-        if (signed(num) != 0) {
+        if (signedInt(num) != 0) {
             return true;
         }
         return false;
     }
 
-    private static int signed(int value) {
+    private static int signedInt(int value) {
         return value & 0x80000000;
     }
 
