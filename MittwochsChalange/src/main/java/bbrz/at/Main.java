@@ -11,21 +11,21 @@ public class Main {
             int A = rnd.nextInt(200) - 100;
             int B = rnd.nextInt(200) - 100;
 
-            System.out.println(A >= B);
+            System.out.println(A + " >= " + B);
             System.out.println("A: => " + A);
-            System.out.println("B: => " + B + "\n");
+            System.out.println("B: => " + B);
 
             if (A >= B && biggerSame(A, B)) {
                 System.out.println(biggerSame(A, B));
-                System.out.println("Congratulations you made it!\n<----------->");
+                System.out.println("Congratulations you made it!\n<----------->\n");
 
             } else if (!(A >= B) && !biggerSame(A, B)) {
                 System.out.println(biggerSame(A, B));
-                System.out.println("Congratulations you made it!\n<----------->");
+                System.out.println("Congratulations you made it!\n<----------->\n");
 
             } else {
                 System.out.println(biggerSame(A, B));
-                System.out.println("You failed!\n<----------->");
+                System.out.println("You failed!\n<----------->\n");
             }
         }
 
@@ -34,21 +34,21 @@ public class Main {
             int A = rnd.nextInt(200) - 100;
             int B = rnd.nextInt(200) - 100;
 
-            System.out.println(A <= B);
+            System.out.println(A + " <= " + B);
             System.out.println("A: => " + A);
-            System.out.println("B: => " + B + "\n");
+            System.out.println("B: => " + B);
 
             if (A <= B && smallerSame(A, B)) {
                 System.out.println(smallerSame(A, B));
-                System.out.println("Congratulations you made it!\n<----------->");
+                System.out.println("Congratulations you made it!\n<----------->\n");
 
             } else if (!(A <= B) && !smallerSame(A, B)) {
                 System.out.println(smallerSame(A, B));
-                System.out.println("Congratulations you made it!\n<----------->");
+                System.out.println("Congratulations you made it!\n<----------->\n");
 
             } else {
                 System.out.println(smallerSame(A, B));
-                System.out.println("You failed!\n<----------->");
+                System.out.println("You failed!\n<----------->\n");
             }
         }
     }
@@ -95,12 +95,6 @@ public class Main {
     private static int toPositive(int negativeNumber) {
 
         int positiveNumber = (isNegative(negativeNumber)) ? -negativeNumber : negativeNumber;
-
-        /*if (isNegative(negativeNumber)) {
-            positiveNumber = -negativeNumber;
-        } else {
-            positiveNumber = negativeNumber;
-        }*/
 
         return positiveNumber;
     }
