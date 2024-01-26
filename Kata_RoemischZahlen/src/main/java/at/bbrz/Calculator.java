@@ -2,9 +2,7 @@ package at.bbrz;
 
 import at.bbrz.calculations.Interpretor;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public class Calculator {
 
