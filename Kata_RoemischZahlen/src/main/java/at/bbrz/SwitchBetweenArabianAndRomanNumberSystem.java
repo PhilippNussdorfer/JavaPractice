@@ -27,12 +27,32 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
     }
 
     public int getArabianNumber(String romanNumber) {
+        if (isRomanNumber(romanNumber)) {
+            char[] myRomanNumber = romanNumber.toUpperCase().toCharArray();
+            List<List<RomanNumbers>> sets = new ArrayList<>();
 
-        char[] myRomanNumber = romanNumber.toUpperCase().toCharArray();
-        List<List<RomanNumbers>> sets = new ArrayList<>();
+            splitRomanNumberInSets(myRomanNumber, sets);
+            return calculateArabianNumber(sets);
+        }
+        throw new IllegalArgumentException("This is not an roman number!");
+    }
 
-        splitRomanNumberInSets(myRomanNumber, sets);
-        return calculateArabianNumber(sets);
+    private boolean isRomanNumber(String romanNumber) {
+        boolean result = false;
+        for (char romanNum : romanNumber.toUpperCase().toCharArray()) {
+            for (RomanNumbers numbers : currentRomanNumbers) {
+                if (romanNum == numbers.getLatter()) {
+                    result = true;
+                    break;
+                } else {
+                    result = false;
+                }
+            }
+            if (!result) {
+                return result;
+            }
+        }
+        return result;
     }
 
     private int calculateArabianNumber(List<List<RomanNumbers>> sets) {
@@ -73,7 +93,7 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
         List<RomanNumbers> tmpRomanNumbersList = new ArrayList<>();
 
         for (char number : myRomanNumber) {
-            var num = Objects.requireNonNull(getRomanNumberWithLatter(number));
+            var num = getRomanNumberWithLatter(number);
 
             if (!tmpRomanNumbersList.isEmpty()) {
 
@@ -166,8 +186,10 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
     private RomanNumbers getNextSmallestRomanNumber(int current) {
         sortRomanNumbersDesc();
         for (RomanNumbers num : currentRomanNumbers) {
-            if (current > num.getValue())
+            if (current > num.getValue()) {
+                sortRomanNumbersAsc();
                 return num;
+            }
         }
         sortRomanNumbersAsc();
         return null;

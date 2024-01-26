@@ -68,4 +68,9 @@ class SwitchBetweenArabianAndRomanNumberSystemTest {
         result = switcher.getArabianNumber("MccMxCVI");
         assertEquals(1896, result);
     }
+
+    @Test
+    void throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, ()-> switcher.getArabianNumber("AM"));
+    }
 }
