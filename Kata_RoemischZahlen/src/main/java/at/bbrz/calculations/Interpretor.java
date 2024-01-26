@@ -24,7 +24,6 @@ public class Interpretor {
                 return calc.getResult(firstNum, secNum);
             }
         }
-        System.out.println("this operator:" + operator + " dose not exist");
-        return 0;
+        throw new IllegalArgumentException("this operator:\" + operator + \" dose not exist");
     }
 }
