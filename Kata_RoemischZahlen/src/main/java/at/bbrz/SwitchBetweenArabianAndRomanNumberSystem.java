@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 public class SwitchBetweenArabianAndRomanNumberSystem {
@@ -49,7 +48,7 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
                 }
             }
             if (!result) {
-                return result;
+                return false;
             }
         }
         return result;
