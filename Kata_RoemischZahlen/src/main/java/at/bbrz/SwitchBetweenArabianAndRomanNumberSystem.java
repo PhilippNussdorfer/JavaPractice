@@ -8,96 +8,69 @@ import java.util.List;
 
 @Getter
 public class SwitchBetweenArabianAndRomanNumberSystem {
+    RomanNumberChecker checker;
 
-    private final List<RomanNumbers> currentRomanNumbers = new ArrayList<>(
-            List.of(RomanNumbers.I,
-                    RomanNumbers.V,
-                    RomanNumbers.X,
-                    RomanNumbers.L,
-                    RomanNumbers.C,
-                    RomanNumbers.D,
-                    RomanNumbers.M,
-                    RomanNumbers.N)
-    );
-    private final List<Character> listOfBetwixtNumbers = new ArrayList<>(List.of('V', 'L', 'D'));
-
-    public SwitchBetweenArabianAndRomanNumberSystem() {
-        sortRomanNumbersAsc();
+    public SwitchBetweenArabianAndRomanNumberSystem(RomanNumberChecker checker) {
+        this.checker = checker;
+        checker.sortRomanNumbersAsc();
     }
 
     public int getArabianNumber(String romanNumber) {
-        if (isRomanNumber(romanNumber)) {
-            char[] myRomanNumber = romanNumber.toUpperCase().toCharArray();
-            List<List<RomanNumbers>> sets = new ArrayList<>();
+        if (checker.isRomanNumber(romanNumber)) {
+            char[] arrayOfRomanDigits = romanNumber.toUpperCase().toCharArray();
+            List<List<RomanNumbers>> listOfRomanDigits;
 
-            splitRomanNumberInSets(myRomanNumber, sets);
-            return calculateArabianNumber(sets);
+            listOfRomanDigits = splitRomanNumberInLists(arrayOfRomanDigits);
+            return calculateArabianNumber(listOfRomanDigits);
         }
         throw new IllegalArgumentException("This is not an roman number!");
     }
 
-    private boolean isRomanNumber(String romanNumber) {
-        boolean result = false;
-        for (char romanNum : romanNumber.toUpperCase().toCharArray()) {
-            for (RomanNumbers numbers : currentRomanNumbers) {
-                if (romanNum == numbers.getLatter()) {
-                    result = true;
-                    break;
-                } else {
-                    result = false;
-                }
-            }
-            if (!result) {
-                return false;
-            }
-        }
-        return result;
-    }
-
-    private int calculateArabianNumber(List<List<RomanNumbers>> sets) {
+    private int calculateArabianNumber(List<List<RomanNumbers>> listOfRomanDigits) {
         int result = 0;
         boolean skip = false;
         List<RomanNumbers> currentPointer = null, prevPointer = null;
 
-        for (int i = 0; i < sets.size(); i++) {
+        for (int i = 0; i < listOfRomanDigits.size(); i++) {
             if (i - 1 >= 0) {
-                currentPointer = sets.get(i);
-                prevPointer = sets.get(i - 1);
+                currentPointer = listOfRomanDigits.get(i);
+                prevPointer = listOfRomanDigits.get(i - 1);
 
                 int currentValue = currentPointer.get(0).getValue();
                 int prevValue = prevPointer.get(0).getValue();
 
                 if (prevValue < currentValue) {
-                    result += getValueFromSet(currentPointer) - getValueFromSet(prevPointer);
+                    result += getValueFromList(currentPointer) - getValueFromList(prevPointer);
                     skip = true;
                 } else {
                     if (skip) {
                         skip = false;
                     } else {
-                        result += getValueFromSet(prevPointer);
+                        result += getValueFromList(prevPointer);
                     }
                 }
             }
         }
 
         if (prevPointer != null && prevPointer.get(0).getValue() > currentPointer.get(0).getValue()) {
-            result += getValueFromSet(currentPointer);
+            result += getValueFromList(currentPointer);
         } else if (prevPointer == null && currentPointer == null) {
-            result += getValueFromSet(sets.get(0));
+            result += getValueFromList(listOfRomanDigits.get(0));
         }
         return result;
     }
 
-    private void splitRomanNumberInSets(char[] myRomanNumber, List<List<RomanNumbers>> sets) {
+    private List<List<RomanNumbers>> splitRomanNumberInLists(char[] myRomanNumber) {
+        List<List<RomanNumbers>> listOfRomanDigits = new ArrayList<>();
         List<RomanNumbers> tmpRomanNumbersList = new ArrayList<>();
 
         for (char number : myRomanNumber) {
-            var num = getRomanNumberWithLatter(number);
+            var num = checker.getRomanNumberWithLatter(number);
 
             if (!tmpRomanNumbersList.isEmpty()) {
 
                 if (!tmpRomanNumbersList.contains(num)) {
-                    sets.add(new ArrayList<>(tmpRomanNumbersList));
+                    listOfRomanDigits.add(new ArrayList<>(tmpRomanNumbersList));
                     tmpRomanNumbersList.clear();
                     tmpRomanNumbersList.add(num);
 
@@ -110,12 +83,13 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
         }
 
         if (!tmpRomanNumbersList.isEmpty()) {
-            sets.add(new ArrayList<>(tmpRomanNumbersList));
+            listOfRomanDigits.add(new ArrayList<>(tmpRomanNumbersList));
             tmpRomanNumbersList.clear();
         }
+        return listOfRomanDigits;
     }
 
-    private int getValueFromSet(List<RomanNumbers> numbers) {
+    private int getValueFromList(List<RomanNumbers> numbers) {
         int result = 0;
         for (RomanNumbers number : numbers) {
             result += number.getValue();
@@ -148,7 +122,7 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
         RomanNumbers result = null;
         int tmp = 0;
 
-        for (RomanNumbers number : currentRomanNumbers) {
+        for (RomanNumbers number : checker.getCurrentRomanNumbers()) {
             if (num >= number.getValue() && number.getValue() > tmp) {
                 result = number;
                 tmp = number.getValue();
@@ -163,8 +137,8 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
         RomanNumbers result = null;
         int tmp = 0;
 
-        for (RomanNumbers number : currentRomanNumbers) {
-            if (!listOfBetwixtNumbers.contains(number.getLatter()) && num > number.getValue() && number.getValue() > tmp) {
+        for (RomanNumbers number : checker.getCurrentRomanNumbers()) {
+            if (!checker.getListOfBetwixtNumbers().contains(number.getLatter()) && num > number.getValue() && number.getValue() > tmp) {
                 result = number;
                 tmp = number.getValue();
             }
@@ -174,23 +148,14 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
         return result;
     }
 
-    private RomanNumbers getRomanNumberWithLatter(char letter) {
-        for (RomanNumbers number : currentRomanNumbers) {
-            if (letter == number.getLatter())
-                return number;
-        }
-        return null;
-    }
-
     private RomanNumbers getNextSmallestRomanNumber(int current) {
-        sortRomanNumbersDesc();
-        for (RomanNumbers num : currentRomanNumbers) {
+        checker.sortRomanNumbersDesc();
+        for (RomanNumbers num : checker.getCurrentRomanNumbers()) {
             if (current > num.getValue()) {
-                sortRomanNumbersAsc();
+                checker.sortRomanNumbersAsc();
                 return num;
             }
         }
-        sortRomanNumbersAsc();
         return null;
     }
 
@@ -200,7 +165,7 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
 
     private int getBiggestRomanNum() {
         int res = 0;
-        for (RomanNumbers number : currentRomanNumbers) {
+        for (RomanNumbers number : checker.getCurrentRomanNumbers()) {
             if (number.getValue() > res) {
                 res = number.getValue();
             }
@@ -209,36 +174,12 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
     }
 
     private RomanNumbers getNextBiggestGroundRomanNumber(int num) {
-        for (RomanNumbers number : currentRomanNumbers) {
-            if (!listOfBetwixtNumbers.contains(number.getLatter()) && number.getValue() > num) {
+        for (RomanNumbers number : checker.getCurrentRomanNumbers()) {
+            if (!checker.getListOfBetwixtNumbers().contains(number.getLatter()) && number.getValue() > num) {
                 return number;
             }
         }
         return RomanNumbers.M;
-    }
-
-    private void sortRomanNumbersAsc() {
-        for (int i = 0; i < currentRomanNumbers.size(); i++) {
-            for (int j = 0; j < currentRomanNumbers.size(); j++) {
-                if (j + 1 != currentRomanNumbers.size() && currentRomanNumbers.get(j).getValue() > currentRomanNumbers.get(j + 1).getValue()) {
-                    var tmp = currentRomanNumbers.get(j);
-                    currentRomanNumbers.set(j, currentRomanNumbers.get(j + 1));
-                    currentRomanNumbers.set(j + 1, tmp);
-                }
-            }
-        }
-    }
-
-    private void sortRomanNumbersDesc() {
-        for (int i = 0; i < currentRomanNumbers.size(); i++) {
-            for (int j = 0; j < currentRomanNumbers.size(); j++) {
-                if (j + 1 != currentRomanNumbers.size() && currentRomanNumbers.get(j).getValue() < currentRomanNumbers.get(j + 1).getValue()) {
-                    var tmp = currentRomanNumbers.get(j);
-                    currentRomanNumbers.set(j, currentRomanNumbers.get(j + 1));
-                    currentRomanNumbers.set(j + 1, tmp);
-                }
-            }
-        }
     }
 
     private String getRomanNumWithSubtraction(int roundedNum) {
