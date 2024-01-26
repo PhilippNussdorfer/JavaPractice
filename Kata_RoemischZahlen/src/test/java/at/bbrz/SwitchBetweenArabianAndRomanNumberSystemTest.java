@@ -23,7 +23,7 @@ class SwitchBetweenArabianAndRomanNumberSystemTest {
         assertEquals("MCMXXI", result);
 
         result = switcher.getRomanNumber(1571);
-        assertEquals("MDXXXCI", result);
+        assertEquals("MDLXXI", result);
 
         result = switcher.getRomanNumber(4000);
         assertEquals("N", result);
@@ -35,7 +35,7 @@ class SwitchBetweenArabianAndRomanNumberSystemTest {
         assertEquals("MXxII".toUpperCase(), result);
 
         result = switcher.getRomanNumber(1896);
-        assertEquals("MccMxCVI".toUpperCase(), result);
+        assertEquals("MDCCCxCVI".toUpperCase(), result);
     }
 
     @Test

@@ -246,7 +246,7 @@ public class SwitchBetweenArabianAndRomanNumberSystem {
         var nextBiggestGroundNumber = getNextBiggestGroundRomanNumber(roundedNum);
         int multiplier = getMultiplier(possibleGroundNumberToSubtractWith, nextBiggestGroundNumber.getValue() - roundedNum);
 
-        while (multiplier > 3) {
+        while (multiplier > 1) {
             nextBiggestGroundNumber = getNextSmallestRomanNumber(nextBiggestGroundNumber.getValue());
             if (nextBiggestGroundNumber == null)
                 return "Error with this number:" + roundedNum;
