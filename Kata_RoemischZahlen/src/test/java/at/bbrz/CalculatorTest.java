@@ -17,6 +17,8 @@ class CalculatorTest {
     SwitchBetweenArabianAndRomanNumberSystem switcher;
     @Mock
     Interpretor interpretor;
+    @Mock
+    IllegalArgumentException exception;
 
     Calculator calculator;
 
@@ -95,11 +97,9 @@ class CalculatorTest {
 
     @Test
     void OperatorDoseNotExist() {
-        Mockito.when(switcher.getArabianNumber(Mockito.anyString())).thenReturn(1000, 1);
-        Mockito.when(interpretor.interpret(Mockito.anyInt(), Mockito.anyChar(), Mockito.anyInt())).thenReturn(0);
-        Mockito.when(switcher.getRomanNumber(Mockito.anyInt())).thenReturn("N");
+        Mockito.when(switcher.getArabianNumber(Mockito.anyString())).thenReturn(1000, 1000);
+        Mockito.when(interpretor.interpret(Mockito.anyInt(), Mockito.anyChar(), Mockito.anyInt())).thenThrow(exception);
 
-        var res = calculator.Calculate("m", 'i', "I");
-        assertEquals("N", res);
+        assertThrows(IllegalArgumentException.class, () -> calculator.Calculate("M", 'i', "M"));
     }
 }
