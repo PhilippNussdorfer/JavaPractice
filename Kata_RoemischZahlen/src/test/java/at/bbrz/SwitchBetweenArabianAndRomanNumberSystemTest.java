@@ -3,6 +3,7 @@ package at.bbrz;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,15 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class SwitchBetweenArabianAndRomanNumberSystemTest {
 
-    private SwitchBetweenArabianAndRomanNumberSystem switcher = new SwitchBetweenArabianAndRomanNumberSystem();
+    @Mock
+    SwitchBetweenArabianAndRomanNumberSystem switcher;
 
     @BeforeEach
     void setUp() {
+        switcher = new SwitchBetweenArabianAndRomanNumberSystem();
     }
 
     @Test
     void getRomanNumber() {
-
         var result = switcher.getRomanNumber(1921);
         assertEquals("MCMXXI", result);
 
