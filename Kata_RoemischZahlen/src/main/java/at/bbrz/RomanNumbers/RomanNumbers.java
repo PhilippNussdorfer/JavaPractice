@@ -15,12 +15,12 @@ public enum RomanNumbers {
     @Getter
     private final int value;
     @Getter
-    private final char latter;
+    private final char letter;
 
-    RomanNumbers(int value, char latter) { this.value = value; this.latter = latter; }
+    RomanNumbers(int value, char letter) { this.value = value; this.letter = letter; }
 
     @Override
     public String toString() {
-        return "" + latter;
+        return "" + letter;
     }
 }
