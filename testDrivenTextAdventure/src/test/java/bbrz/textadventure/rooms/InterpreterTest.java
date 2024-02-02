@@ -21,13 +21,15 @@ class InterpreterTest {
     Action exitAction;
     @Mock
     Action moveAction;
+    @Mock
+    Action pickup;
 
     Interpreter interpreter;
 
     @BeforeEach
     void setUp() {
         interpreter = new Interpreter();
-        interpreter.addActions(exitAction, moveAction);
+        interpreter.addActions(exitAction, moveAction, pickup);
     }
 
     @Test
@@ -57,6 +59,14 @@ class InterpreterTest {
 
         interpreter.interpret("west");
         Mockito.verify(moveAction, Mockito.times(1)).execute("west");
+    }
+
+    @Test
+    void commandWithMultipleWords() throws CommandNotFoundException {
+        Mockito.when(pickup.canHandle("pickup")).thenReturn(true);
+
+        interpreter.interpret("pickup log stick");
+        Mockito.verify(pickup, Mockito.times(1)).execute("pickup", "log", "stick");
     }
 
     @Test
