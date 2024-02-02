@@ -5,6 +5,7 @@ import bbrz.adventure.game.EnemyDrops.InterpretDrops;
 import bbrz.adventure.game.EntityType;
 import bbrz.adventure.game.Items.ItemDropList;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -56,15 +57,20 @@ public class EnemyComponent extends Component {
         return entity.getComponent(PhysicsComponent.class);
     }
 
+    private Entity getPlayer() {
+        return getGameWorld().getSingleton(EntityType.PLAYER);
+    }
+
     @Override
     public void onUpdate(double tpf) {
         followPlayerIfInRange(150, 40);
     }
 
     public void followPlayerIfInRange(int maxRange, int minRange) {
-        var player = getGameWorld().getSingleton(EntityType.PLAYER);
-        if (entity.distance(player) <= maxRange && entity.distance(player) > minRange) {
-            var playerPosition = player.getPosition();
+        evadeEntity(getEntityThatIsToClose());
+
+        if (entity.distanceBBox(getPlayer()) <= maxRange && entity.distanceBBox(getPlayer()) > minRange) {
+            var playerPosition = getPlayer().getPosition();
             moveXCoordinatesTo(playerPosition);
             moveYCoordinatesTo(playerPosition);
         } else {
@@ -72,6 +78,31 @@ public class EnemyComponent extends Component {
             getPhysicsComponent().setVelocityX(0);
             getPhysicsComponent().setVelocityY(0);
         }
+    }
+
+    private void evadeEntity(Entity entityToEvade) {
+        if (entityToEvade != null) {
+            Point2D entityToEvadePos = entityToEvade.getPosition();
+            Point2D selfPos = entity.getPosition();
+            //System.out.println("self X:" + selfPos.getX() + " Y:" + selfPos.getY());
+            //System.out.println("entity X:" + entityToEvadePos.getX() + " Y: " + entityToEvadePos.getY());
+
+            if (entity.distanceBBox(entityToEvade) < 20) {
+                
+            }
+        }
+    }
+
+    private Entity getEntityThatIsToClose() {
+        List<Entity> entitys = getGameWorld().getEntities();
+        for (Entity entity : entitys) {
+            if (entity != this.entity && entity != getPlayer()) {
+                if (this.entity.distanceBBox(entity) < 20 && entity.getType() != EntityType.ITEM_BAG) {
+                    return entity;
+                }
+            }
+        }
+        return null;
     }
 
     private void moveXCoordinatesTo(Point2D playerPosition) {
