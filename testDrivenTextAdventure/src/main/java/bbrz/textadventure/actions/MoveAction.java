@@ -2,8 +2,6 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 
-import java.util.List;
-
 public class MoveAction extends AbAction {
 
 
