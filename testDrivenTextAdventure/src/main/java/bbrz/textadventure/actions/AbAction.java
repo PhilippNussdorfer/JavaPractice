@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Getter
 public abstract class AbAction implements Action {
+    @Getter
     private String[] possibleCommands;
     protected Game game;
 
