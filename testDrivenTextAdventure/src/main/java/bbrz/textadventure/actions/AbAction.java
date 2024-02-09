@@ -1,12 +1,14 @@
 package bbrz.textadventure.actions;
 
+import bbrz.textadventure.Game;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
 public abstract class AbAction implements Action {
-    String[] possibleCommands;
+    private String[] possibleCommands;
+    protected Game game;
 
     @Override
     public boolean canHandle(String command) {
