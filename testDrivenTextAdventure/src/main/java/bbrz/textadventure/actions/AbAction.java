@@ -1,10 +1,12 @@
 package bbrz.textadventure.actions;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
 public abstract class AbAction implements Action {
-    List<String> possibleCommands = new ArrayList<>();
+    String[] possibleCommands;
 
     @Override
     public boolean canHandle(String command) {
