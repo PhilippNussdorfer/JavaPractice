@@ -13,6 +13,6 @@ public class MoveAction extends AbAction {
 
     @Override
     public void execute(String... params) {
-
+        game.move(params[0]);
     }
 }
