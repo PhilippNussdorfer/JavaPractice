@@ -1,12 +1,14 @@
 package bbrz.textadventure.actions;
 
+import bbrz.textadventure.Game;
+
 import java.util.List;
 
 public class MoveAction extends AbAction {
 
 
-    public MoveAction(String ... possibleCommands) {
-        super(possibleCommands);
+    public MoveAction(Game game, String ... possibleCommands) {
+        super(possibleCommands, game);
     }
 
     @Override

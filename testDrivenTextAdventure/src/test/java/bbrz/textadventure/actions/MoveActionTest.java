@@ -9,7 +9,7 @@ class MoveActionTest {
     @Mock
     Game game;
 
-    MoveAction move = new MoveAction();
+    MoveAction move = new MoveAction(game);
 
     @BeforeEach
     void setUp() {
