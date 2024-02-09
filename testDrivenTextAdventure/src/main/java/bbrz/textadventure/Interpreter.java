@@ -5,16 +5,15 @@ import bbrz.textadventure.customException.CommandNotFoundException;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
 public class Interpreter {
-    private List<Action> actionList = new ArrayList<>();
+    private final List<Action> actionList = new ArrayList<>();
 
     public void addActions(Action ... actions) {
-        for (Action action : actions) {
-            actionList.add(action);
-        }
+        actionList.addAll(Arrays.asList(actions));
     }
 
     public void interpret(String commandWithParams) throws CommandNotFoundException {
