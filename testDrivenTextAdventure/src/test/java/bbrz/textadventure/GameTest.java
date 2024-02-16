@@ -1,5 +1,6 @@
 package bbrz.textadventure;
 
+import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.rooms.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class GameTest {
     }
 
     @Test
-    void moveToNextRoom() {
+    void moveToNextRoom() throws RoomNotFoundException {
         Mockito.when(room.getRoom("s")).thenReturn(secRoom);
         Mockito.when(secRoom.getRoom("n")).thenReturn(room);
 
