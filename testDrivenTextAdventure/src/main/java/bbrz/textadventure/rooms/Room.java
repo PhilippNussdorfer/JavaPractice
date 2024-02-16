@@ -1,10 +1,8 @@
 package bbrz.textadventure.rooms;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 public class Room {
 
     @Getter
@@ -12,6 +10,12 @@ public class Room {
     @Getter
     private final String description;
     private final RoomPointer[] pointers;
+
+    public Room(String name, String description, RoomPointer ... pointers) {
+        this.name = name;
+        this.description = description;
+        this.pointers = pointers;
+    }
 
     public Room getRoom(String direction) throws RoomNotFoundException {
         for (RoomPointer pointer : pointers) {
