@@ -1,4 +1,4 @@
-package bbrz.textadventure.rooms;
+package bbrz.textadventure;
 
 import bbrz.textadventure.Interpreter;
 import bbrz.textadventure.actions.Action;
