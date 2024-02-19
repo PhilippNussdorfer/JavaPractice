@@ -3,26 +3,32 @@ package bbrz.textadventure.rooms;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import lombok.Getter;
 
-public class Room {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Location {
 
     @Getter
     private final String name;
     @Getter
     private final String description;
-    private final RoomPointer[] pointers;
+    private final List<LocationPointer> pointers = new ArrayList<>();
 
-    public Room(String name, String description, RoomPointer ... pointers) {
+    public Location(String name, String description) {
         this.name = name;
         this.description = description;
-        this.pointers = pointers;
     }
 
-    public Room getRoom(String direction) throws RoomNotFoundException {
-        for (RoomPointer pointer : pointers) {
+    public Location getRoom(String direction) throws RoomNotFoundException {
+        for (LocationPointer pointer : pointers) {
             if (pointer.isDirection(direction)) {
                 return pointer.getTarget();
             }
         }
         throw new RoomNotFoundException("There is no room in this direction.");
+    }
+
+    public void addPointers(LocationPointer ... pointers) {
+        this.pointers.addAll(List.of(pointers));
     }
 }

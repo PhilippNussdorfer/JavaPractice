@@ -11,38 +11,41 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class RoomTest {
+class LocationTest {
 
     @Mock
-    RoomPointer pointer;
+    LocationPointer pointer;
     @Mock
-    RoomPointer secPointer;
-    Room room;
-    Room secRoom;
+    LocationPointer secPointer;
+    Location location;
+    Location secLocation;
 
     @BeforeEach
     void setUp() {
-        room = new Room("startRoom", "description", pointer);
-        secRoom = new Room("secRoom", "description", secPointer);
+        location = new Location("startRoom", "description");
+        secLocation = new Location("secRoom", "description");
+
+        location.addPointers(pointer);
+        secLocation.addPointers(secPointer);
     }
 
     @Test
     void getRoom() throws RoomNotFoundException {
         Mockito.when(pointer.isDirection("s")).thenReturn(true);
-        Mockito.when(pointer.getTarget()).thenReturn(secRoom);
+        Mockito.when(pointer.getTarget()).thenReturn(secLocation);
 
-        var res = room.getRoom("s");
-        assertEquals(secRoom, res);
+        var res = location.getRoom("s");
+        assertEquals(secLocation, res);
 
         Mockito.when(secPointer.isDirection("n")).thenReturn(true);
-        Mockito.when(secPointer.getTarget()).thenReturn(room);
+        Mockito.when(secPointer.getTarget()).thenReturn(location);
 
-        res = secRoom.getRoom("n");
-        assertEquals(room, res);
+        res = secLocation.getRoom("n");
+        assertEquals(location, res);
     }
 
     @Test
     void noRoomFound() {
-        assertThrows(RoomNotFoundException.class, ()-> room.getRoom("n"));
+        assertThrows(RoomNotFoundException.class, ()-> location.getRoom("n"));
     }
 }

@@ -8,16 +8,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class RoomPointerTest {
+class LocationPointerTest {
 
     @Mock
-    Room room;
+    Location location;
 
-    RoomPointer pointer;
+    LocationPointer pointer;
 
     @BeforeEach
     void setUp() {
-        pointer = new RoomPointer("s", room);
+        pointer = new LocationPointer("s", location);
     }
 
     @Test
@@ -32,6 +32,6 @@ class RoomPointerTest {
     @Test
     void getTarget() {
         var res = pointer.getTarget();
-        assertEquals(room, res);
+        assertEquals(location, res);
     }
 }

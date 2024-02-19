@@ -3,15 +3,15 @@ package bbrz.textadventure.rooms;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class RoomPointer {
+public class LocationPointer {
     private String direction;
-    private Room target;
+    private Location target;
 
     public boolean isDirection(String direction) {
         return direction.equals(this.direction);
     }
 
-    public Room getTarget() {
+    public Location getTarget() {
         return this.target;
     }
 }

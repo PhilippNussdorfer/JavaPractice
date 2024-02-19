@@ -1,24 +1,22 @@
 package bbrz.textadventure;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
-import bbrz.textadventure.rooms.Room;
+import bbrz.textadventure.rooms.Location;
 import lombok.Getter;
 
 @Getter
 public class Game {
-    private final Interpreter interpreter;
     private final Player player;
-    private Room currentRoom;
+    private Location currentLocation;
 
-    public Game(Interpreter interpreter, Player player, Room currentRoom) {
-        this.interpreter = interpreter;
+    public Game(Player player, Location currentLocation) {
         this.player = player;
-        this.currentRoom = currentRoom;
+        this.currentLocation = currentLocation;
     }
 
     public void move(String direction) {
         try {
-            currentRoom = currentRoom.getRoom(direction);
+            currentLocation = currentLocation.getRoom(direction);
 
         } catch (RoomNotFoundException roomNotFound) {
             System.out.println(roomNotFound.getMessage());

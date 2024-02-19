@@ -1,7 +1,7 @@
 package bbrz.textadventure;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
-import bbrz.textadventure.rooms.Room;
+import bbrz.textadventure.rooms.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,24 +20,24 @@ class GameTest {
     @Mock
     Player player;
     @Mock
-    Room room;
+    Location location;
     @Mock
-    Room secRoom;
+    Location secLocation;
 
     @BeforeEach
     void setUp() {
-        game = new Game(interpreter, player, room);
+        game = new Game(interpreter, player, location);
     }
 
     @Test
     void moveToNextRoom() throws RoomNotFoundException {
-        Mockito.when(room.getRoom("s")).thenReturn(secRoom);
-        Mockito.when(secRoom.getRoom("n")).thenReturn(room);
+        Mockito.when(location.getRoom("s")).thenReturn(secLocation);
+        Mockito.when(secLocation.getRoom("n")).thenReturn(location);
 
         game.move("s");
-        assertEquals(game.getCurrentRoom(), secRoom);
+        assertEquals(game.getCurrentLocation(), secLocation);
 
         game.move("n");
-        assertEquals(game.getCurrentRoom(), room);
+        assertEquals(game.getCurrentLocation(), location);
     }
 }
