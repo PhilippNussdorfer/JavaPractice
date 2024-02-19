@@ -16,8 +16,6 @@ class GameTest {
 
     Game game;
     @Mock
-    Interpreter interpreter;
-    @Mock
     Player player;
     @Mock
     Location location;
@@ -26,7 +24,7 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game(interpreter, player, location);
+        game = new Game(player, location);
     }
 
     @Test
