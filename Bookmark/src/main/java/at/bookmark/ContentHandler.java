@@ -15,8 +15,15 @@ public class ContentHandler {
     @Getter
     private final List<Bookmark> bookmarks = new ArrayList<>();
     @Getter
-    ImageIcon icon = new ImageIcon("src/main/resources/icon/Bookmark.png");
+    ImageIcon icon;
     private final ReaderAndWriter readerAndWriter = new ReaderAndWriter();
+
+    public ContentHandler() {
+        URL url = ClassLoader.getSystemResource("icon/Bookmark.png");
+        if (url != null) {
+            icon = new ImageIcon(url);
+        }
+    }
 
     public void addLoadedBookmarks() {
         this.bookmarks.addAll(readerAndWriter.loadFile());
