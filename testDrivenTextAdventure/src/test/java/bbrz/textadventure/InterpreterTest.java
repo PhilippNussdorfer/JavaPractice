@@ -3,6 +3,7 @@ package bbrz.textadventure;
 import bbrz.textadventure.Interpreter;
 import bbrz.textadventure.actions.Action;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import jdk.jshell.spi.ExecutionControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +32,7 @@ class InterpreterTest {
     }
 
     @Test
-    void interpretSingleWordAction() throws CommandNotFoundException {
+    void interpretSingleWordAction() throws CommandNotFoundException, ExecutionControl.NotImplementedException {
 
         Mockito.when(exitAction.canHandle("exit")).thenReturn(true);
         interpreter.interpret("exit");
@@ -39,7 +40,7 @@ class InterpreterTest {
     }
 
     @Test
-    void singleWordActionWithMorePossibleCommands() throws CommandNotFoundException {
+    void singleWordActionWithMorePossibleCommands() throws CommandNotFoundException, ExecutionControl.NotImplementedException {
 
         Mockito.when(moveAction.canHandle("north")).thenReturn(true);
         Mockito.when(moveAction.canHandle("south")).thenReturn(true);
@@ -60,7 +61,7 @@ class InterpreterTest {
     }
 
     @Test
-    void commandWithMultipleWords() throws CommandNotFoundException {
+    void commandWithMultipleWords() throws CommandNotFoundException, ExecutionControl.NotImplementedException {
         Mockito.when(pickup.canHandle("pickup")).thenReturn(true);
 
         interpreter.interpret("pickup log stick");

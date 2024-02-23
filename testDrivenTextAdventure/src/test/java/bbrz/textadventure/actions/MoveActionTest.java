@@ -39,7 +39,7 @@ class MoveActionTest {
     }
 
     @Test
-    void notACommandForMoveI() {
+    void notACommandForMove() {
         var res = move.canHandle("get-info");
         assertFalse(res);
 

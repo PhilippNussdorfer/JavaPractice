@@ -13,7 +13,7 @@ public abstract class AbAction implements Action {
     @Override
     public boolean canHandle(String command) {
         for (String possibleCommand : possibleCommands) {
-            if (possibleCommand.equals(command))
+            if (possibleCommand.equalsIgnoreCase(command))
                 return true;
         }
         return false;
