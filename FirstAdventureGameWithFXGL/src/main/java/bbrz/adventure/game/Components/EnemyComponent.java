@@ -63,72 +63,68 @@ public class EnemyComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        followPlayerIfInRange(150, 40);
+        followPlayerIfInRange(150, 30, 20);
     }
 
-    public void followPlayerIfInRange(int maxRange, int minRange) {
-        evadeEntity(getEntityThatIsToClose());
+    public void followPlayerIfInRange(int maxRange, int minRange, int evadeDistance) {
+        var isEvading = evadeEntity(getEntityThatIsToClose(evadeDistance));
 
-        if (entity.distanceBBox(getPlayer()) <= maxRange && entity.distanceBBox(getPlayer()) > minRange) {
-            var playerPosition = getPlayer().getPosition();
-            moveXCoordinatesTo(playerPosition);
-            moveYCoordinatesTo(playerPosition);
-        } else {
-            getAnimationComponent().idle();
-            getPhysicsComponent().setVelocityX(0);
-            getPhysicsComponent().setVelocityY(0);
-        }
-    }
-
-    private void evadeEntity(Entity entityToEvade) {
-        if (entityToEvade != null) {
-            Point2D entityToEvadePos = entityToEvade.getPosition();
-            Point2D selfPos = entity.getPosition();
-            //System.out.println("self X:" + selfPos.getX() + " Y:" + selfPos.getY());
-            //System.out.println("entity X:" + entityToEvadePos.getX() + " Y: " + entityToEvadePos.getY());
-
-            if (entity.distanceBBox(entityToEvade) < 20) {
-                
+        if (!isEvading) {
+            if (entity.distanceBBox(getPlayer()) <= maxRange && entity.distanceBBox(getPlayer()) > minRange) {
+                var playerPosition = getPlayer().getPosition();
+                moveTowards(playerPosition);
+            } else {
+                stopMoving();
             }
         }
     }
 
-    private Entity getEntityThatIsToClose() {
+    private void stopMoving() {
+        getAnimationComponent().idle();
+        getPhysicsComponent().setVelocityX(0);
+        getPhysicsComponent().setVelocityY(0);
+    }
+
+    private void moveTowards(Point2D targetPosition) {
+        double dx = targetPosition.getX() - entity.getX();
+        double dy = targetPosition.getY() - entity.getY();
+
+        double angle = Math.atan2(dy, dx);
+
+        getPhysicsComponent().setVelocityX(speed * Math.cos(angle));
+        getPhysicsComponent().setVelocityY(speed * Math.sin(angle));
+        getAnimationComponent().move();
+    }
+
+    private boolean evadeEntity(Entity entityToEvade) {
+        if (entityToEvade != null) {
+            Point2D entityToEvadePos = entityToEvade.getPosition();
+            Point2D selfPos = entity.getPosition();
+
+            double dx = selfPos.getX() + entityToEvadePos.getX();
+            double dy = selfPos.getY() + entityToEvadePos.getY();
+            double angle = Math.atan2(dy, dx) + Math.PI;
+
+            if (entity.distanceBBox(entityToEvade) < 20) {
+                getPhysicsComponent().setVelocityX(speed * Math.cos(angle));
+                getPhysicsComponent().setVelocityY(speed * Math.sin(angle));
+                getAnimationComponent().move();
+            }
+        }
+
+        return entityToEvade == null;
+    }
+
+    private Entity getEntityThatIsToClose(int distance) {
         List<Entity> entitys = getGameWorld().getEntities();
         for (Entity entity : entitys) {
             if (entity != this.entity && entity != getPlayer()) {
-                if (this.entity.distanceBBox(entity) < 20 && entity.getType() != EntityType.ITEM_BAG) {
+                if (this.entity.distanceBBox(entity) < distance && entity.getType() != EntityType.ITEM_BAG) {
                     return entity;
                 }
             }
         }
         return null;
-    }
-
-    private void moveXCoordinatesTo(Point2D playerPosition) {
-        if (playerPosition.getX() < entity.getX()) {
-            getPhysicsComponent().setVelocityX(-speed);
-            getAnimationComponent().move();
-        } else if (playerPosition.getX() > entity.getX()) {
-            getPhysicsComponent().setVelocityX(speed);
-            getAnimationComponent().move();
-        } else {
-            getPhysicsComponent().setVelocityX(0);
-            getAnimationComponent().idle();
-        }
-    }
-
-    private void moveYCoordinatesTo(Point2D playerPosition) {
-        if (playerPosition.getY() < entity.getY()) {
-            getPhysicsComponent().setVelocityY(-speed);
-            getAnimationComponent().move();
-        } else if (playerPosition.getY() > entity.getY()) {
-            getPhysicsComponent().setVelocityY(speed);
-            getAnimationComponent().move();
-        } else {
-            getPhysicsComponent().setVelocityY(0);
-            getAnimationComponent().idle();
-        }
     }
 
     public void respawn() {
