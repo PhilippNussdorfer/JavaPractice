@@ -2,6 +2,7 @@ package bbrz.textadventure;
 
 import bbrz.textadventure.actions.Action;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import jdk.jshell.spi.ExecutionControl;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Interpreter {
         actionList.addAll(Arrays.asList(actions));
     }
 
-    public void interpret(String commandWithParams) throws CommandNotFoundException {
+    public void interpret(String commandWithParams) throws CommandNotFoundException, ExecutionControl.NotImplementedException {
         String[] words = commandWithParams.toLowerCase().split(" ");
 
         for (Action action : actionList) {
