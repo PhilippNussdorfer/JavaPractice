@@ -2,6 +2,7 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.Getter;
@@ -23,11 +24,11 @@ public class DescriptionAction extends AbAction {
     public void execute(String... params) throws ExecutionControl.NotImplementedException, CommandNotFoundException {
         if (params.length > 1) {
             if (params[1].equalsIgnoreCase(additionList.get(0))) {
-                wrapper.outPrintln(game.getCurrentLocation().getDescription());
+                wrapper.outPrintlnColored(game.getCurrentLocation().getDescription() + "\n", TextColor.DARK_BROWN);
             }
 
             else if (params[1].equalsIgnoreCase(additionList.get(1))) {
-                wrapper.outPrintln(game.getCurrentLocation().getName());
+                wrapper.outPrintlnColored(game.getCurrentLocation().getName() + "\n", TextColor.DARK_BROWN);
             }
 
             else if (params.length > 2 && params[1].equalsIgnoreCase(additionList.get(2))) {
@@ -38,7 +39,7 @@ public class DescriptionAction extends AbAction {
                 throw new CommandNotFoundException("This is an command with errors: " + String.join(" ", Arrays.stream(params).toList()));
             }
         } else {
-            wrapper.outPrintln(game.getCurrentLocation().getDescription());
+            wrapper.outPrintlnColored(game.getCurrentLocation().getDescription() + "\n", TextColor.DARK_BROWN);
         }
     }
 }
