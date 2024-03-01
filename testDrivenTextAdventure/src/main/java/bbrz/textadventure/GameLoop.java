@@ -3,6 +3,7 @@ package bbrz.textadventure;
 import bbrz.textadventure.actions.DescriptionAction;
 import bbrz.textadventure.actions.MoveAction;
 import bbrz.textadventure.actions.ExitAction;
+import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.rooms.Location;
 import bbrz.textadventure.rooms.LocationPointer;
@@ -25,18 +26,22 @@ public class GameLoop {
     private void runGame() {
         initGame();
 
-        boolean runGame = true;
-
         while (game.isLoopGame()) {
-            wrapper.outPrintln("You are at the: " + game.getCurrentLocation().getName());
-            wrapper.outPrint("Enter your commands:\n>");
+            wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName() + "\nYour possible directions are:", TextColor.BLUE);
+            game.getPossibleDirections();
+
+            wrapper.outPrintColored("\n\nEnter your commands:\n>", TextColor.BLUE);
             String userInput = scanner.nextLine();
 
             try {
                 interpreter.interpret(userInput);
             } catch (CommandNotFoundException | ExecutionControl.NotImplementedException exc) {
-                wrapper.outPrintln(exc.getMessage());
+                wrapper.outErr(exc.getMessage());
             }
+        }
+
+        if (!game.isLoopGame()) {
+            wrapper.outPrintlnColored("\nGoodbye and have a nice day!", TextColor.MAGENTA);
         }
     }
 
@@ -70,7 +75,7 @@ public class GameLoop {
         lake.addPointers(new LocationPointer("n", woods),
                 new LocationPointer("e", beach));
 
-        game = new Game(new Player(), cottage);
+        game = new Game(new Player(), cottage, wrapper);
 
         interpreter = new Interpreter();
         interpreter.addActions(new MoveAction(game , "west", "north", "east", "south", "n", "s", "w", "e"));
