@@ -1,5 +1,6 @@
 package bbrz.textadventure;
 
+import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.actions.DescriptionAction;
 import bbrz.textadventure.actions.MoveAction;
 import bbrz.textadventure.actions.ExitAction;
@@ -75,7 +76,10 @@ public class GameLoop {
         lake.addPointers(new LocationPointer("n", woods),
                 new LocationPointer("e", beach));
 
-        game = new Game(new Player(), cottage, wrapper);
+        wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
+        String name = scanner.nextLine();
+
+        game = new Game(new Player(name, 10, 0, 2, wrapper), cottage, wrapper);
 
         interpreter = new Interpreter();
         interpreter.addActions(new MoveAction(game , "west", "north", "east", "south", "n", "s", "w", "e"));
