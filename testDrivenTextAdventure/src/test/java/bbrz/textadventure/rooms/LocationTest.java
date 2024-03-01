@@ -45,6 +45,15 @@ class LocationTest {
     }
 
     @Test
+    void getPointerDirections() {
+        Mockito.when(pointer.getDirection()).thenReturn("n");
+        Mockito.when(pointer.getTarget()).thenReturn(secLocation);
+
+        var res = location.getPointerDirections();
+        assertEquals(res.get(0), "n => secRoom");
+    }
+
+    @Test
     void noRoomFound() {
         assertThrows(RoomNotFoundException.class, ()-> location.getRoom("n"));
     }
