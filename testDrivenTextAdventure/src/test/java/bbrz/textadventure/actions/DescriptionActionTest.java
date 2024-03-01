@@ -3,6 +3,7 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.rooms.Location;
 import jdk.jshell.spi.ExecutionControl;
@@ -37,15 +38,15 @@ class DescriptionActionTest {
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(location.getDescription()).thenReturn("Hello world");
         action.execute("d");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintln("Hello world");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Hello world\n", TextColor.DARK_BROWN);
 
         Mockito.when(location.getDescription()).thenReturn("this is a location");
         action.execute("desc");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintln("this is a location");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("this is a location\n", TextColor.DARK_BROWN);
 
         Mockito.when(location.getDescription()).thenReturn("location description");
         action.execute("describe");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintln("location description");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("location description\n", TextColor.DARK_BROWN);
     }
 
     @Test
@@ -53,11 +54,11 @@ class DescriptionActionTest {
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(location.getDescription()).thenReturn("Hello world");
         action.execute("D", "Location");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintln("Hello world");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Hello world\n", TextColor.DARK_BROWN);
 
         Mockito.when(location.getName()).thenReturn("Your location");
         action.execute("d", "LocationName");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintln("Your location");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Your location\n", TextColor.DARK_BROWN);
     }
 
     @Test
