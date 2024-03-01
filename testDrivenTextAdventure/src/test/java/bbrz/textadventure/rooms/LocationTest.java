@@ -1,6 +1,7 @@
 package bbrz.textadventure.rooms;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,12 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class LocationTest {
 
+    Location location;
+    Location secLocation;
     @Mock
     LocationPointer pointer;
     @Mock
     LocationPointer secPointer;
-    Location location;
-    Location secLocation;
+    @Mock
+    Item item;
+    @Mock
+    Item secItem;
 
     @BeforeEach
     void setUp() {
@@ -56,5 +61,36 @@ class LocationTest {
     @Test
     void noRoomFound() {
         assertThrows(RoomNotFoundException.class, ()-> location.getRoom("n"));
+    }
+
+    @Test
+    void addItem() {
+        location.addItems(item);
+
+        assertTrue(location.getItems().contains(item));
+    }
+
+    @Test
+    void addItems() {
+        location.addItems(item, secItem);
+
+        assertTrue(location.getItems().contains(item));
+        assertTrue(location.getItems().contains(secItem));
+    }
+
+    @Test
+    void removeItem() {
+        location.addItems(item, secItem);
+        location.removeItems(item);
+
+        assertEquals(1, location.getItems().size());
+    }
+
+    @Test
+    void removeItems() {
+        location.addItems(item, secItem);
+        location.removeItems(secItem, item);
+
+        assertEquals(0, location.getItems().size());
     }
 }
