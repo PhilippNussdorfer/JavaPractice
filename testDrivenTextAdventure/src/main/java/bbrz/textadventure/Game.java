@@ -1,5 +1,6 @@
 package bbrz.textadventure;
 
+import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.rooms.Location;
@@ -23,10 +24,8 @@ public class Game {
     public void move(String direction) {
         try {
             currentLocation = currentLocation.getRoom(direction);
-
         } catch (RoomNotFoundException roomNotFound) {
             wrapper.outErr(roomNotFound.getMessage());
-
         }
     }
 
