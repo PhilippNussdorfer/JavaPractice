@@ -31,4 +31,14 @@ public class Location {
     public void addPointers(LocationPointer ... pointers) {
         this.pointers.addAll(List.of(pointers));
     }
+
+    public List<String> getPointerDirections() {
+        List<String> result = new ArrayList<>();
+
+        for (LocationPointer pointer : pointers) {
+            result.add(pointer.getDirection() + " => " + pointer.getTarget().name);
+        }
+
+        return result;
+    }
 }
