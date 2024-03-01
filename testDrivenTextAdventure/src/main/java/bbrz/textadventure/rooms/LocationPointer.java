@@ -1,8 +1,10 @@
 package bbrz.textadventure.rooms;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class LocationPointer {
     private String direction;
     private Location target;
@@ -11,7 +13,4 @@ public class LocationPointer {
         return direction.equals(this.direction);
     }
 
-    public Location getTarget() {
-        return this.target;
-    }
 }
