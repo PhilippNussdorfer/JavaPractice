@@ -4,8 +4,8 @@ import bbrz.textadventure.Game;
 
 public class BackpackAction extends AbAction {
 
-    public BackpackAction(Game game, String name, String description, String ... possibleCommands) {
-        super(game, name, description, possibleCommands);
+    public BackpackAction(Game game, String ... possibleCommands) {
+        super(game, "Backpack", "Shows you your items in the backpack <Command>", possibleCommands);
     }
 
     @Override
