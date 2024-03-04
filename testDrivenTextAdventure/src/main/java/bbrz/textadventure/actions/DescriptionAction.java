@@ -4,24 +4,26 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.OutputWrapper;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import bbrz.textadventure.customException.NoItemFoundException;
+import bbrz.textadventure.item.Item;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Getter
 public class DescriptionAction extends AbAction {
 
+    @Getter
     private final List<String> additionList = List.of("location", "locationName", "item");
     OutputWrapper wrapper;
     public DescriptionAction(Game game, OutputWrapper wrapper, String ... possibleCommands) {
-        super(possibleCommands, game);
+        super(game, "Describe", "To describe an location, item or get the location name <Command> <Addition> <Item name>", possibleCommands);
         this.wrapper = wrapper;
     }
 
     @Override
-    public void execute(String... params) throws ExecutionControl.NotImplementedException, CommandNotFoundException {
+    public void execute(String... params) throws CommandNotFoundException, NoItemFoundException {
         if (params.length > 1) {
             if (params[1].equalsIgnoreCase(additionList.get(0))) {
                 wrapper.outPrintlnColored(game.getCurrentLocation().getDescription() + "\n", TextColor.DARK_BROWN);
@@ -32,7 +34,18 @@ public class DescriptionAction extends AbAction {
             }
 
             else if (params.length > 2 && params[1].equalsIgnoreCase(additionList.get(2))) {
-                throw new ExecutionControl.NotImplementedException("please Implement item");
+                var locationItems = game.getCurrentLocation().getItems();
+                var playerBp = game.getPlayer().getBackpack();
+                var itemName = params[2];
+
+                var item = getItemFromString(locationItems, itemName);
+                if (item == null) {
+                    item = getItemFromString(playerBp, itemName);
+                    if (item == null) {
+                        throw new NoItemFoundException("Could not find the item with the name: " + itemName + "!");
+                    }
+                }
+                wrapper.outPrintlnColored(item.getDescription(), TextColor.DARK_BROWN);
             }
 
             else {
@@ -41,5 +54,15 @@ public class DescriptionAction extends AbAction {
         } else {
             wrapper.outPrintlnColored(game.getCurrentLocation().getDescription() + "\n", TextColor.DARK_BROWN);
         }
+    }
+
+    private Item getItemFromString(List<Item> items, String name) {
+        Item result = null;
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                result = item;
+            }
+        }
+        return result;
     }
 }
