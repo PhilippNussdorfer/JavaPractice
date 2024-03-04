@@ -3,6 +3,7 @@ package bbrz.textadventure;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.item.Item;
 import bbrz.textadventure.rooms.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,10 @@ class GameTest {
     Location secLocation;
     @Mock
     OutputWrapper wrapper;
+    @Mock
+    Item item;
+    @Mock
+    Item secItem;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +54,46 @@ class GameTest {
     void getPossibleDirections() {
         Mockito.when(location.getPointerDirections()).thenReturn(List.of("s => secLocation", "n => thirdLocation"));
 
-        game.getPossibleDirections();
+        game.printPossibleDirections();
         Mockito.verify(wrapper, Mockito.times(1)).outPrintColored("\ns => secLocation", TextColor.GREEN);
         Mockito.verify(wrapper, Mockito.times(1)).outPrintColored("\nn => thirdLocation", TextColor.GREEN);
+    }
+
+    @Test
+    void printLocationItems() {
+        Mockito.when(location.getItems()).thenReturn(List.of(item));
+        Mockito.when(item.getName()).thenReturn("name");
+
+        game.printLocationItems();
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items you can see: name\n", TextColor.GREEN);
+    }
+
+    @Test
+    void printMultipleLocationItems() {
+        Mockito.when(location.getItems()).thenReturn(List.of(item, secItem));
+        Mockito.when(item.getName()).thenReturn("name");
+        Mockito.when(secItem.getName()).thenReturn("secName");
+
+        game.printLocationItems();
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items you can see: name, secName\n", TextColor.GREEN);
+    }
+
+    @Test
+    void printPlayerBPWithSingleItem() {
+        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(item.getName()).thenReturn("name");
+
+        game.printBPItems();
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items in your Backpack: name\n", TextColor.GREEN);
+    }
+
+    @Test
+    void printPlayerBPWithMultipleItems() {
+        Mockito.when(player.getBackpack()).thenReturn(List.of(item, secItem));
+        Mockito.when(item.getName()).thenReturn("name");
+        Mockito.when(secItem.getName()).thenReturn("secName");
+
+        game.printBPItems();
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items in your Backpack: name, secName\n", TextColor.GREEN);
     }
 }
