@@ -96,12 +96,13 @@ public class GameLoop {
         game = new Game(new Player(name, 10, 0, 2, wrapper), cottage, wrapper);
 
         interpreter = new Interpreter();
-        interpreter.addActions(new MoveAction(game , "west", "north", "east", "south", "n", "s", "w", "e"));
-        interpreter.addActions(new DescriptionAction(game, wrapper, "d", "desc", "describe"));
-        interpreter.addActions(new ExitAction(game, "ex", "x", "exit"));
-        interpreter.addActions(new DropAction(game, "drop"));
-        interpreter.addActions(new PickUpAction(game, "pickup", "pick"));
         interpreter.addActions(new HelpAction(game, "h", "help"));
+        interpreter.addActions(new MoveAction(game , "west", "north", "east", "south", "n", "s", "w", "e"));
+        interpreter.addActions(new ExitAction(game, "ex", "x", "exit"));
+        interpreter.addActions(new DescriptionAction(game, wrapper, "d", "desc", "describe"));
+        interpreter.addActions(new PickUpAction(game, "pickup", "pick"));
+        interpreter.addActions(new DropAction(game, "drop"));
+        interpreter.addActions(new BackpackAction(game, "bp", "backpack"));
 
         game.addInterpreter(interpreter);
     }
