@@ -8,6 +8,7 @@ public enum TextColor {
     DARK_BROWN("\u001B[33m"),
     MAGENTA("\u001B[95m"),
     BLUE("\u001B[34m"),
+    CYAN("\u001B[36m"),
     RESET("\u001B[0m");
 
     @Getter
