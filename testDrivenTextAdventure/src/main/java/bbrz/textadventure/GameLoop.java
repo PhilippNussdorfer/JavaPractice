@@ -31,9 +31,10 @@ public class GameLoop {
         initGame();
 
         while (game.isLoopGame()) {
-            wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName() + "\nYour possible"+
-                    " directions are:", TextColor.BLUE);
-            game.getPossibleDirections();
+            wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName(), TextColor.BLUE);
+            game.printLocationItems();
+            wrapper.outPrintlnColored("Your possible directions are: ", TextColor.BLUE);
+            game.printPossibleDirections();
 
             wrapper.outPrintColored("\n\nEnter your commands:\n>", TextColor.BLUE);
             String userInput = scanner.nextLine();
