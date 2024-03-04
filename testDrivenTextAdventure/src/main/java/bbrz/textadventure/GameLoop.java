@@ -1,9 +1,9 @@
 package bbrz.textadventure;
 
+import bbrz.textadventure.actions.*;
+import bbrz.textadventure.customException.NoFreeSpaceException;
+import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.actions.DescriptionAction;
-import bbrz.textadventure.actions.MoveAction;
-import bbrz.textadventure.actions.ExitAction;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.rooms.Location;
@@ -28,7 +28,8 @@ public class GameLoop {
         initGame();
 
         while (game.isLoopGame()) {
-            wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName() + "\nYour possible directions are:", TextColor.BLUE);
+            wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName() + "\nYour possible"+
+                    " directions are:", TextColor.BLUE);
             game.getPossibleDirections();
 
             wrapper.outPrintColored("\n\nEnter your commands:\n>", TextColor.BLUE);
@@ -36,7 +37,8 @@ public class GameLoop {
 
             try {
                 interpreter.interpret(userInput);
-            } catch (CommandNotFoundException | ExecutionControl.NotImplementedException exc) {
+            } catch (CommandNotFoundException | ExecutionControl.NotImplementedException | IllegalArgumentException |
+                     NoItemFoundException | NoFreeSpaceException exc) {
                 wrapper.outErr(exc.getMessage());
             }
         }
@@ -85,5 +87,10 @@ public class GameLoop {
         interpreter.addActions(new MoveAction(game , "west", "north", "east", "south", "n", "s", "w", "e"));
         interpreter.addActions(new DescriptionAction(game, wrapper, "d", "desc", "describe"));
         interpreter.addActions(new ExitAction(game, "ex", "x", "exit"));
+        interpreter.addActions(new DropAction(game, "drop"));
+        interpreter.addActions(new PickUpAction(game, "pickup", "pick"));
+        interpreter.addActions(new HelpAction(game, "h", "help"));
+
+        game.addInterpreter(interpreter);
     }
 }

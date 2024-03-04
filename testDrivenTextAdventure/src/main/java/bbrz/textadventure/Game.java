@@ -11,7 +11,8 @@ import lombok.Setter;
 public class Game {
     private final Player player;
     private Location currentLocation;
-    OutputWrapper wrapper;
+    private final OutputWrapper wrapper;
+    private Interpreter interpreter;
     @Setter
     private boolean loopGame = true;
 
@@ -19,6 +20,10 @@ public class Game {
         this.player = player;
         this.currentLocation = currentLocation;
         this.wrapper = wrapper;
+    }
+
+    public void addInterpreter(Interpreter interpreter) {
+        this.interpreter = interpreter;
     }
 
     public void move(String direction) {
