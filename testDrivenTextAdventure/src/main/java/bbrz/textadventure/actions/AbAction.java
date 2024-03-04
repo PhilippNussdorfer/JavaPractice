@@ -2,13 +2,13 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public abstract class AbAction implements Action {
-    @Getter
-    private String[] possibleCommands;
     protected Game game;
+    protected String name;
+    protected String description;
+    private String[] possibleCommands;
 
     @Override
     public boolean canHandle(String command) {
@@ -17,5 +17,20 @@ public abstract class AbAction implements Action {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
+
+    @Override
+    public String[] getPossibleCommands() {
+        return this.possibleCommands;
     }
 }

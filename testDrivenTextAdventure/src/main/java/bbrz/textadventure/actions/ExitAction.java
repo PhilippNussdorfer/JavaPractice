@@ -4,7 +4,7 @@ import bbrz.textadventure.Game;
 
 public class ExitAction extends AbAction {
     public ExitAction(Game game, String ... possibleCommands) {
-        super(possibleCommands, game);
+        super(game, "Exit", "Exits the game <Command>", possibleCommands);
     }
 
     @Override

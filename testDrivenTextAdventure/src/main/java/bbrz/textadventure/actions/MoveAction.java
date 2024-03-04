@@ -6,7 +6,7 @@ public class MoveAction extends AbAction {
 
 
     public MoveAction(Game game, String ... possibleCommands) {
-        super(possibleCommands, game);
+        super(game, "Move", "To move to an other location <Command>", possibleCommands);
     }
 
     @Override
