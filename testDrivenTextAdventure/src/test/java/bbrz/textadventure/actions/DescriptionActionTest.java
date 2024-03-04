@@ -5,14 +5,19 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.OutputWrapper;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import bbrz.textadventure.customException.NoItemFoundException;
+import bbrz.textadventure.entity.Player;
+import bbrz.textadventure.item.Item;
 import bbrz.textadventure.rooms.Location;
-import jdk.jshell.spi.ExecutionControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +32,10 @@ class DescriptionActionTest {
     OutputWrapper wrapper;
     @Mock
     Location location;
+    @Mock
+    Item item;
+    @Mock
+    Player player;
 
     @BeforeEach
     void beforeEach() {
@@ -34,7 +43,7 @@ class DescriptionActionTest {
     }
 
     @Test
-    void simpleInputs() throws ExecutionControl.NotImplementedException, CommandNotFoundException {
+    void simpleInputs() throws CommandNotFoundException, NoItemFoundException {
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(location.getDescription()).thenReturn("Hello world");
         action.execute("d");
@@ -50,7 +59,7 @@ class DescriptionActionTest {
     }
 
     @Test
-    void inputsWithAdditions() throws ExecutionControl.NotImplementedException, CommandNotFoundException {
+    void inputsWithAdditions() throws CommandNotFoundException, NoItemFoundException {
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(location.getDescription()).thenReturn("Hello world");
         action.execute("D", "Location");
@@ -62,8 +71,27 @@ class DescriptionActionTest {
     }
 
     @Test
-    void describeItems() {
-        assertThrows(ExecutionControl.NotImplementedException.class, () -> action.execute("d", "item", "name"));
+    void describeItem() throws NoItemFoundException, CommandNotFoundException {
+        Mockito.when(game.getPlayer()).thenReturn(player);
+        Mockito.when(game.getCurrentLocation()).thenReturn(location);
+        Mockito.when(item.getName()).thenReturn("candle");
+        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
+        Mockito.when(item.getDescription()).thenReturn("Hello World");
+
+        action.execute("d", "Item", "Candle");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Hello World", TextColor.DARK_BROWN);
+    }
+
+    @Test
+    void describeItemsThrowException() {
+        Mockito.when(game.getPlayer()).thenReturn(player);
+        Mockito.when(game.getCurrentLocation()).thenReturn(location);
+        Mockito.when(item.getName()).thenReturn("candle");
+        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
+
+        assertThrows(NoItemFoundException.class, () -> action.execute("d", "item", "name"));
     }
 
     @Test
