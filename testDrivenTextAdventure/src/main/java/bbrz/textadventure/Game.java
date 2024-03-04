@@ -3,9 +3,12 @@ package bbrz.textadventure;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.item.Item;
 import bbrz.textadventure.rooms.Location;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 public class Game {
@@ -22,6 +25,24 @@ public class Game {
         this.wrapper = wrapper;
     }
 
+    public void printLocationItems() {
+        wrapper.outPrintlnColored("\nThese are all items you can see: " + getPrintableStringFromItemList(currentLocation.getItems()) + "\n", TextColor.GREEN);
+    }
+
+    public void printBPItems() {
+        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + getPrintableStringFromItemList(player.getBackpack()) + "\n", TextColor.GREEN);
+    }
+
+    private String getPrintableStringFromItemList(List<Item> items) {
+        StringBuilder builder = new StringBuilder();
+
+        for (Item item : items) {
+            builder.append(item.getName()).append(", ");
+        }
+
+        return builder.substring(0, builder.length() -2);
+    }
+
     public void addInterpreter(Interpreter interpreter) {
         this.interpreter = interpreter;
     }
@@ -34,7 +55,7 @@ public class Game {
         }
     }
 
-    public void getPossibleDirections() {
+    public void printPossibleDirections() {
         var directions = currentLocation.getPointerDirections();
 
         for (String direction : directions) {
