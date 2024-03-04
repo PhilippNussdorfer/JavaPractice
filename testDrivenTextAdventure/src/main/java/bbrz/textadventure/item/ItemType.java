@@ -9,5 +9,6 @@ public enum ItemType {
     WEAPON,
     ARTIFACT,
     SHIELD,
-    MISC
+    MISC,
+    CONSUMABLE
 }
