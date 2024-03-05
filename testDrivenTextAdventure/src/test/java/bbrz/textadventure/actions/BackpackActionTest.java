@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +29,21 @@ class BackpackActionTest {
     void execute() {
         action.execute("bp");
         Mockito.verify(game, Mockito.times(1)).printBPItems();
+    }
+
+    @Test
+    void getter() {
+        var res = action.getName();
+        assertEquals("Backpack", res);
+
+        res = action.getDescription();
+        assertEquals("Shows you your items in the backpack <Command>", res);
+
+        var resArr = action.getPossibleCommands();
+
+        assertTrue(Arrays.stream(resArr).toList().contains("bp"));
+        assertTrue(Arrays.stream(resArr).toList().contains("Backpack"));
+        assertFalse(Arrays.stream(resArr).toList().contains("exit"));
     }
 
     @Test
