@@ -1,5 +1,7 @@
 package at.bookmark;
 
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -9,8 +11,6 @@ public class Gui {
     private JPanel mainPanel;
     private JTextField searchBar;
     private JButton btnAdd;
-    private JButton btnRemove;
-    private JButton btnEdit;
     private JPanel contentPanel;
     private JPanel searchPanel;
     private JScrollPane scrollContent;
@@ -52,7 +52,7 @@ public class Gui {
         btnAddContent.addActionListener(e -> {
             if (!txtTitle.getText().isEmpty() && !txtLink.getText().isEmpty() && handler.isLink(txtLink.getText())) {
                 handler.addNewBookmark(txtTitle.getText(), txtPage.getText(), txtLink.getText());
-                handler.updateContent(contentPanel);
+                handler.updateContentPanel(contentPanel);
             } else {
                 handler.createErrorWindow("Could not add the Bookmark because there was no title or an invalid weblink");
             }
@@ -63,24 +63,18 @@ public class Gui {
 
     private void initButtons() {
         btnAdd.addActionListener(e-> addContent());
-        btnEdit.addActionListener(e-> {
-            this.selectionFormEdit();
-        });
-        btnRemove.addActionListener(e-> {
-            this.selectionFormDelete();
-        });
     }
 
     private void initContentPanelAndSearchPanel() {
-        GridLayout grid = new GridLayout(0,3, 10, 10);
+        MigLayout mig = new MigLayout("wrap 5");
 
-        contentPanel.setLayout(grid);
+        contentPanel.setLayout(mig);
         contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         handler.addLoadedBookmarks();
-        handler.updateContent(contentPanel);
+        handler.updateContentPanel(contentPanel);
 
-        searchPanel.setLayout(new GridLayout(0, 3, 10, 10));
+        searchPanel.setLayout(new MigLayout("wrap 3"));
         searchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         scrollContent.getVerticalScrollBar().setUnitIncrement(10);
@@ -104,58 +98,5 @@ public class Gui {
                 searchPanel.repaint();
             }
         });
-    }
-
-    private void selectionFormDelete() {
-        JButton deleteBtn = new JButton("Remove");
-        DefaultListModel<String> listModel = getStringDefaultListModel();
-
-        JList jList = new JList<>(listModel);
-
-        Window window = new Window("Select to Delete", jList, deleteBtn);
-        window.setFlow();
-
-        deleteBtn.addActionListener(e -> {
-            if (!jList.isSelectionEmpty()) {
-                handler.getBookmarks().remove(jList.getSelectedIndex());
-                handler.updateContent(contentPanel);
-                listModel.remove(jList.getSelectedIndex());
-            } else {
-                handler.createErrorWindow("Please Select an title from the list!");
-            }
-        });
-
-        window.createWindow(480, 240);
-    }
-
-    private void selectionFormEdit() {
-        JButton editBtn = new JButton("Edit Selected");
-
-        JList jList = new JList<>(getStringDefaultListModel());
-        contentPanel.add(jList);
-        contentPanel.add(editBtn);
-
-        Window window = new Window("Select to Edit", jList, editBtn);
-        window.setFlow();
-
-        editBtn.addActionListener(e -> {
-            if (!jList.isSelectionEmpty()) {
-                jList.setModel(getStringDefaultListModel());
-                handler.getBookmarks().get(jList.getSelectedIndex()).editForm(contentPanel, handler);
-            } else {
-                handler.createErrorWindow("Please Select an title from the list!");
-            }
-        });
-
-        window.createWindow(480, 240);
-    }
-
-    private DefaultListModel<String> getStringDefaultListModel() {
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-
-        for (Bookmark bookmark : this.handler.getBookmarks()) {
-            listModel.addElement(bookmark.getTitle());
-        }
-        return listModel;
     }
 }

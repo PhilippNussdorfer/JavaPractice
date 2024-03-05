@@ -74,7 +74,7 @@ public class Bookmark {
 
         btnAddContent.addActionListener(e -> {
             this.edit(txtTitle.getText(), txtPage.getText(), txtLink.getText());
-            handler.updateContent(content);
+            handler.updateContentPanel(content);
         });
 
         window.createWindow(480, 240);

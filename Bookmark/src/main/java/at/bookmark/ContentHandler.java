@@ -34,14 +34,25 @@ public class ContentHandler {
         bookmarks.add(bookmark);
     }
 
-    public void updateContent(JPanel content) {
-        content.removeAll();
+    public void updateContentPanel(JPanel contentPanel) {
+        contentPanel.removeAll();
         for (Bookmark bookmark : bookmarks) {
-            content.add(bookmark.getTitleLabel());
-            content.add(bookmark.getPageLabel());
-            content.add(bookmark.getLinkBtn());
+            contentPanel.add(bookmark.getTitleLabel());
+            contentPanel.add(bookmark.getPageLabel());
+            contentPanel.add(bookmark.getLinkBtn());
+
+            JButton btnEdit = new JButton("edit");
+            JButton btnRemove = new JButton("Remove");
+
+            btnEdit.addActionListener(e -> bookmark.editForm(contentPanel, this));
+            btnRemove.addActionListener(e -> {
+                bookmarks.remove(bookmark);
+                this.updateContentPanel(contentPanel);
+            });
+            contentPanel.add(btnEdit);
+            contentPanel.add(btnRemove);
         }
-        content.updateUI();
+        contentPanel.updateUI();
         readerAndWriter.writeFile(bookmarks);
     }
 
