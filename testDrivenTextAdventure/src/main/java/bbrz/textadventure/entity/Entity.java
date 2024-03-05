@@ -1,9 +1,10 @@
 package bbrz.textadventure.entity;
 
+import bbrz.textadventure.Game;
 import bbrz.textadventure.OutputWrapper;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.item.Item;
-import jdk.jshell.spi.ExecutionControl;
+import bbrz.textadventure.item.ItemType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.ArrayList;
@@ -44,12 +45,66 @@ public abstract class Entity {
         }
     }
 
-    public void EQAddItems(Item ... items) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Pleas implement this to use!");
+    public void EQAddItems(Item ... items) {
+        for (Item item : items) {
+            if (item.getType() != ItemType.MISC && item.getType() != ItemType.CONSUMABLE) {
+
+                if (equipped.isEmpty()) {
+                    equipped.add(item);
+                }
+
+                else if (isNotAlreadyEquippedOrListIsFull(item)) {
+                    equipped.add(item);
+                }
+
+                else {
+                    wrapper.outErr("The equipped item slots are already full or such an item is already equipped!");
+                }
+
+            } else {
+                wrapper.outErr("This item is not equip able: " + item.getName());
+            }
+        }
     }
 
-    public void EQRemoveItems(Item ... items) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Pleas implement this to use!");
+    private boolean isNotAlreadyEquippedOrListIsFull(Item item) {
+        int artifactCount = 0;
+
+        if (equipped.size() == EQUIPPED_SPACE) {
+            return false;
+        } else {
+            for (Item equippedItem : equipped) {
+                if (item.getType() == ItemType.ARTIFACT) {
+
+                    if (equippedItem.getType() == item.getType()) {
+                        artifactCount++;
+                    }
+
+                    if (artifactCount == 2) {
+                        return false;
+                    }
+
+                } else {
+
+                    if (item.getType() == equippedItem.getType()) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    public void EQRemoveItems(Game game, Item ... items) {
+        for (Item item : items) {
+            if (backpack.size() != BACKPACK_SPACE) {
+                backpack.add(item);
+                equipped.remove(item);
+            } else {
+                game.getCurrentLocation().addItems(item);
+                equipped.remove(item);
+            }
+        }
     }
 
     public void getsAttacked(int dmg) {
