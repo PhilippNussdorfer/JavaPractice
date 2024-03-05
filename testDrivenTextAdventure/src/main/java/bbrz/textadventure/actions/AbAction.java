@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public abstract class AbAction implements Action {
     protected Game game;
-    protected String name;
-    protected String description;
+    private String name;
+    private String description;
     private String[] possibleCommands;
 
     @Override
