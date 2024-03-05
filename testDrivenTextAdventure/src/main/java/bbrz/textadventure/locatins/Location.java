@@ -1,4 +1,4 @@
-package bbrz.textadventure.rooms;
+package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.item.Item;

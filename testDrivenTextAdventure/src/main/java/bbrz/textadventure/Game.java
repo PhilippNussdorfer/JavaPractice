@@ -4,7 +4,7 @@ import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.item.Item;
-import bbrz.textadventure.rooms.Location;
+import bbrz.textadventure.locatins.Location;
 import lombok.Getter;
 import lombok.Setter;
 

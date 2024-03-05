@@ -1,4 +1,4 @@
-package bbrz.textadventure.rooms;
+package bbrz.textadventure.locatins;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

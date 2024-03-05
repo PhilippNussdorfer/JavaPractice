@@ -8,7 +8,7 @@ import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Item;
-import bbrz.textadventure.rooms.Location;
+import bbrz.textadventure.locatins.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

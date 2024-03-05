@@ -3,9 +3,9 @@ package bbrz.textadventure.item;
 import java.util.List;
 
 public class ItemStats {
-    private int hp;
-    private int armor;
-    private int dmg;
+    private final int hp;
+    private final int armor;
+    private final int dmg;
 
     public ItemStats(int hp, int armor, int dmg) {
         this.hp = hp;
@@ -20,7 +20,7 @@ public class ItemStats {
     }
 
     /**
-     * @return an List of integer in this order (hp, armor, dmg)
+     * @return a List of integer in this order (hp, armor, dmg)
      */
     public List<Integer> getStats() {
         return List.of(hp, armor, dmg);

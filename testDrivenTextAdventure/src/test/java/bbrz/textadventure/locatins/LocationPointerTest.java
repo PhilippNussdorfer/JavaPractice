@@ -1,4 +1,4 @@
-package bbrz.textadventure.rooms;
+package bbrz.textadventure.locatins;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -9,8 +9,8 @@ import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.item.ItemStats;
 import bbrz.textadventure.item.ItemType;
-import bbrz.textadventure.rooms.Location;
-import bbrz.textadventure.rooms.LocationPointer;
+import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locatins.LocationPointer;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.util.Scanner;
