@@ -4,7 +4,7 @@ import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.item.Item;
-import bbrz.textadventure.rooms.Location;
+import bbrz.textadventure.locatins.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +32,10 @@ class GameTest {
     Item item;
     @Mock
     Item secItem;
+    @Mock
+    RoomNotFoundException exception;
+    @Mock
+    Interpreter interpreter;
 
     @BeforeEach
     void setUp() {
@@ -57,6 +61,21 @@ class GameTest {
         game.printPossibleDirections();
         Mockito.verify(wrapper, Mockito.times(1)).outPrintColored("\ns => secLocation", TextColor.GREEN);
         Mockito.verify(wrapper, Mockito.times(1)).outPrintColored("\nn => thirdLocation", TextColor.GREEN);
+    }
+
+    @Test
+    void addInterpreter() {
+        game.addInterpreter(interpreter);
+        assertEquals(interpreter, game.getInterpreter());
+    }
+
+    @Test
+    void cantFindRoom() throws RoomNotFoundException {
+        Mockito.when(location.getRoom("w")).thenThrow(exception);
+        Mockito.when(exception.getMessage()).thenReturn("not found");
+
+        game.move("w");
+        Mockito.verify(wrapper, Mockito.times(1)).outErr("not found");
     }
 
     @Test
