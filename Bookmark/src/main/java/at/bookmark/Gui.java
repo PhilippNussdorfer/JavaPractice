@@ -18,7 +18,7 @@ public class Gui {
     private final ContentHandler handler = new ContentHandler();
     private final JFrame frame = new JFrame("Bookmark");
 
-    public static void main(String[] args) {
+    public void run() {
         Gui gui = new Gui();
 
         gui.frame.setContentPane(gui.mainPanel);
