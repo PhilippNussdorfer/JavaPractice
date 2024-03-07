@@ -66,7 +66,7 @@ public class Gui {
     }
 
     private void initContentPanelAndSearchPanel() {
-        MigLayout mig = new MigLayout("wrap 5");
+        MigLayout mig = new MigLayout("wrap 6");
 
         contentPanel.setLayout(mig);
         contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

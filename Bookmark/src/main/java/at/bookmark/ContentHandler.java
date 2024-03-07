@@ -36,7 +36,12 @@ public class ContentHandler {
 
     public void updateContentPanel(JPanel contentPanel) {
         contentPanel.removeAll();
+        int count = 1;
+
+        initTop(contentPanel);
+
         for (Bookmark bookmark : bookmarks) {
+            contentPanel.add(new JLabel("" + count));
             contentPanel.add(bookmark.getTitleLabel());
             contentPanel.add(bookmark.getPageLabel());
             contentPanel.add(bookmark.getLinkBtn());
@@ -49,11 +54,23 @@ public class ContentHandler {
                 bookmarks.remove(bookmark);
                 this.updateContentPanel(contentPanel);
             });
+
             contentPanel.add(btnEdit);
             contentPanel.add(btnRemove);
+
+            count++;
         }
         contentPanel.updateUI();
         readerAndWriter.writeFile(bookmarks);
+    }
+
+    private void initTop(JPanel contentPanel) {
+        contentPanel.add(new JLabel("Count"));
+        contentPanel.add(new JLabel("Title"));
+        contentPanel.add(new JLabel("Page"));
+        contentPanel.add(new JLabel(""));
+        contentPanel.add(new JLabel(""));
+        contentPanel.add(new JLabel(""));
     }
 
     public boolean isLink(String link) {
