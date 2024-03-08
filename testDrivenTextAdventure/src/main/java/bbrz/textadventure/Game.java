@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class Game {
@@ -34,13 +35,7 @@ public class Game {
     }
 
     private String getPrintableStringFromItemList(List<Item> items) {
-        StringBuilder builder = new StringBuilder();
-
-        for (Item item : items) {
-            builder.append(item.getName()).append(", ");
-        }
-
-        return builder.substring(0, builder.length() -2);
+        return items.stream().map(Item::getName).collect(Collectors.joining(", "));
     }
 
     public void addInterpreter(Interpreter interpreter) {

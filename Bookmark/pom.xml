@@ -7,6 +7,7 @@
     <groupId>at.bookmark</groupId>
     <artifactId>Bookmark</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
@@ -20,7 +21,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.2.0</version>
 
                 <configuration>
                     <descriptorRefs>
@@ -30,7 +31,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>at/bookmark/Starter.java</mainClass>
+                            <mainClass>at.bookmark.Starter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

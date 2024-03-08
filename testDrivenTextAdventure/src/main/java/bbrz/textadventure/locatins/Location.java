@@ -49,7 +49,7 @@ public class Location {
         List<String> result = new ArrayList<>();
 
         for (LocationPointer pointer : pointers) {
-            result.add(pointer.getDirection() + " => " + pointer.getTarget().name);
+            result.add(pointer.getDirection() + " => " + pointer.getTarget().getName());
         }
 
         return result;
