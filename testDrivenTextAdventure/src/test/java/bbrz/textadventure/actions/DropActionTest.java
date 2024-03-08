@@ -2,6 +2,7 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.entity.Player;
+import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locatins.Location;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,8 @@ class DropActionTest {
     Player player;
     @Mock
     Item item;
+    @Mock
+    Backpack bp;
 
     @BeforeEach
     void setUp() {
@@ -39,11 +42,12 @@ class DropActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(item.getName()).thenReturn("name");
-        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
 
         action.execute("Drop", "name");
         Mockito.verify(location, Mockito.times(1)).addItems(item);
-        Mockito.verify(player, Mockito.times(1)).BPRemoveItems(item);
+        Mockito.verify(player, Mockito.times(1)).bpDrop(item);
     }
 
     @Test

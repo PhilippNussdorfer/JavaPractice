@@ -18,7 +18,7 @@ public class PickUpAction extends AbAction {
 
             for (Item item : this.game.getCurrentLocation().getItems()) {
                 if (item.getName().equalsIgnoreCase(itemName)) {
-                    this.game.getPlayer().BPAddItems(item);
+                    this.game.getPlayer().bpAdd(item);
                     this.game.getCurrentLocation().removeItems(item);
                 }
             }

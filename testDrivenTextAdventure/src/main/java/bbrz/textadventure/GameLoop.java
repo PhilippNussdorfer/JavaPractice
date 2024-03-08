@@ -3,12 +3,11 @@ package bbrz.textadventure;
 import bbrz.textadventure.actions.*;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
+import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
-import bbrz.textadventure.item.Item;
-import bbrz.textadventure.item.ItemStats;
-import bbrz.textadventure.item.ItemType;
+import bbrz.textadventure.item.*;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.locatins.LocationPointer;
 import jdk.jshell.spi.ExecutionControl;
@@ -93,7 +92,7 @@ public class GameLoop {
         wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
         String name = scanner.nextLine();
 
-        game = new Game(new Player(name, 10, 0, 2, wrapper), cottage, wrapper);
+        game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(this.wrapper), new Equipped(this.wrapper)), cottage, wrapper);
 
         interpreter = new Interpreter();
         interpreter.addActions(new HelpAction(game, "h", "help"));

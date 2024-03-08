@@ -6,7 +6,6 @@ import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.item.Item;
-import jdk.jshell.spi.ExecutionControl;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -35,7 +34,7 @@ public class DescriptionAction extends AbAction {
 
             else if (params.length > 2 && params[1].equalsIgnoreCase(additionList.get(2))) {
                 var locationItems = game.getCurrentLocation().getItems();
-                var playerBp = game.getPlayer().getBackpack();
+                var playerBp = game.getPlayer().getBp().getBackpack();
                 var itemName = params[2];
 
                 var item = getItemFromString(locationItems, itemName);

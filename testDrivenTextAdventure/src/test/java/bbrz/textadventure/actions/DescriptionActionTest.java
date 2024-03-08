@@ -7,6 +7,7 @@ import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.entity.Player;
+import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locatins.Location;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,8 @@ class DescriptionActionTest {
     Item item;
     @Mock
     Player player;
+    @Mock
+    Backpack bp;
 
     @BeforeEach
     void beforeEach() {
@@ -75,7 +78,8 @@ class DescriptionActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(item.getName()).thenReturn("candle");
-        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
         Mockito.when(item.getDescription()).thenReturn("Hello World");
 
@@ -88,7 +92,8 @@ class DescriptionActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(item.getName()).thenReturn("candle");
-        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
 
         assertThrows(NoItemFoundException.class, () -> action.execute("d", "item", "name"));

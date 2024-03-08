@@ -16,10 +16,10 @@ public class DropAction extends AbAction {
         } else {
             String itemName = params[1];
 
-            for (Item item : this.game.getPlayer().getBackpack()) {
+            for (Item item : this.game.getPlayer().getBp().getBackpack()) {
                 if (item.getName().equalsIgnoreCase(itemName)) {
                     this.game.getCurrentLocation().addItems(item);
-                    this.game.getPlayer().BPRemoveItems(item);
+                    this.game.getPlayer().bpDrop(item);
                 }
             }
         }

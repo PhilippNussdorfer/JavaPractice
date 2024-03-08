@@ -43,7 +43,7 @@ class PickUpActionTest {
         Mockito.when(item.getName()).thenReturn("name");
 
         action.execute("p", "name");
-        Mockito.verify(player, Mockito.times(1)).BPAddItems(item);
+        Mockito.verify(player, Mockito.times(1)).bpAdd(item);
         Mockito.verify(location, Mockito.times(1)).removeItems(item);
     }
 

@@ -3,6 +3,7 @@ package bbrz.textadventure;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locatins.Location;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,8 @@ class GameTest {
     RoomNotFoundException exception;
     @Mock
     Interpreter interpreter;
+    @Mock
+    Backpack bp;
 
     @BeforeEach
     void setUp() {
@@ -99,7 +102,8 @@ class GameTest {
 
     @Test
     void printPlayerBPWithSingleItem() {
-        Mockito.when(player.getBackpack()).thenReturn(List.of(item));
+        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(item.getName()).thenReturn("name");
 
         game.printBPItems();
@@ -108,7 +112,8 @@ class GameTest {
 
     @Test
     void printPlayerBPWithMultipleItems() {
-        Mockito.when(player.getBackpack()).thenReturn(List.of(item, secItem));
+        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(bp.getBackpack()).thenReturn(List.of(item, secItem));
         Mockito.when(item.getName()).thenReturn("name");
         Mockito.when(secItem.getName()).thenReturn("secName");
 
