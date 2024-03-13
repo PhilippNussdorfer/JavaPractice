@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,6 +51,27 @@ class BackpackTest {
     }
 
     @Test
-    void bpRemoveItems() {
+    void bpRemoveItems() throws NoFreeSpaceException {
+        backpack.bpAddItems(item, secItem);
+        backpack.bpRemoveItems(item);
+
+        assertTrue(backpack.getBackpack().contains(secItem));
+        assertEquals(1, backpack.getBackpack().size());
+    }
+
+    @Test
+    void bpRemoveMultipleItems() throws NoFreeSpaceException {
+        backpack.bpAddItems(item, item, secItem);
+        backpack.bpRemoveItems(item, secItem);
+
+        assertEquals(1, backpack.getBackpack().size());
+        assertTrue(backpack.getBackpack().contains(item));
+    }
+
+    @Test
+    void bpItemNotFound() {
+        backpack.bpRemoveItems(item);
+
+        Mockito.verify(wrapper, Mockito.times(1)).outErr("Could not find the item: null");
     }
 }
