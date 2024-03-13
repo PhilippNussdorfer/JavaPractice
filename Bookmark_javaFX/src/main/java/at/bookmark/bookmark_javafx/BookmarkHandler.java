@@ -1,7 +1,5 @@
 package at.bookmark.bookmark_javafx;
 
-import lombok.Getter;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -9,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookmarkHandler {
-    @Getter
     private List<Bookmark> bookmarks = new ArrayList<>();
     private final WriterReader writerReader = new WriterReader();
 
@@ -51,5 +48,9 @@ public class BookmarkHandler {
             return true;
         }
         return false;
+    }
+
+    public List<Bookmark> getBookmarks() {
+        return this.bookmarks;
     }
 }

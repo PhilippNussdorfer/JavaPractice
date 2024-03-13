@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>23-ea+3</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.28</version>
@@ -77,8 +82,8 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>at.bookmark.bookmark_javafx/at.bookmark.bookmark_javafx.HelloApplication
-                            </mainClass>
+                            <executable>C:/Program Files/Java/jdk-21/bin/Java.exe</executable>
+                            <mainClass>at.bookmark.bookmark_javafx.Bookmark_App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
