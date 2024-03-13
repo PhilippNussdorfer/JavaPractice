@@ -6,13 +6,17 @@ import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.item.ItemStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class EntityTest {
@@ -23,11 +27,17 @@ class EntityTest {
     Item item;
     @Mock
     Item secItem;
+    @Mock
+    Item thirdItem;
+    @Mock
+    ItemStats itemStats;
+    @Mock
+    ItemStats secItemStats;
+    @Mock
+    ItemStats thirdItemStats;
 
     @Mock
     OutputWrapper wrapper;
-    @Mock
-    Location location;
     @Mock
     Game game;
     @Mock
@@ -122,8 +132,45 @@ class EntityTest {
 
     @Test
     void getDmgRole() {
-        var role = entity.roleDmg();
+        entity.roleDmg();
 
         Mockito.verify(attackCalc, Mockito.times(1)).getDmgRole(5);
+    }
+
+    @Test
+    void getBoostedStatsWithoutEquipment() {
+        var list = entity.getBoostedStats();
+
+        assertEquals(entity.getHp(), list.get(0));
+        assertEquals(entity.getArmor(), list.get(1));
+        assertEquals(entity.getDmg(), list.get(2));
+    }
+
+    @Test
+    void getBoostedStatsWithEquipment() {
+        Mockito.when(equipped.getEquipped()).thenReturn(List.of(item));
+        Mockito.when(item.getStats()).thenReturn(itemStats);
+        Mockito.when(itemStats.getItemStats()).thenReturn(List.of(2, 3, 1));
+        var list = entity.getBoostedStats();
+
+        assertEquals(entity.getHp() + 2, list.get(0));
+        assertEquals(entity.getArmor() + 3, list.get(1));
+        assertEquals(entity.getDmg() + 1, list.get(2));
+    }
+
+    @Test
+    void getBoostedStatsWithMultipleItemsEquipped() {
+        Mockito.when(equipped.getEquipped()).thenReturn(List.of(item, secItem, thirdItem));
+        Mockito.when(item.getStats()).thenReturn(itemStats);
+        Mockito.when(secItem.getStats()).thenReturn(secItemStats);
+        Mockito.when(thirdItem.getStats()).thenReturn(thirdItemStats);
+        Mockito.when(itemStats.getItemStats()).thenReturn(List.of(2, 3, 1));
+        Mockito.when(secItemStats.getItemStats()).thenReturn(List.of(3, 4, 1));
+        Mockito.when(thirdItemStats.getItemStats()).thenReturn(List.of(1, 0, 2));
+        var list = entity.getBoostedStats();
+
+        assertEquals(entity.getHp() + 6, list.get(0));
+        assertEquals(entity.getArmor() + 7, list.get(1));
+        assertEquals(entity.getDmg() + 4, list.get(2));
     }
 }
