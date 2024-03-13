@@ -6,6 +6,7 @@ import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
+import bbrz.textadventure.locatins.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +26,8 @@ class EntityTest {
 
     @Mock
     OutputWrapper wrapper;
+    @Mock
+    Location location;
     @Mock
     Game game;
     @Mock
@@ -49,26 +52,26 @@ class EntityTest {
     void addOneItemToEquipped() {
         entity.addEquipment(item);
 
-        Mockito.verify(equipped, Mockito.times(1)).EQAddItems(item);
+        Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item);
     }
 
     @Test
-    void removeSingleItemFromEquipped() {
+    void removeSingleItemFromEquipped() throws NoFreeSpaceException {
         entity.addEquipment(item);
         entity.dropEquipment(game, item);
 
-        Mockito.verify(equipped, Mockito.times(1)).EQAddItems(item);
-        Mockito.verify(equipped, Mockito.times(1)).EQRemoveItems(game, item);
+        Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item);
+        Mockito.verify(equipped, Mockito.times(1)).eqRemoveItems(game, item);
 
     }
 
     @Test
-    void removeMultipleItemsFromEquipped() {
+    void removeMultipleItemsFromEquipped() throws NoFreeSpaceException {
         entity.addEquipment(item, secItem);
         entity.dropEquipment(game, item, secItem);
 
-        Mockito.verify(equipped, Mockito.times(1)).EQAddItems(item, secItem);
-        Mockito.verify(equipped, Mockito.times(1)).EQRemoveItems(game, item, secItem);
+        Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item, secItem);
+        Mockito.verify(equipped, Mockito.times(1)).eqRemoveItems(game, item, secItem);
     }
 
     @Test
