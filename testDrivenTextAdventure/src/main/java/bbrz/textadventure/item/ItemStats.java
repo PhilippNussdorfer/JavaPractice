@@ -22,7 +22,7 @@ public class ItemStats {
     /**
      * @return a List of integer in this order (hp, armor, dmg)
      */
-    public List<Integer> getStats() {
+    public List<Integer> getItemStats() {
         return List.of(hp, armor, dmg);
     }
 }

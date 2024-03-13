@@ -2,6 +2,7 @@ package bbrz.textadventure.item;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.customException.NoFreeSpaceException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,7 +18,7 @@ public class Equipped {
     @Getter
     private final int EQUIPPED_SPACE = 8;
 
-    public void EQAddItems(Item ... items) {
+    public void eqAddItems(Item ... items) {
         for (Item item : items) {
             if (item.getType() != ItemType.MISC && item.getType() != ItemType.CONSUMABLE) {
 
@@ -34,7 +35,7 @@ public class Equipped {
                 }
 
             } else {
-                wrapper.outErr("This item is not equip able: " + item.getName());
+                wrapper.outErr("This item is not equip able: " + item.getName() + " because it is an: " + item.getType() + ".");
             }
         }
     }
@@ -67,10 +68,10 @@ public class Equipped {
         }
     }
 
-    public void EQRemoveItems(Game game, Item ... items) {
+    public void eqRemoveItems(Game game, Item ... items) throws NoFreeSpaceException {
         for (Item item : items) {
-            if (game.getPlayer().getBp().getBackpack().size() != game.getPlayer().getBp().getBACKPACK_SPACE()) {
-                game.getPlayer().getBp().getBackpack().add(item);
+            if (game.getPlayer().getBp().getBackpack().size() < game.getPlayer().getBp().getBACKPACK_SPACE()) {
+                game.getPlayer().getBp().bpAddItems(item);
                 equipped.remove(item);
             } else {
                 game.getCurrentLocation().addItems(item);
