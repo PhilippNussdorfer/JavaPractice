@@ -11,11 +11,11 @@ public class StringFormatting {
         return String.format("%1$-" + length + "s", strToFormat);
     }
 
-    private String getPrintableCollection(String[] strArr) {
+    public String getPrintableCollection(String[] strArr) {
         return String.join(", ", strArr);
     }
 
-    private String getPrintableCollection(List<String> strArr) {
+    public String getPrintableCollection(List<String> strArr) {
         return String.join(", ", strArr);
     }
 }

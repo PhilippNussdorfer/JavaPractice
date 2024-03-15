@@ -22,11 +22,11 @@ public class HelpAction extends AbAction {
         for (Action action : actions) {
             if (action instanceof DescriptionAction descAction) {
                 game.getWrapper().outPrintlnColored(formatter.formatStringLength(15, action.getName()) + " => " + formatter.formatStringLength(100 ,action.getDescription())
-                        + " | Commands => " + formatter.formatStringLength(30, getPrintableCollection(action.getPossibleCommands()))
-                        + " | Additions => " + formatter.formatStringLength(30, getPrintableCollection(descAction.getAdditionList())), TextColor.CYAN);
+                        + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(action.getPossibleCommands()))
+                        + " | Additions => " + formatter.formatStringLength(30, formatter.getPrintableCollection(descAction.getAdditionList())), TextColor.CYAN);
             } else {
                 game.getWrapper().outPrintlnColored(formatter.formatStringLength(15, action.getName()) + " => " + formatter.formatStringLength(100, action.getDescription())
-                        + " | Commands => " + formatter.formatStringLength(30, getPrintableCollection(action.getPossibleCommands())), TextColor.CYAN);
+                        + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(action.getPossibleCommands())), TextColor.CYAN);
             }
         }
         game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
