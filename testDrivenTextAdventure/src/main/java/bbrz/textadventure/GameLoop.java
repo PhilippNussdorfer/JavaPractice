@@ -4,6 +4,7 @@ import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import bbrz.textadventure.gameLoader.StaticGameLoader;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import jdk.jshell.spi.ExecutionControl;

@@ -51,13 +51,14 @@ class PlayerInfoActionTest {
         Mockito.when(equipped.getEQUIPPED_SPACE()).thenReturn(8);
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
         Mockito.when(player.getBoostedStats()).thenReturn(List.of(15, 20, 9));
+        Mockito.when(player.getActualHp()).thenReturn(10);
 
         action.execute("pi");
         Mockito.verify(wrapper, Mockito.times(2)).outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
         Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("""
                 You are: Hans
 
-                HP: 15
+                HP: 15/10
                 Armor: 20
                 Dmg: 9
 

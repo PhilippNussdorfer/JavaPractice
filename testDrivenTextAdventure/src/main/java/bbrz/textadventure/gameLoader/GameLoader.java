@@ -1,5 +1,6 @@
-package bbrz.textadventure;
+package bbrz.textadventure.gameLoader;
 
+import bbrz.textadventure.Game;
 import bbrz.textadventure.tools.OutputWrapper;
 
 import java.util.Scanner;

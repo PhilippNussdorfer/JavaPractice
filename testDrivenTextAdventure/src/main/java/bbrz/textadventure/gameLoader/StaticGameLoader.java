@@ -1,9 +1,11 @@
-package bbrz.textadventure;
+package bbrz.textadventure.gameLoader;
 
+import bbrz.textadventure.Game;
 import bbrz.textadventure.actions.*;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
+import bbrz.textadventure.gameLoader.GameLoader;
 import bbrz.textadventure.item.*;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.locatins.LocationPointer;
