@@ -10,7 +10,8 @@ public class LocationPointer {
     private Location target;
 
     public boolean isDirection(String direction) {
-        return direction.equals(this.direction);
+        char[] directionChars = direction.toLowerCase().toCharArray();
+        return this.direction.toCharArray()[0] == directionChars[0];
     }
 
 }
