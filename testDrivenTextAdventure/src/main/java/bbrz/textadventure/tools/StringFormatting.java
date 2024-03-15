@@ -1,12 +1,10 @@
 package bbrz.textadventure.tools;
 
 import bbrz.textadventure.item.Item;
-import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 public class StringFormatting {
 
     public String formatStringLength(int length, String strToFormat) {
