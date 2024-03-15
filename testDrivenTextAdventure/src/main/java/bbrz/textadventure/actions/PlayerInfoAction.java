@@ -10,7 +10,7 @@ public class PlayerInfoAction extends AbAction {
     private final StringFormatting formatter = new StringFormatting();
 
     public PlayerInfoAction(Game game, String ... possibleCommands) {
-        super(game, "Player info", "Shows information about the player and his equipment", possibleCommands);
+        super(game, "Player info", "Shows information about the player and his equipment <Command>", possibleCommands);
     }
 
     @Override
