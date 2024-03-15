@@ -3,18 +3,16 @@ package bbrz.textadventure;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
-import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
+import bbrz.textadventure.tools.StringFormatting;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 public class Game {
+    private final StringFormatting formatter = new StringFormatting();
     private final Player player;
     private Location currentLocation;
     private final OutputWrapper wrapper;
@@ -29,16 +27,12 @@ public class Game {
     }
 
     public void printLocationItems() {
-        wrapper.outPrintlnColored("\nThese are all items you can see: " + getPrintableStringFromItemList(currentLocation.getItems()) + "\n", TextColor.GREEN);
+        wrapper.outPrintlnColored("\nThese are all items you can see: " + formatter.getPrintableStringFromItemList(currentLocation.getItems()) + "\n", TextColor.GREEN);
     }
 
     public void printBPItems() {
-        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + getPrintableStringFromItemList(player.getBp().getBackpack()) + "\n" +
+        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + formatter.getPrintableStringFromItemList(player.getBp().getBackpack()) + "\n" +
                 "You have " + (player.getBp().getBACKPACK_SPACE() - player.getBp().getBackpack().size()) + " backpack slots free.\n", TextColor.GREEN);
-    }
-
-    private String getPrintableStringFromItemList(List<Item> items) {
-        return items.stream().map(Item::getName).collect(Collectors.joining(", "));
     }
 
     public void addInterpreter(Interpreter interpreter) {
