@@ -68,6 +68,7 @@ public class StaticGameLoader implements GameLoader {
         interpreter.addActions(new DropAction(game, "drop"));
         interpreter.addActions(new BackpackAction(game, "bp", "backpack"));
         interpreter.addActions(new PlayerInfoAction(game, "player-info", "p-info", "pi"));
+        interpreter.addActions(new EquipAction(game, "eq", "equip"));
 
         game.addInterpreter(interpreter);
         return game;
