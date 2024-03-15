@@ -1,7 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoItemFoundException;

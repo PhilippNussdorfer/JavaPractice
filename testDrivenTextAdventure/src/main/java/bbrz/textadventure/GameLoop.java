@@ -10,6 +10,8 @@ import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.item.*;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.locatins.LocationPointer;
+import bbrz.textadventure.tools.Interpreter;
+import bbrz.textadventure.tools.OutputWrapper;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.util.Scanner;

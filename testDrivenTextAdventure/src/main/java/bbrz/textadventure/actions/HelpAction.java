@@ -31,12 +31,4 @@ public class HelpAction extends AbAction {
         }
         game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
     }
-
-    private String getPrintableCollection(String[] strArr) {
-        return String.join(", ", strArr);
-    }
-
-    private String getPrintableCollection(List<String> strArr) {
-        return String.join(", ", strArr);
-    }
 }

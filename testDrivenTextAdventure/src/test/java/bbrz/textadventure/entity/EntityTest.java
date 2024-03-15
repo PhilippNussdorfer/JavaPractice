@@ -1,7 +1,7 @@
 package bbrz.textadventure.entity;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;

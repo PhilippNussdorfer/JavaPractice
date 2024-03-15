@@ -1,4 +1,4 @@
-package bbrz.textadventure;
+package bbrz.textadventure.tools;
 
 import bbrz.textadventure.colors.TextColor;
 

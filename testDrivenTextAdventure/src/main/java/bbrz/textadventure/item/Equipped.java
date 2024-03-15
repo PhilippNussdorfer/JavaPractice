@@ -1,7 +1,7 @@
 package bbrz.textadventure.item;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

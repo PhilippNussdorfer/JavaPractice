@@ -1,6 +1,6 @@
 package bbrz.textadventure.item;
 
-import bbrz.textadventure.OutputWrapper;
+import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,6 +4,7 @@ import bbrz.textadventure.actions.Action;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
+import bbrz.textadventure.tools.Interpreter;
 import jdk.jshell.spi.ExecutionControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
