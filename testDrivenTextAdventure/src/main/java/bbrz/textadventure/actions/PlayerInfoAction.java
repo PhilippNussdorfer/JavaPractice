@@ -1,0 +1,28 @@
+package bbrz.textadventure.actions;
+
+import bbrz.textadventure.Game;
+import bbrz.textadventure.colors.TextColor;
+import bbrz.textadventure.entity.Player;
+import bbrz.textadventure.tools.StringFormatting;
+
+public class PlayerInfoAction extends AbAction {
+
+    private final StringFormatting formatter = new StringFormatting();
+
+    public PlayerInfoAction(Game game, String ... possibleCommands) {
+        super(game, "Player info", "Shows information about the player and his equipment", possibleCommands);
+    }
+
+    @Override
+    public void execute(String... params) {
+        Player player = game.getPlayer();
+        var playerStats = player.getBoostedStats();
+
+        game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
+        game.getWrapper().outPrintlnColored("You are: " + player.getName() + "\n\n" +
+                "HP: " + playerStats.get(0) + "\nArmor: " + playerStats.get(1) + "\nDmg: " + playerStats.get(2) +
+                "\n\nYour equipment that you have equipped is:\n" + formatter.getPrintableStringFromItemList(player.getEquipped().getEquipped()) +
+                "\nYou have " + (player.getEquipped().getEQUIPPED_SPACE() - player.getEquipped().getEquipped().size()) + " equipment slots free.", TextColor.MAGENTA);
+        game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
+    }
+}
