@@ -1,27 +1,38 @@
 package bbrz.textadventure.entity;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
-import lombok.AllArgsConstructor;
+import bbrz.textadventure.tools.OutputWrapper;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 public abstract class Entity {
     private String name;
-    private int hp;
+    private final int hp;
+    private int actualHp;
     private int armor;
     private int dmg;
     private final OutputWrapper wrapper;
     private final AttackCalc attackCalc;
     private final Backpack bp;
     private final Equipped equipped;
+
+    public Entity(String name, int hp, int armor, int dmg, OutputWrapper wrapper, AttackCalc attackCalc, Backpack bp, Equipped equipped) {
+        this.name = name;
+        this.hp = hp;
+        this.actualHp = hp;
+        this.armor = armor;
+        this.dmg = dmg;
+        this.wrapper = wrapper;
+        this.attackCalc = attackCalc;
+        this.bp = bp;
+        this.equipped = equipped;
+    }
 
     public void bpAdd(Item ... items) throws NoFreeSpaceException {
         bp.bpAddItems(items);
@@ -44,7 +55,7 @@ public abstract class Entity {
     }
 
     public void attacked(int dmgTaken) {
-        this.hp -= attackCalc.getsAttacked(dmgTaken, this.armor);
+        this.actualHp -= attackCalc.getsAttacked(dmgTaken, this.armor);
     }
 
     public List<Integer> getBoostedStats() {
