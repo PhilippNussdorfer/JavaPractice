@@ -48,7 +48,8 @@ class HelpActionTest {
         Mockito.when(secAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
         
         action.execute("h");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name => description Commands: Commands Additions: addition", TextColor.CYAN);
+        Mockito.verify(wrapper, Mockito.times(2)).outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ", TextColor.CYAN);
     }
 
     @Test
@@ -63,7 +64,7 @@ class HelpActionTest {
         Mockito.when(thirdAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
 
         action.execute("h");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name => description Commands: Commands", TextColor.CYAN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                      ", TextColor.CYAN);
     }
 
     @Test
@@ -83,8 +84,8 @@ class HelpActionTest {
         Mockito.when(secAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
 
         action.execute("h");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name => description Commands: Commands", TextColor.CYAN);
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name => description Commands: Commands Additions: addition", TextColor.CYAN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                      ", TextColor.CYAN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ", TextColor.CYAN);
     }
 
     @Test

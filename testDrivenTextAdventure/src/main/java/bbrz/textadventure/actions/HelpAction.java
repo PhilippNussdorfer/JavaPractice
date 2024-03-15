@@ -19,7 +19,7 @@ public class HelpAction extends AbAction {
     public void execute(String... params) {
         var actions = game.getInterpreter().getActionList();
 
-        System.out.println("=".repeat(210));
+        game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
         for (Action action : actions) {
             if (action instanceof DescriptionAction descAction) {
                 game.getWrapper().outPrintlnColored(formatStringLength(15, action.getName()) + " => " + formatStringLength(100 ,action.getDescription())
@@ -30,7 +30,7 @@ public class HelpAction extends AbAction {
                         + " | Commands => " + formatStringLength(30, getPrintableCollection(action.getPossibleCommands())), TextColor.CYAN);
             }
         }
-        System.out.println("=".repeat(210));
+        game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
     }
 
     private String getPrintableCollection(String[] strArr) {

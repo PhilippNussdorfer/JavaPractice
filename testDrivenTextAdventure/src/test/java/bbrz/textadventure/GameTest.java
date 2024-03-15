@@ -107,7 +107,7 @@ class GameTest {
         Mockito.when(item.getName()).thenReturn("name");
 
         game.printBPItems();
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items in your Backpack: name\n", TextColor.GREEN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items in your Backpack: name\nYou have -1 backpack slots free.\n", TextColor.GREEN);
     }
 
     @Test
@@ -118,6 +118,6 @@ class GameTest {
         Mockito.when(secItem.getName()).thenReturn("secName");
 
         game.printBPItems();
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items in your Backpack: name, secName\n", TextColor.GREEN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items in your Backpack: name, secName\nYou have -2 backpack slots free.\n", TextColor.GREEN);
     }
 }
