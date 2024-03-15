@@ -24,10 +24,6 @@ public class Bookmark_App extends Application {
     private final int popupHeight = 120;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
 
-    /*public static void main(String[] args) {
-        launch(args);
-    }*/
-
     public void launch_app() {
         launch();
     }
