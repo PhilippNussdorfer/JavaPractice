@@ -42,8 +42,8 @@ public abstract class Entity {
         bp.bpRemoveItems(items);
     }
 
-    public void addEquipment(Item ... items) {
-        equipped.eqAddItems(items);
+    public void addEquipment(Item item) {
+        equipped.eqAddItems(item);
     }
 
     public void dropEquipment(Game game, Item ... items) throws NoFreeSpaceException {

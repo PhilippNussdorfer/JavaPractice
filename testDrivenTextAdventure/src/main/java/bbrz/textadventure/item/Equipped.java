@@ -18,26 +18,27 @@ public class Equipped {
     @Getter
     private final int EQUIPPED_SPACE = 8;
 
-    public void eqAddItems(Item ... items) {
-        for (Item item : items) {
-            if (item.getType() != ItemType.MISC && item.getType() != ItemType.CONSUMABLE) {
+    public boolean eqAddItems(Item item) {
+        if (item.getType() != ItemType.MISC && item.getType() != ItemType.CONSUMABLE) {
 
-                if (equipped.isEmpty()) {
-                    equipped.add(item);
-                }
-
-                else if (isNotAlreadyEquippedOrListIsFull(item)) {
-                    equipped.add(item);
-                }
-
-                else {
-                    wrapper.outErr("The equipped item slots are already full or such an item is already equipped!");
-                }
-
-            } else {
-                wrapper.outErr("This item is not equip able: " + item.getName() + " because it is an: " + item.getType() + ".");
+            if (equipped.isEmpty()) {
+                equipped.add(item);
             }
+
+            else if (isNotAlreadyEquippedOrListIsFull(item)) {
+                equipped.add(item);
+            }
+
+            else {
+                wrapper.outErr("The equipped item slots are already full or such an item is already equipped!");
+                return false;
+            }
+
+        } else {
+            wrapper.outErr("This item is not equip able: " + item.getName() + " because it is an: " + item.getType() + ".");
+            return false;
         }
+        return true;
     }
 
     private boolean isNotAlreadyEquippedOrListIsFull(Item item) {

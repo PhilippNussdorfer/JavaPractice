@@ -72,7 +72,9 @@ class EquippedTest {
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
         Mockito.when(secItem.getType()).thenReturn(ItemType.ARTIFACT);
         Mockito.when(thirdItem.getType()).thenReturn(ItemType.ARTIFACT);
-        equipped.eqAddItems(item, secItem, thirdItem);
+        equipped.eqAddItems(secItem);
+        equipped.eqAddItems(thirdItem);
+        equipped.eqAddItems(item);
 
         assertEquals(3, equipped.getEquipped().size());
         assertTrue(equipped.getEquipped().contains(item));
@@ -83,7 +85,8 @@ class EquippedTest {
     @Test
     void tryToEquipMultipleOfSameType() {
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
-        equipped.eqAddItems(item, item);
+        equipped.eqAddItems(item);
+        equipped.eqAddItems(item);
 
         assertTrue(equipped.getEquipped().contains(item));
         assertEquals(1, equipped.getEquipped().size());
@@ -93,7 +96,9 @@ class EquippedTest {
     @Test
     void tryToEquipMoreThanTwoArtifacts() {
         Mockito.when(item.getType()).thenReturn(ItemType.ARTIFACT);
-        equipped.eqAddItems(item, item, item);
+        equipped.eqAddItems(item);
+        equipped.eqAddItems(item);
+        equipped.eqAddItems(item);
 
         assertTrue(equipped.getEquipped().contains(item));
         assertEquals(2, equipped.getEquipped().size());
@@ -112,7 +117,16 @@ class EquippedTest {
         Mockito.when(item8.getType()).thenReturn(ItemType.HELMET);
         Mockito.when(item9.getType()).thenReturn(ItemType.ARMORED_PANTS);
 
-        equipped.eqAddItems(item, secItem, thirdItem, item4, item5, item6, item7, item8, item9);
+        equipped.eqAddItems(item);
+        equipped.eqAddItems(secItem);
+        equipped.eqAddItems(thirdItem);
+        equipped.eqAddItems(item4);
+        equipped.eqAddItems(item5);
+        equipped.eqAddItems(item6);
+        equipped.eqAddItems(item7);
+        equipped.eqAddItems(item8);
+        equipped.eqAddItems(item9);
+
         Mockito.verify(wrapper, Mockito.times(1)).outErr("The equipped item slots are already full or such an item is already equipped!");
     }
 

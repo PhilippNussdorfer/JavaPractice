@@ -77,10 +77,12 @@ class EntityTest {
 
     @Test
     void removeMultipleItemsFromEquipped() throws NoFreeSpaceException {
-        entity.addEquipment(item, secItem);
+        entity.addEquipment(item);
+        entity.addEquipment(secItem);
         entity.dropEquipment(game, item, secItem);
 
-        Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item, secItem);
+        Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item);
+        Mockito.verify(equipped, Mockito.times(1)).eqAddItems(secItem);
         Mockito.verify(equipped, Mockito.times(1)).eqRemoveItems(game, item, secItem);
     }
 
