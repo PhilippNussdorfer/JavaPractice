@@ -31,7 +31,8 @@ public class Game {
     }
 
     public void printBPItems() {
-        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + getPrintableStringFromItemList(player.getBp().getBackpack()) + "\n", TextColor.GREEN);
+        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + getPrintableStringFromItemList(player.getBp().getBackpack()) + "\n" +
+                "You have " + (player.getBp().getBACKPACK_SPACE() - player.getBp().getBackpack().size()) + " backpack slots free.\n", TextColor.GREEN);
     }
 
     private String getPrintableStringFromItemList(List<Item> items) {
