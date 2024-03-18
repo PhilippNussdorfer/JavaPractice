@@ -1,15 +1,12 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.actions.*;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.gameLoader.GameLoader;
 import bbrz.textadventure.item.*;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.locatins.LocationPointer;
-import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 
 import java.util.Scanner;
@@ -58,19 +55,8 @@ public class StaticGameLoader implements GameLoader {
         String name = scanner.nextLine();
 
         Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), cottage, wrapper);
+        game.addInterpreter(InterpreterInit.init(game, wrapper));
 
-        Interpreter interpreter = new Interpreter();
-        interpreter.addActions(new HelpAction(game, "h", "help"));
-        interpreter.addActions(new MoveAction(game, "west", "north", "east", "south", "n", "s", "w", "e"));
-        interpreter.addActions(new ExitAction(game, "ex", "x", "exit"));
-        interpreter.addActions(new DescriptionAction(game, wrapper, "d", "desc", "describe"));
-        interpreter.addActions(new PickUpAction(game, "pickup", "pick"));
-        interpreter.addActions(new DropAction(game, "drop"));
-        interpreter.addActions(new BackpackAction(game, "bp", "backpack"));
-        interpreter.addActions(new PlayerInfoAction(game, "player-info", "p-info", "pi"));
-        interpreter.addActions(new EquipAction(game, "eq", "equip"));
-
-        game.addInterpreter(interpreter);
         return game;
     }
 }
