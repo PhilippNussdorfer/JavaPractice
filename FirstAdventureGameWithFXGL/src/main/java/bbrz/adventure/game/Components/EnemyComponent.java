@@ -9,10 +9,10 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import javafx.geometry.Point2D;
 import javafx.util.Duration;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -71,8 +71,7 @@ public class EnemyComponent extends Component {
 
         if (!isEvading) {
             if (entity.distanceBBox(getPlayer()) <= maxRange && entity.distanceBBox(getPlayer()) > minRange) {
-                var playerPosition = getPlayer().getPosition();
-                moveTowards(playerPosition);
+                moveTowards(getPlayer());
             } else {
                 stopMoving();
             }
@@ -85,46 +84,48 @@ public class EnemyComponent extends Component {
         getPhysicsComponent().setVelocityY(0);
     }
 
-    private void moveTowards(Point2D targetPosition) {
-        double dx = targetPosition.getX() - entity.getX();
-        double dy = targetPosition.getY() - entity.getY();
+    private void moveTowards(Entity target) {
+        double angle = getAngle(target, entity);
+        move(angle);
+    }
 
-        double angle = Math.atan2(dy, dx);
+    private double getAngle(Entity first, Entity second) {
+        double dx = first.getX() - second.getX();
+        double dy = first.getY() - second.getY();
 
+        return Math.atan2(dy, dx);
+    }
+
+    private void move(double angle) {
         getPhysicsComponent().setVelocityX(speed * Math.cos(angle));
         getPhysicsComponent().setVelocityY(speed * Math.sin(angle));
         getAnimationComponent().move();
     }
 
-    private boolean evadeEntity(Entity entityToEvade) {
-        if (entityToEvade != null) {
-            Point2D entityToEvadePos = entityToEvade.getPosition();
-            Point2D selfPos = entity.getPosition();
+    private void moveAround() {
 
-            double dx = selfPos.getX() + entityToEvadePos.getX();
-            double dy = selfPos.getY() + entityToEvadePos.getY();
-            double angle = Math.atan2(dy, dx) + Math.PI;
-
-            if (entity.distanceBBox(entityToEvade) < 20) {
-                getPhysicsComponent().setVelocityX(speed * Math.cos(angle));
-                getPhysicsComponent().setVelocityY(speed * Math.sin(angle));
-                getAnimationComponent().move();
-            }
-        }
-
-        return entityToEvade == null;
     }
 
-    private Entity getEntityThatIsToClose(int distance) {
+    private boolean evadeEntity(List<Entity> entitysToEvade) {
+        if (entitysToEvade != null) {
+
+        }
+
+        return !(entitysToEvade == null);
+    }
+
+    private List<Entity> getEntityThatIsToClose(int distance) {
         List<Entity> entitys = getGameWorld().getEntities();
+        List<Entity> entitysToClose = new ArrayList<>();
+
         for (Entity entity : entitys) {
             if (entity != this.entity && entity != getPlayer()) {
                 if (this.entity.distanceBBox(entity) < distance && entity.getType() != EntityType.ITEM_BAG) {
-                    return entity;
+                    entitysToClose.add(entity);
                 }
             }
         }
-        return null;
+        return entitysToClose;
     }
 
     public void respawn() {
