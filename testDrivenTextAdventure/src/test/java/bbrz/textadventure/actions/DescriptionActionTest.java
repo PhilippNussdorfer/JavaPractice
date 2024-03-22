@@ -2,6 +2,8 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.item.ItemStats;
+import bbrz.textadventure.item.ItemType;
 import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
@@ -39,6 +41,8 @@ class DescriptionActionTest {
     Player player;
     @Mock
     Backpack bp;
+    @Mock
+    ItemStats itemStats;
 
     @BeforeEach
     void beforeEach() {
@@ -82,9 +86,12 @@ class DescriptionActionTest {
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
         Mockito.when(item.getDescription()).thenReturn("Hello World");
+        Mockito.when(item.getStats()).thenReturn(itemStats);
+        Mockito.when(itemStats.getItemStats()).thenReturn(List.of(0, 0, 0));
+        Mockito.when(item.getType()).thenReturn(ItemType.CONSUMABLE);
 
-        action.execute("d", "Item", "Candle");
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Hello World", TextColor.DARK_BROWN);
+        action.execute("d", "ItemName", "Candle");
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Hello World, it is a: CONSUMABLE, bonus stats Hp: 0, Armor: 0, Dmg: 0", TextColor.DARK_BROWN);
     }
 
     @Test
@@ -96,7 +103,7 @@ class DescriptionActionTest {
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
 
-        assertThrows(NoItemFoundException.class, () -> action.execute("d", "item", "name"));
+        assertThrows(NoItemFoundException.class, () -> action.execute("d", "itemName", "name"));
     }
 
     @Test
