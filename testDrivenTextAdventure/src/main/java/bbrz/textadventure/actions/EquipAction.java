@@ -4,6 +4,8 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.item.Item;
 
+import java.util.Iterator;
+
 public class EquipAction extends AbAction {
     public EquipAction(Game game, String ... possibleCommands) {
         super(game, "Equip" , "Equips an item if the slot for the item type is free <Command> <Item Name>", possibleCommands);
@@ -25,11 +27,14 @@ public class EquipAction extends AbAction {
             }
         }
 
-        for (Item item : game.getCurrentLocation().getItems()) {
+        Iterator<Item> iterator = game.getCurrentLocation().getItems().iterator();
+
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
             if (item.getName().equalsIgnoreCase(params[1])) {
                 var res = game.getPlayer().getEquipped().eqAddItems(item);
                 if (res) {
-                    game.getCurrentLocation().removeItems(item);
+                    iterator.remove();
                 }
             }
         }
