@@ -19,13 +19,13 @@ public class StaticGameLoader implements GameLoader {
         Item oldIronHelmet = Item.builder().name("Old Iron Helmet").description("It's olb butt still protects.").value(15).stats(new ItemStats(3, 5, 0)).type(ItemType.HELMET).build();
         Item oldBronzeSword = Item.builder().name("Old Bronze Sword").description("when sharpened and repaired than it cold be like new").value(11).type(ItemType.WEAPON).stats(new ItemStats(0, 0, 3)).build();
 
-        Location cottage = new Location("Cottage", "It's a small cottage where you can hear the wind howling through the cracks in the old windows and a small fireplace in the middle of the room where a fire is lit.");
-        Location well = new Location("Well", "A Well with clear Water.");
-        Location woods = new Location("Woods", "This dark and eerie where you can here the howling of the wind and owls through this dark night.");
-        Location clearing = new Location("Clearing", "A small clearing in the woods with a big rock in the middle surrounded with firefly's");
-        Location cliff = new Location("Cliff", "On top on the cliff, when you look down you can see the beach and the sea where the moon reflects.");
-        Location beach = new Location("Beach", "On this sand beach where the sea slowly caresses the beach.");
-        Location lake = new Location("Lake", "It's a small lake separated from the sea and where the clear blue water that reflects the moon.");
+        Location cottage = new Location("Cottage", "It's a small cottage where you can hear the wind howling through the cracks in the old windows and a small fireplace in the middle of the room where a fire is lit.",MapRuleMark.STARTING_LOCATION);
+        Location well = new Location("Well", "A Well with clear Water.", MapRuleMark.WELL);
+        Location woods = new Location("Woods", "This dark and eerie where you can here the howling of the wind and owls through this dark night.", MapRuleMark.WOODS);
+        Location clearing = new Location("Clearing", "A small clearing in the woods with a big rock in the middle surrounded with firefly's", MapRuleMark.CLEARING);
+        Location cliff = new Location("Cliff", "On top on the cliff, when you look down you can see the beach and the sea where the moon reflects.", MapRuleMark.CLIFF);
+        Location beach = new Location("Beach", "On this sand beach where the sea slowly caresses the beach.", MapRuleMark.BEACH);
+        Location lake = new Location("Lake", "It's a small lake separated from the sea and where the clear blue water that reflects the moon.", MapRuleMark.LAKE);
 
         cottage.addItems(candle, matches);
         cottage.addPointers(new LocationPointer("s", well));
