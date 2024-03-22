@@ -1,14 +1,16 @@
 package bbrz.textadventure.gameLoader;
 
 public enum MapRuleMark {
-    Woods,
-    Lake,
-    Beach,
-    Clearing,
-    Sea,
-    EdgeOfTheForest,
-    Meadow,
-    Swamp,
-    EdgeOfTheSwamp,
-    Well
+    WOODS,
+    LAKE,
+    BEACH,
+    CLEARING,
+    SEA,
+    EDGE_OF_THE_FOREST,
+    MEADOW,
+    SWAMP,
+    EDGE_OF_THE_SWAP,
+    WELL,
+    CLIFF,
+    STARTING_LOCATION
 }
