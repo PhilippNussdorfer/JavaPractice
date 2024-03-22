@@ -63,8 +63,8 @@ class EquippedTest {
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
         equipped.eqAddItems(item);
 
-        assertTrue(equipped.getEquipped().contains(item));
-        assertEquals(1, equipped.getEquipped().size());
+        assertTrue(equipped.getEquippedList().contains(item));
+        assertEquals(1, equipped.getEquippedList().size());
     }
 
     @Test
@@ -76,10 +76,10 @@ class EquippedTest {
         equipped.eqAddItems(thirdItem);
         equipped.eqAddItems(item);
 
-        assertEquals(3, equipped.getEquipped().size());
-        assertTrue(equipped.getEquipped().contains(item));
-        assertTrue(equipped.getEquipped().contains(secItem));
-        assertTrue(equipped.getEquipped().contains(thirdItem));
+        assertEquals(3, equipped.getEquippedList().size());
+        assertTrue(equipped.getEquippedList().contains(item));
+        assertTrue(equipped.getEquippedList().contains(secItem));
+        assertTrue(equipped.getEquippedList().contains(thirdItem));
     }
 
     @Test
@@ -88,8 +88,8 @@ class EquippedTest {
         equipped.eqAddItems(item);
         equipped.eqAddItems(item);
 
-        assertTrue(equipped.getEquipped().contains(item));
-        assertEquals(1, equipped.getEquipped().size());
+        assertTrue(equipped.getEquippedList().contains(item));
+        assertEquals(1, equipped.getEquippedList().size());
         Mockito.verify(wrapper, Mockito.times(1)).outErr("The equipped item slots are already full or such an item is already equipped!");
     }
 
@@ -100,8 +100,8 @@ class EquippedTest {
         equipped.eqAddItems(item);
         equipped.eqAddItems(item);
 
-        assertTrue(equipped.getEquipped().contains(item));
-        assertEquals(2, equipped.getEquipped().size());
+        assertTrue(equipped.getEquippedList().contains(item));
+        assertEquals(2, equipped.getEquippedList().size());
         Mockito.verify(wrapper, Mockito.times(1)).outErr("The equipped item slots are already full or such an item is already equipped!");
     }
 
@@ -148,10 +148,10 @@ class EquippedTest {
         Mockito.when(list.size()).thenReturn(0);
 
         equipped.eqAddItems(item);
-        assertEquals(1, equipped.getEquipped().size());
+        assertEquals(1, equipped.getEquippedList().size());
 
         equipped.eqRemoveItems(game, item);
-        assertEquals(0, equipped.getEquipped().size());
+        assertEquals(0, equipped.getEquippedList().size());
         Mockito.verify(backpack, Mockito.times(1)).bpAddItems(item);
     }
 

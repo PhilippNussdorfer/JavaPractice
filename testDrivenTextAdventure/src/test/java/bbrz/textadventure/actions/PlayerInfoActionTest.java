@@ -45,7 +45,7 @@ class PlayerInfoActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(player.getName()).thenReturn("Hans");
         Mockito.when(player.getEquipped()).thenReturn(equipped);
-        Mockito.when(equipped.getEquipped()).thenReturn(List.of(item, secItem));
+        Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item, secItem));
         Mockito.when(item.getName()).thenReturn("Iron Helmet");
         Mockito.when(secItem.getName()).thenReturn("Rusty old Sword");
         Mockito.when(equipped.getEQUIPPED_SPACE()).thenReturn(8);

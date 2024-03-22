@@ -59,7 +59,7 @@ public abstract class Entity {
     }
 
     public List<Integer> getBoostedStats() {
-        List<Item> equippedItems = equipped.getEquipped();
+        List<Item> equippedItems = equipped.getEquippedList();
         int hp = this.hp;
         int armor = this.armor;
         int dmg = this.dmg;

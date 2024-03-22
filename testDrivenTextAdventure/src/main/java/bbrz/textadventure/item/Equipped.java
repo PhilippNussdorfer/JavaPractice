@@ -14,19 +14,19 @@ public class Equipped {
 
     private final OutputWrapper wrapper;
     @Getter
-    private final List<Item> equipped = new ArrayList<>();
+    private final List<Item> equippedList = new ArrayList<>();
     @Getter
     private final int EQUIPPED_SPACE = 8;
 
     public boolean eqAddItems(Item item) {
         if (item.getType() != ItemType.MISC && item.getType() != ItemType.CONSUMABLE) {
 
-            if (equipped.isEmpty()) {
-                equipped.add(item);
+            if (equippedList.isEmpty()) {
+                equippedList.add(item);
             }
 
             else if (isNotAlreadyEquippedOrListIsFull(item)) {
-                equipped.add(item);
+                equippedList.add(item);
             }
 
             else {
@@ -44,10 +44,10 @@ public class Equipped {
     private boolean isNotAlreadyEquippedOrListIsFull(Item item) {
         int artifactCount = 0;
 
-        if (equipped.size() == EQUIPPED_SPACE) {
+        if (equippedList.size() == EQUIPPED_SPACE) {
             return false;
         } else {
-            for (Item equippedItem : equipped) {
+            for (Item equippedItem : equippedList) {
                 if (item.getType() == ItemType.ARTIFACT) {
 
                     if (equippedItem.getType() == item.getType()) {
@@ -73,10 +73,10 @@ public class Equipped {
         for (Item item : items) {
             if (game.getPlayer().getBp().getBackpack().size() < game.getPlayer().getBp().getBACKPACK_SPACE()) {
                 game.getPlayer().getBp().bpAddItems(item);
-                equipped.remove(item);
+                equippedList.remove(item);
             } else {
                 game.getCurrentLocation().addItems(item);
-                equipped.remove(item);
+                equippedList.remove(item);
             }
         }
     }

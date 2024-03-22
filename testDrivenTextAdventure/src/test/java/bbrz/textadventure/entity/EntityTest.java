@@ -150,7 +150,7 @@ class EntityTest {
 
     @Test
     void getBoostedStatsWithEquipment() {
-        Mockito.when(equipped.getEquipped()).thenReturn(List.of(item));
+        Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item));
         Mockito.when(item.getStats()).thenReturn(itemStats);
         Mockito.when(itemStats.getItemStats()).thenReturn(List.of(2, 3, 1));
         var list = entity.getBoostedStats();
@@ -162,7 +162,7 @@ class EntityTest {
 
     @Test
     void getBoostedStatsWithMultipleItemsEquipped() {
-        Mockito.when(equipped.getEquipped()).thenReturn(List.of(item, secItem, thirdItem));
+        Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item, secItem, thirdItem));
         Mockito.when(item.getStats()).thenReturn(itemStats);
         Mockito.when(secItem.getStats()).thenReturn(secItemStats);
         Mockito.when(thirdItem.getStats()).thenReturn(thirdItemStats);
