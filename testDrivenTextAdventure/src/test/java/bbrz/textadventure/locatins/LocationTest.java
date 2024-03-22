@@ -1,6 +1,7 @@
 package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.gameLoader.MapRuleMark;
 import bbrz.textadventure.item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,8 @@ class LocationTest {
 
     @BeforeEach
     void setUp() {
-        location = new Location("startRoom", "description");
-        secLocation = new Location("secRoom", "description");
+        location = new Location("startRoom", "description", MapRuleMark.LAKE);
+        secLocation = new Location("secRoom", "description", MapRuleMark.BEACH);
 
         location.addPointers(pointer);
         secLocation.addPointers(secPointer);
