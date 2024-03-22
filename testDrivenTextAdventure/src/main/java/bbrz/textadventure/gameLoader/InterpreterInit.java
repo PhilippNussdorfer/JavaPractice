@@ -19,6 +19,8 @@ public class InterpreterInit {
         interpreter.addActions(new BackpackAction(game, "bp", "backpack"));
         interpreter.addActions(new PlayerInfoAction(game, "player-info", "p-info", "pi"));
         interpreter.addActions(new EquipAction(game, "eq", "equip"));
+        interpreter.addActions(new DropEquipmentAction(game, "de", "drop-equipment", "drop-eq"));
+        interpreter.addActions(new SwapEquipmentAction(game, "swap", "swap-eq", "swap-equipment"));
 
         return interpreter;
     }
