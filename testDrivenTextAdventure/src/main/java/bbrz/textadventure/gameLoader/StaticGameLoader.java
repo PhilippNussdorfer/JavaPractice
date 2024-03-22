@@ -16,8 +16,8 @@ public class StaticGameLoader implements GameLoader {
     public Game initGame(OutputWrapper wrapper, Scanner scanner) {
         Item candle = Item.builder().type(ItemType.CONSUMABLE).description("When lit the world around you will be illuminated").stats(new ItemStats()).name("Candle").value(10).build();
         Item matches = Item.builder().name("Matches").description("Can start a fire.").value(6).stats(new ItemStats()).type(ItemType.CONSUMABLE).build();
-        Item oldIronHelmet = Item.builder().name("Old Iron Helmet").description("It's olb butt still protects.").value(15).stats(new ItemStats(3, 5, 0)).type(ItemType.HELMET).build();
-        Item oldBronzeSword = Item.builder().name("Old Bronze Sword").description("when sharpened and repaired than it cold be like new").value(11).type(ItemType.WEAPON).stats(new ItemStats(0, 0, 3)).build();
+        Item oldIronHelmet = Item.builder().name("Old-Iron-Helmet").description("It's olb butt still protects.").value(15).stats(new ItemStats(3, 5, 0)).type(ItemType.HELMET).build();
+        Item oldBronzeSword = Item.builder().name("Old-Bronze-Sword").description("when sharpened and repaired than it cold be like new").value(11).type(ItemType.WEAPON).stats(new ItemStats(0, 0, 3)).build();
 
         Location cottage = new Location("Cottage", "It's a small cottage where you can hear the wind howling through the cracks in the old windows and a small fireplace in the middle of the room where a fire is lit.",MapRuleMark.STARTING_LOCATION);
         Location well = new Location("Well", "A Well with clear Water.", MapRuleMark.WELL);
