@@ -47,8 +47,11 @@ class EquipActionTest {
 
     @Test
     void executeWithSingleItemFromLocation() throws CommandNotFoundException {
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
-        Mockito.when(location.getItems()).thenReturn(List.of(item));
+        Mockito.when(location.getItems()).thenReturn(items);
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(player.getEquipped()).thenReturn(equipped);
         Mockito.when(item.getName()).thenReturn("name");
@@ -58,13 +61,16 @@ class EquipActionTest {
 
         action.execute("eq", "name");
         Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item);
-        Mockito.verify(location, Mockito.times(1)).removeItems(item);
+        assertEquals(0, items.size());
     }
 
     @Test
     void executeWithSingleItemFromLocationAndGetsNotAdded() throws CommandNotFoundException {
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
-        Mockito.when(location.getItems()).thenReturn(List.of(item));
+        Mockito.when(location.getItems()).thenReturn(items);
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(player.getEquipped()).thenReturn(equipped);
         Mockito.when(item.getName()).thenReturn("name");
@@ -74,16 +80,20 @@ class EquipActionTest {
 
         action.execute("eq", "name");
         Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item);
-        Mockito.verify(location, Mockito.times(0)).removeItems(item);
+        assertEquals(1, items.size());
     }
 
     @Test
     void executeWithSingleItemFromBackpack() throws CommandNotFoundException {
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+        items.add(secItem);
+
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(player.getEquipped()).thenReturn(equipped);
         Mockito.when(item.getName()).thenReturn("name");
         Mockito.when(player.getBp()).thenReturn(bp);
-        Mockito.when(bp.getBackpack()).thenReturn(List.of(item, secItem));
+        Mockito.when(bp.getBackpack()).thenReturn(items);
         Mockito.when(secItem.getName()).thenReturn("no");
         Mockito.when(equipped.eqAddItems(secItem)).thenReturn(true);
 
