@@ -10,6 +10,8 @@ import bbrz.textadventure.tools.StringFormatting;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 public class Game {
     private final StringFormatting formatter = new StringFormatting();
@@ -17,6 +19,7 @@ public class Game {
     private Location currentLocation;
     private final OutputWrapper wrapper;
     private Interpreter interpreter;
+    private List<List<Location>> gameMap;
     @Setter
     private boolean loopGame = true;
 
@@ -24,6 +27,14 @@ public class Game {
         this.player = player;
         this.currentLocation = currentLocation;
         this.wrapper = wrapper;
+        this.gameMap = null;
+    }
+
+    public Game(Player player, Location currentLocation, OutputWrapper wrapper, List<List<Location>> gameMap) {
+        this.player = player;
+        this.currentLocation = currentLocation;
+        this.wrapper = wrapper;
+        this.gameMap = gameMap;
     }
 
     public void printLocationItems() {
