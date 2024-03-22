@@ -9,6 +9,7 @@ import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.tools.OutputWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,7 +34,12 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
         String name = scanner.nextLine();
 
-        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), locations.get(0), wrapper);
+        List<Location> initialList = new ArrayList<>();
+        initialList.add(initLocations().get(0));
+        List<List<Location>> gameMap = new ArrayList<>();
+        gameMap.add(initialList);
+
+        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), locations.get(0), wrapper, gameMap);
         game.addInterpreter(InterpreterInit.init(game, wrapper));
 
         return game;
