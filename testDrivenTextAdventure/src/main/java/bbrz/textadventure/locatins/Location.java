@@ -1,6 +1,7 @@
 package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.gameLoader.MapRuleMark;
 import bbrz.textadventure.item.Item;
 import lombok.Getter;
 
@@ -13,13 +14,16 @@ public class Location {
     private final String name;
     @Getter
     private final String description;
+    @Getter
+    private final MapRuleMark mark;
     private final List<LocationPointer> pointers = new ArrayList<>();
     @Getter
     private final List<Item> items = new ArrayList<>();
 
-    public Location(String name, String description) {
+    public Location(String name, String description, MapRuleMark mark) {
         this.name = name;
         this.description = description;
+        this.mark = mark;
     }
 
     public Location getRoom(String direction) throws RoomNotFoundException {
