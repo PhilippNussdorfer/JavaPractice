@@ -10,8 +10,8 @@ import java.util.List;
 public class SwapEquipmentAction extends AbAction {
 
     public SwapEquipmentAction(Game game, String ... possibleCommands) {
-        super(game, "Swap Equipment", "Swaps the equipped item with an item you want to equip make sure they are from te same type " +
-                "<Command> <Equipped Item Name> <Item Name of new Equipment>", possibleCommands);
+        super(game, "Swap Equipment", "Swaps the equipped item with an item you want to equip make sure they are from te same type\n" +
+                " ".repeat(19) + "<Command> <Equipped Item Name> <Item Name of new Equipment>" + " ".repeat(41), possibleCommands);
     }
 
     @Override
