@@ -25,4 +25,10 @@ public class PlayerInfoAction extends AbAction {
                 "\nYou have " + (player.getEquipped().getEQUIPPED_SPACE() - player.getEquipped().getEquippedList().size()) + " equipment slots free.", TextColor.MAGENTA);
         game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
     }
+
+    @Override
+    public String helpMessage() {
+        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
+                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
+    }
 }

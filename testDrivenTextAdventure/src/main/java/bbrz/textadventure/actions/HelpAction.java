@@ -4,8 +4,6 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.tools.StringFormatting;
 
-import java.util.List;
-
 public class HelpAction extends AbAction {
 
     private final StringFormatting formatter = new StringFormatting();
@@ -16,19 +14,16 @@ public class HelpAction extends AbAction {
 
     @Override
     public void execute(String... params) {
-        var actions = game.getInterpreter().getActionList();
-
         game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
-        for (Action action : actions) {
-            if (action instanceof DescriptionAction descAction) {
-                game.getWrapper().outPrintlnColored(formatter.formatStringLength(15, action.getName()) + " => " + formatter.formatStringLength(100 ,action.getDescription())
-                        + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(action.getPossibleCommands()))
-                        + " | Additions => " + formatter.formatStringLength(30, formatter.getPrintableCollection(descAction.getAdditionList())), TextColor.CYAN);
-            } else {
-                game.getWrapper().outPrintlnColored(formatter.formatStringLength(15, action.getName()) + " => " + formatter.formatStringLength(100, action.getDescription())
-                        + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(action.getPossibleCommands())), TextColor.CYAN);
-            }
+        for (Action action : game.getInterpreter().getActionList()) {
+            game.getWrapper().outPrintlnColored(action.helpMessage(), TextColor.CYAN);
         }
-        game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
+        game.getWrapper().outPrintlnColored("=".repeat(210) + "\n", TextColor.DARK_BROWN);
+    }
+
+    @Override
+    public String helpMessage() {
+        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
+                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
     }
 }

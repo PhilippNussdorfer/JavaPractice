@@ -16,17 +16,26 @@ public class EquipAction extends AbAction {
         if (params.length < 2) {
             throw new CommandNotFoundException("The item name is missing!");
         }
+        if (goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(params)) {
+            return;
+        }
+        IterateOverCurrentLocationItemsAddToPlayerEquipmentAndRemoveFromList(params);
+    }
 
+    private boolean goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(String[] params) {
         for (Item item : game.getPlayer().getBp().getBackpack()) {
             if (item.getName().equalsIgnoreCase(params[1])) {
                 var res = game.getPlayer().getEquipped().eqAddItems(item);
                 if (res) {
                     game.getPlayer().getBp().bpRemoveItems(item);
+                    return true;
                 }
-                return;
             }
         }
+        return false;
+    }
 
+    private void IterateOverCurrentLocationItemsAddToPlayerEquipmentAndRemoveFromList(String[] params) {
         Iterator<Item> iterator = game.getCurrentLocation().getItems().iterator();
 
         while (iterator.hasNext()) {
@@ -38,5 +47,11 @@ public class EquipAction extends AbAction {
                 }
             }
         }
+    }
+
+    @Override
+    public String helpMessage() {
+        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
+                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
     }
 }

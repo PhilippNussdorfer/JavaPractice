@@ -23,4 +23,10 @@ public class DropEquipmentAction extends AbAction {
             throw new NoItemFoundException("Please enter an item name with the command or use help when you are not sure on how to use it.");
         }
     }
+
+    @Override
+    public String helpMessage() {
+        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
+                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
+    }
 }

@@ -8,6 +8,8 @@ import jdk.jshell.spi.ExecutionControl;
 public interface Action {
     boolean canHandle(String command);
 
+    String helpMessage();
+
     void execute(String ... params) throws ExecutionControl.NotImplementedException, CommandNotFoundException, NoFreeSpaceException, NoItemFoundException;
 
     String getName();
