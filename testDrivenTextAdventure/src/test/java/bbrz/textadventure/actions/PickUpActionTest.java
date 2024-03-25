@@ -57,4 +57,9 @@ class PickUpActionTest {
     void throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> action.execute("p"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Pick up         => To pick up an item in an location <Command> <Item name>                                              | Commands => pickup, p                     ", action.helpMessage());
+    }
 }

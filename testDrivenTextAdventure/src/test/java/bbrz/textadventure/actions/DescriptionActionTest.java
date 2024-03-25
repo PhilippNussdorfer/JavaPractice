@@ -119,4 +119,9 @@ class DescriptionActionTest {
         res = action.canHandle("d");
         assertTrue(res);
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Describe        => To describe an location, item or get the location name <Command> <Addition> <Item name>              | Commands => desc, describe, d              | Additions => location, locationName, itemName", action.helpMessage());
+    }
 }

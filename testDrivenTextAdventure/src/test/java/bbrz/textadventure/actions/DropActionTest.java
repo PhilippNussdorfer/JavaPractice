@@ -60,4 +60,9 @@ class DropActionTest {
     void throwsNewIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> action.execute("drop"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Drop            => To drop an item <Command> <Item name>                                                                | Commands => drop                          ", action.helpMessage());
+    }
 }

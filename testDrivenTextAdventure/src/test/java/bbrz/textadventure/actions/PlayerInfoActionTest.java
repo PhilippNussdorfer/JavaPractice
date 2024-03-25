@@ -73,4 +73,9 @@ class PlayerInfoActionTest {
         assertTrue(action.canHandle("PI"));
         assertFalse(action.canHandle("help"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Player info     => Shows information about the player and his equipment <Command>                                       | Commands => info, pi                      ", action.helpMessage());
+    }
 }

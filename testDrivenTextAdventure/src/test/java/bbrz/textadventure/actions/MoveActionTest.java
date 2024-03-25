@@ -46,4 +46,9 @@ class MoveActionTest {
         res = move.canHandle("w");
         assertTrue(res);
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Move            => To move to an other location <Command>                                                               | Commands => w, n, o, s                    ", move.helpMessage());
+    }
 }

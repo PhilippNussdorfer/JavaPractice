@@ -113,4 +113,9 @@ class EquipActionTest {
         assertTrue(action.canHandle("EQuip"));
         assertFalse(action.canHandle("x"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Equip           => Equips an item if the slot for the item type is free <Command> <Item Name>                           | Commands => eq, equip                     ", action.helpMessage());
+    }
 }

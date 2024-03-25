@@ -109,4 +109,10 @@ class SwapEquipmentActionTest {
         assertTrue(action.canHandle("Swap-Eq"));
         assertFalse(action.canHandle("exiT"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Swap Equipment  => Swaps the equipped item with an item you want to equip make sure they are from te same type\n" +
+                "                   <Command> <Equipped Item Name> <Item Name of new Equipment>                                          | Commands => swap, swap-eq, swap-equipment ", action.helpMessage());
+    }
 }

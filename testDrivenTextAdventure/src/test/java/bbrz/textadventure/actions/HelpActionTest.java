@@ -79,4 +79,9 @@ class HelpActionTest {
         assertTrue(action.canHandle("HelP"));
         assertFalse(action.canHandle("exiT"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Help            => Shows the help for all possible Commands <Command>                                                   | Commands => h, help                       ", action.helpMessage());
+    }
 }

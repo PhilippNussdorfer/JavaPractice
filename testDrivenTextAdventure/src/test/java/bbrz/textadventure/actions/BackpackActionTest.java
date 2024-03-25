@@ -51,4 +51,9 @@ class BackpackActionTest {
         assertTrue(action.canHandle("BACKPACK"));
         assertFalse(action.canHandle("Pickup"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Backpack        => Shows you your items in the backpack <Command>                                                       | Commands => bp, Backpack                  ", action.helpMessage());
+    }
 }

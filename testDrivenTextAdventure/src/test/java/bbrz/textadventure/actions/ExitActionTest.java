@@ -43,4 +43,9 @@ class ExitActionTest {
         res = action.canHandle("hXit");
         assertFalse(res);
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Exit            => Exits the game <Command>                                                                             | Commands => ex, x, exit                   ", action.helpMessage());
+    }
 }

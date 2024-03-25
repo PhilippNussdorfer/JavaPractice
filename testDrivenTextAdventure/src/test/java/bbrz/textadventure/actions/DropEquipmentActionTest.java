@@ -67,4 +67,9 @@ class DropEquipmentActionTest {
         assertTrue(action.canHandle("DE"));
         assertFalse(action.canHandle("exit"));
     }
+
+    @Test
+    void helpMessage() {
+        assertEquals("Drop Equipment  => drops the item in the backpack or to the floor when the backpack is full <Command> <Item Name>       | Commands => de, drop-eq                   ", action.helpMessage());
+    }
 }
