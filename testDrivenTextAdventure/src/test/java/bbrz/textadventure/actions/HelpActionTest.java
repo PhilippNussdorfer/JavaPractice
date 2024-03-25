@@ -39,16 +39,12 @@ class HelpActionTest {
     void executeOnceDescribe() {
         Mockito.when(game.getInterpreter()).thenReturn(interpreter);
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
-
         Mockito.when(interpreter.getActionList()).thenReturn(List.of(secAction));
-
-        Mockito.when(secAction.getName()).thenReturn("name");
-        Mockito.when(secAction.getDescription()).thenReturn("description ");
-        Mockito.when(secAction.getAdditionList()).thenReturn(List.of("addition"));
-        Mockito.when(secAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
+        Mockito.when(secAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ");
         
         action.execute("h");
-        Mockito.verify(wrapper, Mockito.times(2)).outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("=".repeat(210) + "\n", TextColor.DARK_BROWN);
         Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ", TextColor.CYAN);
     }
 
@@ -58,10 +54,7 @@ class HelpActionTest {
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
 
         Mockito.when(interpreter.getActionList()).thenReturn(List.of(thirdAction));
-
-        Mockito.when(thirdAction.getName()).thenReturn("name");
-        Mockito.when(thirdAction.getDescription()).thenReturn("description");
-        Mockito.when(thirdAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
+        Mockito.when(thirdAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                      ");
 
         action.execute("h");
         Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                      ", TextColor.CYAN);
@@ -73,15 +66,8 @@ class HelpActionTest {
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
 
         Mockito.when(interpreter.getActionList()).thenReturn(List.of(thirdAction, secAction));
-
-        Mockito.when(thirdAction.getName()).thenReturn("name");
-        Mockito.when(thirdAction.getDescription()).thenReturn("description");
-        Mockito.when(thirdAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
-
-        Mockito.when(secAction.getName()).thenReturn("name");
-        Mockito.when(secAction.getDescription()).thenReturn("description ");
-        Mockito.when(secAction.getAdditionList()).thenReturn(List.of("addition"));
-        Mockito.when(secAction.getPossibleCommands()).thenReturn(new String[] {"Commands"});
+        Mockito.when(secAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ");
+        Mockito.when(thirdAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                      ");
 
         action.execute("h");
         Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("name            => description                                                                                          | Commands => Commands                      ", TextColor.CYAN);
