@@ -2,23 +2,26 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Window extends JPanel {
+public class Window extends JPanel implements KeyListener {
     private Flock flock;
     private Flock secFlock;
     private Flock thirdFlock;
     private final int width = 1280, height = 840;
     private final PerlinNoise perlinNoise = new PerlinNoise();
+    private final Followable followable = new Followable();
 
     public Window() {
         setPreferredSize(new Dimension(width, height));
         setBackground(Color.cyan);
 
-        perlinNoise.NoiseGenerator();
-        System.out.println(perlinNoise.noise(4));
-        System.out.println(perlinNoise.noise(4, 1005));
-
         spawnFlock();
+
+        new Timer(5, (ActionEvent e) -> {
+
+        });
 
         new Timer(17, (ActionEvent e) -> {
            /*if (flock.hasLeftTheWindow(width)) {
@@ -31,9 +34,9 @@ public class Window extends JPanel {
     }
 
     private void spawnFlock() {
-        flock = Flock.spawn(100, height * 0.5, 40, perlinNoise, width, height, Color.ORANGE);
-        secFlock = Flock.spawn(600, 700, 50, perlinNoise, width, height, Color.BLUE);
-        thirdFlock = Flock.spawn(1000, 150, 45, perlinNoise, width, height, Color.GREEN);
+        flock = Flock.spawn(100, height * 0.5, 40, perlinNoise, followable, width, height, Color.ORANGE);
+        secFlock = Flock.spawn(600, 700, 50, perlinNoise, followable, width, height, Color.BLUE);
+        thirdFlock = Flock.spawn(1000, 150, 45, perlinNoise, followable, width, height, Color.GREEN);
     }
 
     private void moveFlock() {
@@ -51,17 +54,32 @@ public class Window extends JPanel {
         flock.run(graphics2D);
         secFlock.run(graphics2D);
         thirdFlock.run(graphics2D);
+        followable.draw(graphics2D);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            Window window = new Window();
             JFrame frame = new JFrame("Boids");
+
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setResizable(false);
-            frame.add(new Window(), BorderLayout.CENTER);
+            frame.add(window, BorderLayout.CENTER);
             frame.pack();
             frame.setLocationRelativeTo(null);
+            frame.addKeyListener(window);
             frame.setVisible(true);
         });
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        followable.processPressedKey(e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }

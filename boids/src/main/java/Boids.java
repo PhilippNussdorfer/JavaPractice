@@ -32,8 +32,9 @@ public class Boids {
     private double x = 0, y = 1000;
     private boolean xCountUp = true, yCountUp = true;
     private final PerlinNoise perlinNoise;
+    private final Followable followable;
 
-    public Boids(double x, double y, double separationDistance, double alignmentDistance, double cohesionDistance, PerlinNoise perlinNoise, Color boidsColor) {
+    public Boids(double x, double y, double separationDistance, double alignmentDistance, double cohesionDistance, PerlinNoise perlinNoise, Followable followable, Color boidsColor) {
         Random random = new Random();
 
         this.acceleration = new Vec();
@@ -49,6 +50,9 @@ public class Boids {
 
         this.boidsColor = boidsColor;
         this.perlinNoise = perlinNoise;
+        this.followable = followable;
+
+        perlinNoise.NoiseGenerator();
     }
 
     private double getXNoise() {
