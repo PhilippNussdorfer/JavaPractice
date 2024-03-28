@@ -19,15 +19,7 @@ public class Window extends JPanel implements KeyListener {
 
         spawnFlock();
 
-        new Timer(5, (ActionEvent e) -> {
-
-        });
-
         new Timer(17, (ActionEvent e) -> {
-           /*if (flock.hasLeftTheWindow(width)) {
-               flock.clearBoidsList();
-               spawnFlock();
-           }*/
             moveFlock();
             repaint();
         }).start();
