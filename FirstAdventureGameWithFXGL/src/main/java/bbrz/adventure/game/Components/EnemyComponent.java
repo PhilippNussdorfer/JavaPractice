@@ -106,12 +106,12 @@ public class EnemyComponent extends Component {
 
     }
 
-    private boolean evadeEntity(List<Entity> entitysToEvade) {
-        if (entitysToEvade != null) {
+    private boolean evadeEntity(List<Entity> entityListToEvade) {
+        if (entityListToEvade != null) {
 
         }
 
-        return !(entitysToEvade == null);
+        return !(entityListToEvade == null);
     }
 
     private List<Entity> getEntityThatIsToClose(int distance) {
