@@ -10,7 +10,6 @@ public class Window extends JPanel implements KeyListener {
     private Flock secFlock;
     private Flock thirdFlock;
     private final int width = 1280, height = 840;
-    private final PerlinNoise perlinNoise = new PerlinNoise();
     private final Followable followable = new Followable();
 
     public Window() {
@@ -26,9 +25,9 @@ public class Window extends JPanel implements KeyListener {
     }
 
     private void spawnFlock() {
-        flock = Flock.spawn(100, height * 0.5, 40, perlinNoise, followable, width, height, Color.ORANGE);
-        secFlock = Flock.spawn(600, 700, 50, perlinNoise, followable, width, height, Color.BLUE);
-        thirdFlock = Flock.spawn(1000, 150, 45, perlinNoise, followable, width, height, Color.GREEN);
+        flock = Flock.spawn(100, height * 0.5, 40, followable, width, height, Color.ORANGE);
+        secFlock = Flock.spawn(600, 700, 50, followable, width, height, Color.BLUE);
+        thirdFlock = Flock.spawn(1000, 150, 45, followable, width, height, Color.GREEN);
     }
 
     private void moveFlock() {

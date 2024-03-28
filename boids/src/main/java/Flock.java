@@ -5,6 +5,7 @@ import java.util.List;
 public class Flock {
     List<Boids> boidsList;
     private final int width, height;
+    private final PerlinNoise perlinNoise = new PerlinNoise();
 
     public Flock(int width, int height) {
         boidsList = new ArrayList<>();
@@ -43,10 +44,11 @@ public class Flock {
         boidsList.add(boids);
     }
 
-    public static Flock spawn(int x, double y, int amount, PerlinNoise perlinNoise, Followable followable, int width, int height, Color flockColor) {
+    public static Flock spawn(int x, double y, int amount, Followable followable, int width, int height, Color flockColor) {
         Flock flock = new Flock(width, height);
+
         for (int i = 0; i < amount; i++) {
-            flock.addBoids(new Boids(x, y, 25, 50, 75, perlinNoise, followable, flockColor));
+            flock.addBoids(new Boids(x, y, 25, 50, 75, flock.perlinNoise, followable, flockColor));
         }
         return flock;
     }

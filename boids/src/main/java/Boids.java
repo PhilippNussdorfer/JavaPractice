@@ -149,7 +149,7 @@ public class Boids {
 
         rule1.multiply(2.5);    //2.5
         rule2.multiply(1.5);    //1.5
-        rule3.multiply(1.3);    //1.3
+        rule3.multiply(1.9);    //1.3
 
         applyForce(rule1);
         applyForce(rule2);
