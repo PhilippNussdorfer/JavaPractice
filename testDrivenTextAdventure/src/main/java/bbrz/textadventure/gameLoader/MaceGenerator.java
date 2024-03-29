@@ -1,17 +1,16 @@
+// MazeGenerator from https://github.com/oppenheimj
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.locatins.Location;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 public class MaceGenerator {
     private final Stack<MaceNode> stack = new Stack<>();
-    private Random rand;
-    private Location[][] mace;
-    private Location replaceable;
-    private int dimensions;
+    private final Random rand;
+    private final Location[][] mace;
+    private final Location replaceable;
+    private final int dimensions;
 
     public MaceGenerator(int dimensions, Location replaceable, Random rand) {
         mace = new Location[dimensions][dimensions];
@@ -40,14 +39,22 @@ public class MaceGenerator {
         for (Location[] row : mace) {
             for (Location loc : row) {
                 if (loc == null) {
-                    builder.append("*");
-                } else {
                     builder.append(" ");
+                } else {
+                    builder.append("*");
                 }
             }
             builder.append("\n");
         }
         return builder.toString();
+    }
+
+    public List<List<Location>> getMaceAsList() {
+        List<List<Location>> result = new ArrayList<>();
+        for (Location[] row : mace) {
+            result.add(Arrays.asList(row));
+        }
+        return result;
     }
 
     private void randomlyAddNodesToStack(ArrayList<MaceNode> neighbours) {
