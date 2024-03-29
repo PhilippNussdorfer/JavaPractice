@@ -24,7 +24,7 @@ public class SelfMapCompositionGameLoader implements GameLoader {
                 new Location("Cliff", "On top on the cliff, when you look down you can see the beach and the sea where the moon reflects.", MapRuleMark.CLIFF),
                 new Location("Beach", "On this sand beach where the sea slowly caresses the beach.", MapRuleMark.BEACH),
                 new Location("Lake", "It's a small lake separated from the sea and where the clear blue water that reflects the moon.", MapRuleMark.LAKE),
-                new Location("Placeable", "for the algorithm to indicate an placeable location", MapRuleMark.PLACEABLE)
+                new Location("Replaceable", "for the algorithm to indicate an replaceable location", MapRuleMark.REPLACEABLE)
         );
     }
 

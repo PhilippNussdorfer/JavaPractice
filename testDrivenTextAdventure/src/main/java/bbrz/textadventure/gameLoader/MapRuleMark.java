@@ -13,5 +13,5 @@ public enum MapRuleMark {
     WELL,
     CLIFF,
     STARTING_LOCATION,
-    PLACEABLE
+    REPLACEABLE
 }
