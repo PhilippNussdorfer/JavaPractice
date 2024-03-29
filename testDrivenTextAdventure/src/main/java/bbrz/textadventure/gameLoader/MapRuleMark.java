@@ -12,5 +12,6 @@ public enum MapRuleMark {
     EDGE_OF_THE_SWAP,
     WELL,
     CLIFF,
-    STARTING_LOCATION
+    STARTING_LOCATION,
+    PLACEABLE
 }
