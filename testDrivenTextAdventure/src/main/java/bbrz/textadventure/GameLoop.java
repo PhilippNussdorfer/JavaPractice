@@ -4,7 +4,10 @@ import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import bbrz.textadventure.gameLoader.MazeGenerator;
+import bbrz.textadventure.gameLoader.MapRuleMark;
 import bbrz.textadventure.gameLoader.StaticGameLoader;
+import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import jdk.jshell.spi.ExecutionControl;
@@ -24,6 +27,9 @@ public class GameLoop {
     }
 
     private void runGame() {
+        MazeGenerator mace = new MazeGenerator(100, new Location("none", "none", MapRuleMark.REPLACEABLE));
+        mace.generateMaze();
+        System.out.println(mace.getRawMaze());
         initGame();
 
         while (game.isLoopGame()) {

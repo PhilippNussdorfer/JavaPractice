@@ -5,22 +5,21 @@ import bbrz.textadventure.locatins.Location;
 
 import java.util.*;
 
-public class MaceGenerator {
+public class MazeGenerator {
     private final Stack<MaceNode> stack = new Stack<>();
-    private final Random rand;
+    private final Random rand = new Random();
     private final Location[][] mace;
     private final Location replaceable;
     private final int dimensions;
 
-    public MaceGenerator(int dimensions, Location replaceable, Random rand) {
+    public MazeGenerator(int dimensions, Location replaceable) {
         mace = new Location[dimensions][dimensions];
 
-        this.rand = rand;
         this.dimensions = dimensions;
         this.replaceable = replaceable;
     }
 
-    public void generateMace() {
+    public void generateMaze() {
         stack.push(new MaceNode(0, 0));
 
         while (!stack.empty()) {
@@ -34,7 +33,7 @@ public class MaceGenerator {
         }
     }
 
-    public String getRawMace() {
+    public String getRawMaze() {
         StringBuilder builder = new StringBuilder();
         for (Location[] row : mace) {
             for (Location loc : row) {
@@ -49,7 +48,7 @@ public class MaceGenerator {
         return builder.toString();
     }
 
-    public List<List<Location>> getMaceAsList() {
+    public List<List<Location>> getMazeAsList() {
         List<List<Location>> result = new ArrayList<>();
         for (Location[] row : mace) {
             result.add(Arrays.asList(row));
