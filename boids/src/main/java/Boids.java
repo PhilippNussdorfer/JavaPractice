@@ -33,13 +33,15 @@ public class Boids {
     private boolean xCountUp = true, yCountUp = true;
     private final PerlinNoise perlinNoise;
     private final Followable followable;
+    private final List<Obstacle> obstacles;
 
-    public Boids(double x, double y, double separationDistance, double alignmentDistance, double cohesionDistance, PerlinNoise perlinNoise, Followable followable, Color boidsColor) {
+    public Boids(double x, double y, double separationDistance, double alignmentDistance, double cohesionDistance, PerlinNoise perlinNoise, Followable followable, List<Obstacle> obstacles, Color boidsColor) {
         Random random = new Random();
 
         this.acceleration = new Vec();
         this.velocity = new Vec(random.nextInt(3) + 1, random.nextInt(3) - 1);
         this.location = new Vec(x, y);
+        this.obstacles = obstacles;
 
         this.maxSpeed = 3;
         this.maxForce = 0.05;
@@ -54,6 +56,112 @@ public class Boids {
 
         perlinNoise.NoiseGenerator();
     }
+
+    private void update() {
+        velocity.add(acceleration);
+        velocity.limit(maxSpeed);
+        location.add(velocity);
+        acceleration.multiply(0);
+    }
+
+    private void applyForce(Vec force) {
+        acceleration.add(force);
+    }
+
+    private Vec seek(Vec target) {
+        Vec steer = Vec.sub(target, location);
+        steer.normalize();
+        steer.multiply(maxSpeed);
+        steer.sub(velocity);
+        steer.limit(maxForce);
+        return steer;
+    }
+
+    private void view(List<Boids> boidsList) {
+        double sightDistance = 150;
+        double peripheryAngle = Math.PI * 0.85;
+
+        for (Boids boids : boidsList) {
+            boids.included = false;
+            if (boids == this)
+                continue;
+
+            double distance = Vec.dist(location, boids.location);
+            if (distance <= 0 || distance > sightDistance)
+                continue;
+
+            Vec lineOfSight = Vec.sub(boids.location, location);
+            double angle = Vec.angleBetween(lineOfSight, velocity);
+            if (angle < peripheryAngle) {
+                boids.included = true;
+            }
+        }
+    }
+
+    private void flock(List<Boids> boidsList) {
+        view(boidsList);
+
+        Vec rule1 = separation(boidsList);
+        Vec rule2 = alignment(boidsList);
+        Vec rule3 = cohesion(boidsList);
+        //Vec rule4 = avoidObstacleSmoothAvoidance();
+        Vec rule4 = avoidObstacle();
+
+        rule1.multiply(2.5);    //2.5
+        rule2.multiply(1.5);    //1.5
+        rule3.multiply(1.3);    //1.3
+        rule4.multiply(5);
+
+        applyForce(rule4);
+        applyForce(rule1);
+        applyForce(rule2);
+        applyForce(rule3);
+        applyForce(chaseFollowable());
+        applyForce(perlinNoise(boidsList));
+        applyForce(migrate);
+    }
+
+    private Vec avoidObstacle() {
+        Vec steer = new Vec();
+
+        for (Obstacle obstacle : obstacles) {
+
+            double distance = Vec.dist(location, obstacle.getPositionVec());
+            if (distance < 45) {
+                Vec diff = Vec.sub(location, obstacle.getPositionVec());
+                diff.normalize();
+                diff.div(distance);
+                steer.add(diff);
+            }
+        }
+
+        return steer;
+    }
+
+    /*private Vec avoidObstacleSmoothAvoidance() {
+        Vec steer = new Vec();
+
+        for (Obstacle obstacle : obstacles) {
+            double distance = Vec.dist(location, obstacle.getPositionVec());
+
+            if (distance < 50) {
+                Vec avoidanceDir = Vec.sub(location, obstacle.getPositionVec());
+                avoidanceDir.normalize();
+
+                Vec currentDir = velocity;
+                currentDir.normalize();
+                avoidanceDir.sub(currentDir);
+                avoidanceDir.normalize();
+
+                double avoidanceStrength = 1 - (distance/150);
+                avoidanceDir.multiply(avoidanceStrength);
+
+                steer.add(avoidanceDir);
+            }
+        }
+
+        return steer;
+    }*/
 
     private double getXNoise() {
         double noise = perlinNoise.noise(x);
@@ -99,62 +207,48 @@ public class Boids {
         return new Vec(getXNoise(), getYNoise());
     }
 
-    private void update() {
-        velocity.add(acceleration);
-        velocity.limit(maxSpeed);
-        location.add(velocity);
-        acceleration.multiply(0);
-    }
+    private Vec perlinNoise(List<Boids> boidsList) {
+        Vec steer = new Vec();
+        int count = 0;
 
-    private void applyForce(Vec force) {
-        acceleration.add(force);
-    }
+        for (Boids boids : boidsList) {
+            if (!boids.included) {
+                steer.add(getNoiseVec());
+                count ++;
+            }
+        }
 
-    private Vec seek(Vec target) {
-        Vec steer = Vec.sub(target, location);
-        steer.normalize();
-        steer.multiply(maxSpeed);
-        steer.sub(velocity);
-        steer.limit(maxForce);
+        if (count > 0) {
+            steer.div(count);
+            steer.normalize();
+            steer.multiply(maxSpeed);
+            steer.sub(velocity);
+            steer.limit(maxForce);
+        }
+
         return steer;
     }
 
-    private void view(List<Boids> boidsList) {
-        double sightDistance = 100;
-        double peripheryAngle = Math.PI * 0.85;
+    private Vec chaseFollowable() {
+        Vec steer = new Vec();
 
-        for (Boids boids : boidsList) {
-            boids.included = false;
-            if (boids == this)
-                continue;
+            double distance = Vec.dist(location, followable.getLocationVec());
+            if (distance < 200) {
+                Vec avoidanceDir = Vec.sub(location, followable.getLocationVec());
+                avoidanceDir.normalize();
 
-            double distance = Vec.dist(location, boids.location);
-            if (distance <= 0 || distance > sightDistance)
-                continue;
+                Vec currentDir = velocity;
+                currentDir.normalize();
+                avoidanceDir.sub(currentDir);
+                avoidanceDir.normalize();
 
-            Vec lineOfSight = Vec.sub(boids.location, location);
-            double angle = Vec.angleBetween(lineOfSight, velocity);
-            if (angle < peripheryAngle) {
-                boids.included = true;
+                double avoidanceStrength = 1 - (distance/50);
+                avoidanceDir.multiply(avoidanceStrength);
+
+                steer.add(avoidanceDir);
             }
-        }
-    }
 
-    private void flock(List<Boids> boidsList) {
-        view(boidsList);
-
-        Vec rule1 = separation(boidsList);
-        Vec rule2 = alignment(boidsList);
-        Vec rule3 = cohesion(boidsList);
-
-        rule1.multiply(2.5);    //2.5
-        rule2.multiply(1.5);    //1.5
-        rule3.multiply(1.9);    //1.3
-
-        applyForce(rule1);
-        applyForce(rule2);
-        applyForce(rule3);
-        applyForce(migrate);
+        return steer;
     }
 
     private Vec separation(List<Boids> boidsList) {
@@ -195,8 +289,6 @@ public class Boids {
 
         for (Boids boids : boidsList) {
             if (!boids.included) {
-                steer.add(getNoiseVec());
-                steer.normalize();
                 continue;
             }
 

@@ -44,11 +44,11 @@ public class Flock {
         boidsList.add(boids);
     }
 
-    public static Flock spawn(int x, double y, int amount, Followable followable, int width, int height, Color flockColor) {
+    public static Flock spawn(int x, double y, int amount, Followable followable, List<Obstacle> obstacles, int width, int height, Color flockColor) {
         Flock flock = new Flock(width, height);
 
         for (int i = 0; i < amount; i++) {
-            flock.addBoids(new Boids(x, y, 25, 50, 75, flock.perlinNoise, followable, flockColor));
+            flock.addBoids(new Boids(x, y, 25, 50, 75, flock.perlinNoise, followable, obstacles, flockColor));
         }
         return flock;
     }

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Window extends JPanel implements KeyListener {
     private Flock flock;
@@ -11,8 +12,10 @@ public class Window extends JPanel implements KeyListener {
     private Flock thirdFlock;
     private final int width = 1280, height = 840;
     private final Followable followable = new Followable();
+    private final java.util.List<Obstacle> obstacles = new ArrayList<>();
 
     public Window() {
+        initObstacles();
         setPreferredSize(new Dimension(width, height));
         setBackground(Color.cyan);
 
@@ -24,10 +27,16 @@ public class Window extends JPanel implements KeyListener {
         }).start();
     }
 
+    private void initObstacles() {
+        obstacles.add(new Obstacle(200, 750));
+        obstacles.add(new Obstacle(600, 150));
+        obstacles.add(new Obstacle(1000, 500));
+    }
+
     private void spawnFlock() {
-        flock = Flock.spawn(100, height * 0.5, 40, followable, width, height, Color.ORANGE);
-        secFlock = Flock.spawn(600, 700, 50, followable, width, height, Color.BLUE);
-        thirdFlock = Flock.spawn(1000, 150, 45, followable, width, height, Color.GREEN);
+        flock = Flock.spawn(100, height * 0.5, 40, followable, obstacles, width, height, Color.ORANGE);
+        secFlock = Flock.spawn(600, 700, 50, followable, obstacles, width, height, Color.BLUE);
+        thirdFlock = Flock.spawn(1000, 150, 45, followable, obstacles, width, height, Color.GREEN);
     }
 
     private void moveFlock() {
@@ -46,6 +55,9 @@ public class Window extends JPanel implements KeyListener {
         secFlock.run(graphics2D);
         thirdFlock.run(graphics2D);
         followable.draw(graphics2D);
+        for (Obstacle obstacle : obstacles) {
+            obstacle.draw(graphics2D);
+        }
     }
 
     public static void main(String[] args) {

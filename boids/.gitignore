@@ -1,6 +1,6 @@
 /.idea/
 /Save.sv
 /out
-/target
+/target/
 /*.iml
 logs/*.log
