@@ -10,6 +10,7 @@ import java.util.List;
 public class Behavior {
     private final double sightRadius;
     private final double minFollowingRadius;
+    private final double separationDistance;
 
     /**
      * minRadius needs to be lower than sightRadius for the following to work.
@@ -49,7 +50,7 @@ public class Behavior {
             Vec obstaclePos = new Vec(obstacle.getX(), obstacle.getY());
 
             double distance = Vec.dist(enemyPos, obstaclePos);
-            if (distance < 45) {
+            if (distance < separationDistance) {
                 Vec diff = Vec.sub(enemyPos, obstaclePos);
                 diff.normalize();
                 diff.div(distance);
