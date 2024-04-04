@@ -44,7 +44,8 @@ public class BookmarkHandler {
 
     public boolean add(String title, String page, String link) {
         if (isLink(link)) {
-            bookmarks.add(new Bookmark(title, page, link));
+            int num = bookmarks.get(bookmarks.size() - 1).getNumeration();
+            bookmarks.add(new Bookmark(num + 1, title, page, link));
             return true;
         }
         return false;

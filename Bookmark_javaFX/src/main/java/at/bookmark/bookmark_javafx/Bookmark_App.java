@@ -1,12 +1,13 @@
 package at.bookmark.bookmark_javafx;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -35,6 +36,10 @@ public class Bookmark_App extends Application {
 
         gridMain.setHgap(10);
         gridMain.setVgap(10);
+        gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+
+        gridSearch.setHgap(10);
+        gridSearch.setVgap(10);
 
         Label lblSearch = new Label("Search:");
         TextField txtSearch = new TextField();
@@ -54,11 +59,17 @@ public class Bookmark_App extends Application {
         btnAdd.setOnAction(e -> addWindow());
 
 
-        FlowPane flow = new FlowPane(lblSearch, txtSearch, btnAdd, gridSearch, gridMain);
-        flow.setHgap(10);
-        flow.setVgap(10);
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
 
-        ScrollPane scrollPane = new ScrollPane(flow);
+        grid.add(lblSearch, 0, 0);
+        grid.add(txtSearch, 1, 0);
+        grid.add(btnAdd, 2, 0);
+        grid.add(gridSearch, 1, 1);
+        grid.add(gridMain, 1, 2);
+
+        ScrollPane scrollPane = new ScrollPane(grid);
         scrollPane.setFitToHeight(true);
 
         Scene scene = new Scene(scrollPane, width, height);
@@ -191,27 +202,27 @@ public class Bookmark_App extends Application {
 
     private void setGrid(GridPane grid, List<Bookmark> bookmarks) {
         grid.getChildren().clear();
-        int row = 0;
 
         for (Bookmark bookmark : bookmarks) {
 
+            Label lblNum = new Label((bookmark.getNumeration() + 1) + "");
             Label lblTitle = new Label(bookmark.getTitle());
             Label lblPage = new Label(bookmark.getPage());
             Button btnLink = new Button("Book Link");
             Button btnRemove = new Button("Delete");
             Button btnEdit = new Button("Edit");
 
-            int id = row;
+            int id = bookmark.getNumeration();
             btnLink.setOnAction(e -> getHostServices().showDocument(bookmark.getLink()));
             btnEdit.setOnAction(e -> editWindow(id));
             btnRemove.setOnAction(e -> deleteNotify(id, bookmark.getTitle()));
 
-            grid.add(lblTitle, 0, row);
-            grid.add(lblPage, 1, row);
-            grid.add(btnEdit, 2, row);
-            grid.add(btnRemove, 3, row);
-            grid.add(btnLink, 4, row);
-            row++;
+            grid.add(lblNum , 0, bookmark.getNumeration());
+            grid.add(lblTitle, 1, bookmark.getNumeration());
+            grid.add(lblPage, 2, bookmark.getNumeration());
+            grid.add(btnEdit, 3, bookmark.getNumeration());
+            grid.add(btnRemove, 4, bookmark.getNumeration());
+            grid.add(btnLink, 5, bookmark.getNumeration());
         }
     }
 }

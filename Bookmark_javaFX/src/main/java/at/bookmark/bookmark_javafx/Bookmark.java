@@ -4,11 +4,13 @@ public class Bookmark {
     private String title;
     private String page;
     private String link;
+    private final int num;
 
-    public Bookmark(String title, String page, String link) {
+    public Bookmark(int num, String title, String page, String link) {
         this.title = title;
         this.page = page;
         this.link = link;
+        this.num = num;
     }
 
     public String getTitle() {
@@ -33,5 +35,9 @@ public class Bookmark {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public int getNumeration() {
+        return this.num;
     }
 }

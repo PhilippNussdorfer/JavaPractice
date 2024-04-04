@@ -26,7 +26,7 @@ public class WriterReader {
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
                 for (Bookmark bookmark : bookmarkList) {
-                    bufferedWriter.write(bookmark.getTitle() + "|" + bookmark.getPage() + "|" + bookmark.getLink() + "\n");
+                    bufferedWriter.write(bookmark.getNumeration() + "|" + bookmark.getTitle() + "|" + bookmark.getPage() + "|" + bookmark.getLink() + "\n");
                 }
 
                 bufferedWriter.close();
@@ -40,6 +40,7 @@ public class WriterReader {
     public List<Bookmark> loadFile() {
         File file = new File(path);
         List<Bookmark> bookmarks = new ArrayList<>();
+        int count = 0;
 
         if (file.exists()) {
             try {
@@ -49,7 +50,12 @@ public class WriterReader {
 
                 while((currentLine = bufferedReader.readLine()) != null) {
                     String[] arr = currentLine.split("\\|");
-                    bookmarks.add(new Bookmark(arr[0], arr[1], arr[2]));
+                    if (isParseAble(arr[0])) {
+                        bookmarks.add(new Bookmark(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3]));
+                    } else {
+                        bookmarks.add(new Bookmark(count, arr[0], arr[1], arr[2]));
+                        count ++;
+                    }
                 }
                 bufferedReader.close();
             } catch (IOException e) {
@@ -57,5 +63,14 @@ public class WriterReader {
             }
         }
         return bookmarks;
+    }
+
+    private boolean isParseAble(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
