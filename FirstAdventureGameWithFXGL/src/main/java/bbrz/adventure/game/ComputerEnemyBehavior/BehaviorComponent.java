@@ -38,8 +38,8 @@ public class BehaviorComponent extends Component {
             avoidanceDir.sub(currentDir);
             avoidanceDir.normalize();
 
-            double avoidanceStrength = 1 - (distance/minFollowingRadius);
-            avoidanceDir.multiply(avoidanceStrength);
+            /*double avoidanceStrength = 1 - (distance/minFollowingRadius);
+            avoidanceDir.multiply(avoidanceStrength);*/
 
             steer.add(avoidanceDir);
             animationComponent.move();

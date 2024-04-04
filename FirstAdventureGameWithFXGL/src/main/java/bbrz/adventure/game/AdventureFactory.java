@@ -51,7 +51,7 @@ public class AdventureFactory implements EntityFactory {
                 .with(physics)
                 .with(new EnemyComponent(data.getX(), data.getY(), 1, 5, 15, EnemyIndicator.SKELETON))
                 .with(new EnemyAnimationComponent("skeleton"))
-                .with(new BehaviorComponent(200, 40, 60))
+                .with(new BehaviorComponent(200, 60, 60))
                 .collidable()
                 .build();
     }

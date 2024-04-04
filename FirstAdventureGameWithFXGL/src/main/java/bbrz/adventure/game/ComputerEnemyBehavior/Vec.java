@@ -56,8 +56,8 @@ public class Vec {
     public void limit(double limit) {
         double mag = this.mag();
         if (mag != 0 && mag > limit) {
-            this.x *= limit / mag;
-            this.y *= limit / mag;
+            this.x *= 0.9;
+            this.y *= 0.9;
         }
     }
 
