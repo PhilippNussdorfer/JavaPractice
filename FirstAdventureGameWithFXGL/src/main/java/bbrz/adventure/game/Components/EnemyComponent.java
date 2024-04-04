@@ -67,7 +67,11 @@ public class EnemyComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        var moveTowards = getBehavior().follow(getPlayer(), entity, speed, FXGL.getGameWorld().getEntities());
+        move();
+    }
+
+    private void move() {
+        var moveTowards = getBehavior().follow(getPlayer(), getAnimationComponent(), entity, speed, FXGL.getGameWorld().getEntities());
         getPhysicsComponent().setBodyLinearVelocity(moveTowards);
     }
 
