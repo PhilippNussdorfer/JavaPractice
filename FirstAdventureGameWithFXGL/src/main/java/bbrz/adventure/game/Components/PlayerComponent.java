@@ -44,6 +44,11 @@ public class PlayerComponent extends Component {
                 FXGL.getAssetLoader().loadImage("gui/inventoryHead.png"), "Inventory");;
     }
 
+    @Override
+    public void onUpdate(double tpf) {
+        entity.translate(0, 0);
+    }
+
     private int maxDmg() {
         return this.maxDmg + this.increasedDmg;
     }
