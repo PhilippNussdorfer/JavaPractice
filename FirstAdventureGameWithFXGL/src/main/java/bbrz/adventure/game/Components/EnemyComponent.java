@@ -1,5 +1,6 @@
 package bbrz.adventure.game.Components;
 
+import bbrz.adventure.game.ComputerEnemyBehavior.BehaviorComponent;
 import bbrz.adventure.game.EnemyDrops.EnemyDrops;
 import bbrz.adventure.game.EnemyDrops.InterpretDrops;
 import bbrz.adventure.game.EntityType;
@@ -12,7 +13,6 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.util.Duration;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -53,6 +53,10 @@ public class EnemyComponent extends Component {
         return entity.getComponent(EnemyAnimationComponent.class);
     }
 
+    private BehaviorComponent getBehavior() {
+        return entity.getComponent(BehaviorComponent.class);
+    }
+
     private PhysicsComponent getPhysicsComponent() {
         return entity.getComponent(PhysicsComponent.class);
     }
@@ -63,69 +67,8 @@ public class EnemyComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        followPlayerIfInRange(150, 30, 20);
-    }
-
-    public void followPlayerIfInRange(int maxRange, int minRange, int evadeDistance) {
-        var isEvading = evadeEntity(getEntityThatIsToClose(evadeDistance));
-
-        if (!isEvading) {
-            if (entity.distanceBBox(getPlayer()) <= maxRange && entity.distanceBBox(getPlayer()) > minRange) {
-                moveTowards(getPlayer());
-            } else {
-                stopMoving();
-            }
-        }
-    }
-
-    private void stopMoving() {
-        getAnimationComponent().idle();
-        getPhysicsComponent().setVelocityX(0);
-        getPhysicsComponent().setVelocityY(0);
-    }
-
-    private void moveTowards(Entity target) {
-        double angle = getAngle(target, entity);
-        move(angle);
-    }
-
-    private double getAngle(Entity first, Entity second) {
-        double dx = first.getX() - second.getX();
-        double dy = first.getY() - second.getY();
-
-        return Math.atan2(dy, dx);
-    }
-
-    private void move(double angle) {
-        getPhysicsComponent().setVelocityX(speed * Math.cos(angle));
-        getPhysicsComponent().setVelocityY(speed * Math.sin(angle));
-        getAnimationComponent().move();
-    }
-
-    private void moveAround() {
-
-    }
-
-    private boolean evadeEntity(List<Entity> entityListToEvade) {
-        if (entityListToEvade != null) {
-
-        }
-
-        return !(entityListToEvade == null);
-    }
-
-    private List<Entity> getEntityThatIsToClose(int distance) {
-        List<Entity> entitys = getGameWorld().getEntities();
-        List<Entity> entitysToClose = new ArrayList<>();
-
-        for (Entity entity : entitys) {
-            if (entity != this.entity && entity != getPlayer()) {
-                if (this.entity.distanceBBox(entity) < distance && entity.getType() != EntityType.ITEM_BAG) {
-                    entitysToClose.add(entity);
-                }
-            }
-        }
-        return entitysToClose;
+        var moveTowards = getBehavior().follow(getPlayer(), entity, speed, FXGL.getGameWorld().getEntities());
+        getPhysicsComponent().setBodyLinearVelocity(moveTowards);
     }
 
     public void respawn() {
