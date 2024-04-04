@@ -1,5 +1,6 @@
 package bbrz.adventure.game.ComputerEnemyBehavior;
 
+import bbrz.adventure.game.Components.EnemyAnimationComponent;
 import bbrz.adventure.game.EntityType;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.Entity;
@@ -22,7 +23,7 @@ public class BehaviorComponent extends Component {
      * @param followingEntity the entity to follow the target
      * @return returns a Vec with the x and y cords.
      */
-    private Vec follow(Entity target, Entity followingEntity) {
+    private Vec follow(Entity target, Entity followingEntity, EnemyAnimationComponent animationComponent) {
         Vec steer = new Vec();
         Vec targetPos = new Vec(target.getX(), target.getY());
         Vec followerPos = new Vec(followingEntity.getX(), followingEntity.getY());
@@ -41,6 +42,9 @@ public class BehaviorComponent extends Component {
             avoidanceDir.multiply(avoidanceStrength);
 
             steer.add(avoidanceDir);
+            animationComponent.move();
+        } else {
+            animationComponent.idle();
         }
 
         return steer;
@@ -78,11 +82,11 @@ public class BehaviorComponent extends Component {
         return steer;
     }
 
-    public Vec2 follow(Entity target, Entity enemy, int maxSpeed, List<Entity> allEntity_s) {
+    public Vec2 follow(Entity target, EnemyAnimationComponent animationComponent, Entity enemy, int maxSpeed, List<Entity> allEntity_s) {
         List<Entity> entityList = getEntityThatIsToClose(separationDistance, enemy, target, allEntity_s);
         var acceleration = new Vec();
 
-        var rule1 = follow(target, enemy);
+        var rule1 = follow(target, enemy, animationComponent);
         var rule2 = separateFromOtherEntity_s(enemy, entityList);
 
         rule2.multiply(6);
