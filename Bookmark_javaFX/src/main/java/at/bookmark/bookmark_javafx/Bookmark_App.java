@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class Bookmark_App extends Application {
     private final BookmarkHandler handler = new BookmarkHandler();
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
-
+    private final Font appFont = new Font(16);
     private final int popupWidth = 360;
     private final int popupHeight = 120;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
@@ -45,7 +45,11 @@ public class Bookmark_App extends Application {
         TextField txtSearch = new TextField();
         Button btnAdd = new Button("Add");
 
-        txtSearch.setPrefWidth(width - width / 3);
+        lblSearch.setFont(appFont);
+        txtSearch.setFont(appFont);
+        btnAdd.setFont(appFont);
+
+        txtSearch.setPrefWidth(width - (double) (width / 3));
         txtSearch.textProperty().addListener((observer, oldValue, newValue) -> {
 
             if (newValue.equals("")) {
@@ -94,6 +98,14 @@ public class Bookmark_App extends Application {
         Label lblTitle = new Label("Title:");
         Label lblPage = new Label("Page:");
         Label lblLink = new Label("Link:");
+
+        txtTitle.setFont(appFont);
+        txtPage.setFont(appFont);
+        txtLink.setFont(appFont);
+
+        lblTitle.setFont(appFont);
+        lblPage.setFont(appFont);
+        lblLink.setFont(appFont);
 
         Button btnEdit = new Button("Save Changes");
 
@@ -159,7 +171,16 @@ public class Bookmark_App extends Application {
         Label lblPage = new Label("Page:");
         Label lblLink = new Label("Link:");
 
+        txtTitle.setFont(appFont);
+        txtPage.setFont(appFont);
+        txtLink.setFont(appFont);
+
+        lblTitle.setFont(appFont);
+        lblPage.setFont(appFont);
+        lblLink.setFont(appFont);
+
         Button btnAdd = new Button("Add New Bookmark");
+        btnAdd.setFont(appFont);
 
         btnAdd.setOnAction(e -> {
             var res = handler.add(txtTitle.getText(), txtPage.getText(), txtLink.getText());
@@ -209,9 +230,18 @@ public class Bookmark_App extends Application {
             Label lblNum = new Label((bookmark.getNumeration() + 1) + "");
             Label lblTitle = new Label(bookmark.getTitle());
             Label lblPage = new Label(bookmark.getPage());
+
             Button btnLink = new Button("Book Link");
             Button btnRemove = new Button("Delete");
             Button btnEdit = new Button("Edit");
+
+            lblNum.setFont(appFont);
+            lblTitle.setFont(appFont);
+            lblPage.setFont(appFont);
+
+            btnLink.setFont(appFont);
+            btnRemove.setFont(appFont);
+            btnEdit.setFont(appFont);
 
             int id = bookmark.getNumeration();
             btnLink.setOnAction(e -> getHostServices().showDocument(bookmark.getLink()));
