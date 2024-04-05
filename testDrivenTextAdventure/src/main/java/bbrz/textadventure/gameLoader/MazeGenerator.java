@@ -38,9 +38,9 @@ public class MazeGenerator {
         for (Location[] row : mace) {
             for (Location loc : row) {
                 if (loc == null) {
-                    builder.append(" ");
+                    builder.append("  ");
                 } else {
-                    builder.append("*");
+                    builder.append("* ");
                 }
             }
             builder.append("\n");
