@@ -54,4 +54,17 @@ public class BookmarkHandler {
     public List<Bookmark> getBookmarks() {
         return this.bookmarks;
     }
+
+    public void shuffleList() {
+        List<Bookmark> reShuffled = new ArrayList<>();
+        int count = 0;
+
+        for (Bookmark bookmark : bookmarks) {
+            bookmark.setNumeration(count);
+            reShuffled.add(bookmark);
+            count++;
+        }
+
+        bookmarks = reShuffled;
+    }
 }

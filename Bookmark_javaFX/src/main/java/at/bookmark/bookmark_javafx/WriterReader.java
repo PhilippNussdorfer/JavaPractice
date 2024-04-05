@@ -50,12 +50,12 @@ public class WriterReader {
 
                 while((currentLine = bufferedReader.readLine()) != null) {
                     String[] arr = currentLine.split("\\|");
-                    if (isParseAble(arr[0])) {
+                    if (isParseAble(arr[0]) && Integer.parseInt(arr[0]) == count) {
                         bookmarks.add(new Bookmark(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3]));
                     } else {
-                        bookmarks.add(new Bookmark(count, arr[0], arr[1], arr[2]));
-                        count ++;
+                        bookmarks.add(new Bookmark(count, arr[1], arr[2], arr[3]));
                     }
+                    count ++;
                 }
                 bufferedReader.close();
             } catch (IOException e) {

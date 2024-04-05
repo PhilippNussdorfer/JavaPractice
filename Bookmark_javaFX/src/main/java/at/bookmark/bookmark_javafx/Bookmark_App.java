@@ -141,6 +141,7 @@ public class Bookmark_App extends Application {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             handler.getBookmarks().remove(id);
+            handler.shuffleList();
             handler.save();
             notification("Deleted " + title, Alert.AlertType.INFORMATION);
             setGrid(gridMain, handler.getBookmarks());
