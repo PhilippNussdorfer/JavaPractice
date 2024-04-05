@@ -4,7 +4,7 @@ public class Bookmark {
     private String title;
     private String page;
     private String link;
-    private final int num;
+    private int num;
 
     public Bookmark(int num, String title, String page, String link) {
         this.title = title;
@@ -39,5 +39,9 @@ public class Bookmark {
 
     public int getNumeration() {
         return this.num;
+    }
+
+    public void setNumeration(int num) {
+        this.num = num;
     }
 }
