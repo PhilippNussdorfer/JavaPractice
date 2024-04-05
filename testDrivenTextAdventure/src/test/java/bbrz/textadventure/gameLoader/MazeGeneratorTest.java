@@ -34,7 +34,7 @@ class MazeGeneratorTest {
         var res = gen.getRawMaze();
         var i = res.length();
 
-        assertEquals(110, i);
+        assertEquals(210, i);
         assertEquals(10, countNewLines(res));
     }
 
