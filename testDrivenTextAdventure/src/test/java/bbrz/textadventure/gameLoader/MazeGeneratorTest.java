@@ -82,8 +82,8 @@ class MazeGeneratorTest {
     private int walker(List<List<Location>> maze, int x, int y) {
         maze.get(y).set(x, marker);
 
-        List<Integer> listOf_XDir = new ArrayList();
-        List<Integer> listOf_YDir = new ArrayList();
+        List<Integer> listOf_XDir = new ArrayList<>();
+        List<Integer> listOf_YDir = new ArrayList<>();
 
         int count = 1, countLocationOccurrence = 0, currentX = x, currentY = y;
         boolean hasLocations = true;
