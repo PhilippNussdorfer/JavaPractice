@@ -1,6 +1,8 @@
 package at.bookmark.bookmark_javafx;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ public class Bookmark_App extends Application {
     private final BookmarkHandler handler = new BookmarkHandler();
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
-    private final Font appFont = new Font(16);
+    private Font appFont = new Font(16);
     private final int popupWidth = 360;
     private final int popupHeight = 120;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
@@ -62,7 +65,6 @@ public class Bookmark_App extends Application {
 
         btnAdd.setOnAction(e -> addWindow());
 
-
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -76,8 +78,35 @@ public class Bookmark_App extends Application {
         ScrollPane scrollPane = new ScrollPane(grid);
         scrollPane.setFitToHeight(true);
 
-        Scene scene = new Scene(scrollPane, width, height);
+        MenuBar menu = new MenuBar();
+
+        Menu fontSize = new Menu("Font Size");
+
+        MenuItem size8 = new MenuItem("8");
+        size8.setOnAction(t -> {
+            appFont = new Font(8);
+        });
+        MenuItem size10 = new MenuItem("10");
+        size10.setOnAction(t -> appFont = new Font(10));
+        MenuItem size12 = new MenuItem("12");
+        size12.setOnAction(t -> appFont = new Font(12));
+        MenuItem size14 = new MenuItem("14");
+        size14.setOnAction(t -> appFont = new Font(14));
+        MenuItem size16 = new MenuItem("16");
+        size16.setOnAction(t -> appFont = new Font(16));
+        MenuItem size18 = new MenuItem("18");
+        size18.setOnAction(t -> appFont = new Font(18));
+        MenuItem size20 = new MenuItem("20");
+        size20.setOnAction(t -> appFont = new Font(20));
+
+        fontSize.getItems().addAll(size8, size10, size12, size14, size16, size18, size20);
+        menu.getMenus().add(fontSize);
+
+        VBox vbox = new VBox(menu, scrollPane);
+
+        Scene scene = new Scene(vbox, width, height);
         scene.setFill(Color.LIGHTGRAY);
+
 
         stage.setTitle("Bookmark");
         stage.setScene(scene);
@@ -255,5 +284,9 @@ public class Bookmark_App extends Application {
             grid.add(btnRemove, 4, bookmark.getNumeration());
             grid.add(btnLink, 5, bookmark.getNumeration());
         }
+    }
+
+    private void updateFont() {
+
     }
 }
