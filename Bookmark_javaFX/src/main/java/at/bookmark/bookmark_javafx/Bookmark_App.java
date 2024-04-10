@@ -42,6 +42,7 @@ public class Bookmark_App extends Application {
     private Label lbl_edit_title;
     private Label lbl_edit_page;
     private Label lbl_edit_link;
+    private Button btn_edit_edit;
 
     private TextField txt_add_title;
     private TextField txt_add_page;
@@ -144,9 +145,9 @@ public class Bookmark_App extends Application {
         lbl_edit_page.setText("Page:");
         lbl_edit_link.setText("Link:");
 
-        Button btnEdit = new Button("Save Changes");
+        btn_edit_edit.setText("Save Changes");
 
-        btnEdit.setOnAction(e -> {
+        btn_edit_edit.setOnAction(e -> {
             var res = handler.edit(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
             if (res) {
                 notification("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
@@ -169,7 +170,7 @@ public class Bookmark_App extends Application {
         pane.add(txt_edit_page, 1, 1);
         pane.add(lbl_edit_link, 0 , 2);
         pane.add(txt_edit_link, 1, 2);
-        pane.add(btnEdit, 0, 3);
+        pane.add(btn_edit_edit, 0, 3);
 
 
         editStage.setTitle("Add Bookmark");
@@ -317,6 +318,8 @@ public class Bookmark_App extends Application {
     private void initNodes() {
         buttons.addAll(List.of(
                 btn_add = new Button(),
+
+                btn_edit_edit = new Button(),
 
                 btn_add_add = new Button()
         ));
