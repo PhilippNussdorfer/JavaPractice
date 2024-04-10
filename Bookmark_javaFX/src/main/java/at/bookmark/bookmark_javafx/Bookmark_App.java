@@ -1,8 +1,6 @@
 package at.bookmark.bookmark_javafx;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,12 +26,38 @@ public class Bookmark_App extends Application {
     private final int popupHeight = 120;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
 
+    private final List<Button> buttons = new ArrayList<>();
+    private final List<Label> labels = new ArrayList<>();
+    private final List<TextField> txtFields = new ArrayList<>();
+    private final List<Button> viewBtn_s = new ArrayList<>();
+    private final List<Label> viewLbl_s = new ArrayList<>();
+
+    private Label lbl_search;
+    private TextField txt_search;
+    private Button btn_add;
+
+    private TextField txt_edit_title;
+    private TextField txt_edit_page;
+    private TextField txt_edit_link;
+    private Label lbl_edit_title;
+    private Label lbl_edit_page;
+    private Label lbl_edit_link;
+
+    private TextField txt_add_title;
+    private TextField txt_add_page;
+    private TextField txt_add_link;
+    private Label lbl_add_title;
+    private Label lbl_add_page;
+    private Label lbl_add_link;
+    private Button btn_add_add;
+
     public void launch_app() {
         launch();
     }
 
     @Override
     public void start(Stage stage) {
+        initNodes();
         int width = 1280;
         int height = 640;
 
@@ -44,34 +68,34 @@ public class Bookmark_App extends Application {
         gridSearch.setHgap(10);
         gridSearch.setVgap(10);
 
-        Label lblSearch = new Label("Search:");
-        TextField txtSearch = new TextField();
-        Button btnAdd = new Button("Add");
+        lbl_search.setText("Search:");
+        btn_add.setText("Add");
 
-        lblSearch.setFont(appFont);
-        txtSearch.setFont(appFont);
-        btnAdd.setFont(appFont);
-
-        txtSearch.setPrefWidth(width - (double) (width / 3));
-        txtSearch.textProperty().addListener((observer, oldValue, newValue) -> {
+        txt_search.setPrefWidth(width - (double) (width / 3));
+        txt_search.textProperty().addListener((observer, oldValue, newValue) -> {
 
             if (newValue.equals("")) {
                 gridSearch.getChildren().clear();
             } else {
                 var results = searchForBookmark(newValue);
+
+                viewLbl_s.clear();
+                viewBtn_s.clear();
+
                 setGrid(gridSearch, results);
+                setGrid(gridMain, handler.getBookmarks());
             }
         });
 
-        btnAdd.setOnAction(e -> addWindow());
+        btn_add.setOnAction(e -> addWindow());
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
 
-        grid.add(lblSearch, 0, 0);
-        grid.add(txtSearch, 1, 0);
-        grid.add(btnAdd, 2, 0);
+        grid.add(lbl_search, 0, 0);
+        grid.add(txt_search, 1, 0);
+        grid.add(btn_add, 2, 0);
         grid.add(gridSearch, 1, 1);
         grid.add(gridMain, 1, 2);
 
@@ -79,34 +103,26 @@ public class Bookmark_App extends Application {
         scrollPane.setFitToHeight(true);
 
         MenuBar menu = new MenuBar();
-
         Menu fontSize = new Menu("Font Size");
 
-        MenuItem size8 = new MenuItem("8");
-        size8.setOnAction(t -> {
-            appFont = new Font(8);
-        });
-        MenuItem size10 = new MenuItem("10");
-        size10.setOnAction(t -> appFont = new Font(10));
-        MenuItem size12 = new MenuItem("12");
-        size12.setOnAction(t -> appFont = new Font(12));
-        MenuItem size14 = new MenuItem("14");
-        size14.setOnAction(t -> appFont = new Font(14));
-        MenuItem size16 = new MenuItem("16");
-        size16.setOnAction(t -> appFont = new Font(16));
-        MenuItem size18 = new MenuItem("18");
-        size18.setOnAction(t -> appFont = new Font(18));
-        MenuItem size20 = new MenuItem("20");
-        size20.setOnAction(t -> appFont = new Font(20));
+        for (int i = 8; i < 34; i += 2) {
+            MenuItem size = new MenuItem(i + "");
+            int tmp = i;
 
-        fontSize.getItems().addAll(size8, size10, size12, size14, size16, size18, size20);
+            size.setOnAction(t -> {
+                appFont = new Font(tmp);
+                updateFont();
+            });
+
+            fontSize.getItems().add(size);
+        }
+
         menu.getMenus().add(fontSize);
 
         VBox vbox = new VBox(menu, scrollPane);
 
         Scene scene = new Scene(vbox, width, height);
         scene.setFill(Color.LIGHTGRAY);
-
 
         stage.setTitle("Bookmark");
         stage.setScene(scene);
@@ -120,43 +136,39 @@ public class Bookmark_App extends Application {
         Stage editStage = new Stage();
         Bookmark bookmark = handler.getBookmarks().get(id);
 
-        TextField txtTitle = new TextField(bookmark.getTitle());
-        TextField txtPage = new TextField(bookmark.getPage());
-        TextField txtLink = new TextField(bookmark.getLink());
+        txt_edit_title.setText(bookmark.getTitle());
+        txt_edit_page.setText(bookmark.getPage());
+        txt_edit_link.setText(bookmark.getLink());
 
-        Label lblTitle = new Label("Title:");
-        Label lblPage = new Label("Page:");
-        Label lblLink = new Label("Link:");
-
-        txtTitle.setFont(appFont);
-        txtPage.setFont(appFont);
-        txtLink.setFont(appFont);
-
-        lblTitle.setFont(appFont);
-        lblPage.setFont(appFont);
-        lblLink.setFont(appFont);
+        lbl_edit_title.setText("Title:");
+        lbl_edit_page.setText("Page:");
+        lbl_edit_link.setText("Link:");
 
         Button btnEdit = new Button("Save Changes");
 
         btnEdit.setOnAction(e -> {
-            var res = handler.edit(id, txtTitle.getText(), txtPage.getText(), txtLink.getText());
+            var res = handler.edit(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
             if (res) {
-                notification("Edited Bookmark for: " + txtTitle.getText(), Alert.AlertType.INFORMATION);
+                notification("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
+
+                viewBtn_s.clear();
+                viewLbl_s.clear();
+
                 setGrid(gridMain, handler.getBookmarks());
                 handler.save();
                 editStage.close();
             } else {
-                notification("Please use a link that is usable, this link is invalid: ' " + txtLink.getText() + " '!", Alert.AlertType.ERROR);
+                notification("Please use a link that is usable, this link is invalid: ' " + txt_edit_link.getText() + " '!", Alert.AlertType.ERROR);
             }
         });
 
         GridPane pane = new GridPane();
-        pane.add(lblTitle, 0, 0);
-        pane.add(txtTitle, 1, 0);
-        pane.add(lblPage, 0, 1);
-        pane.add(txtPage, 1, 1);
-        pane.add(lblLink, 0 , 2);
-        pane.add(txtLink, 1, 2);
+        pane.add(lbl_edit_title, 0, 0);
+        pane.add(txt_edit_title, 1, 0);
+        pane.add(lbl_edit_page, 0, 1);
+        pane.add(txt_edit_page, 1, 1);
+        pane.add(lbl_edit_link, 0 , 2);
+        pane.add(txt_edit_link, 1, 2);
         pane.add(btnEdit, 0, 3);
 
 
@@ -184,7 +196,12 @@ public class Bookmark_App extends Application {
             handler.getBookmarks().remove(id);
             handler.shuffleList();
             handler.save();
+
             notification("Deleted " + title, Alert.AlertType.INFORMATION);
+
+            viewLbl_s.clear();
+            viewBtn_s.clear();
+
             setGrid(gridMain, handler.getBookmarks());
         }
     }
@@ -192,45 +209,37 @@ public class Bookmark_App extends Application {
     private void addWindow() {
         Stage addStage = new Stage();
 
-        TextField txtTitle = new TextField();
-        TextField txtPage = new TextField();
-        TextField txtLink = new TextField();
+        lbl_add_title.setText("Title:");
+        lbl_add_page.setText("Page:");
+        lbl_add_link.setText("Link:");
 
-        Label lblTitle = new Label("Title:");
-        Label lblPage = new Label("Page:");
-        Label lblLink = new Label("Link:");
+        btn_add_add.setText("Add New Bookmark");
 
-        txtTitle.setFont(appFont);
-        txtPage.setFont(appFont);
-        txtLink.setFont(appFont);
-
-        lblTitle.setFont(appFont);
-        lblPage.setFont(appFont);
-        lblLink.setFont(appFont);
-
-        Button btnAdd = new Button("Add New Bookmark");
-        btnAdd.setFont(appFont);
-
-        btnAdd.setOnAction(e -> {
-            var res = handler.add(txtTitle.getText(), txtPage.getText(), txtLink.getText());
+        btn_add_add.setOnAction(e -> {
+            var res = handler.add(txt_add_title.getText(), txt_add_page.getText(), txt_add_link.getText());
             if (res) {
-                notification("Added Bookmark for: " + txtTitle.getText(), Alert.AlertType.INFORMATION);
+                notification("Added Bookmark for: " + txt_add_title.getText(), Alert.AlertType.INFORMATION);
+
+                viewBtn_s.clear();
+                viewLbl_s.clear();
+
                 setGrid(gridMain, handler.getBookmarks());
+
                 handler.save();
                 addStage.close();
             } else {
-                notification("Please use a link that is usable, this link is invalid: ' " + txtLink.getText() + " '!", Alert.AlertType.ERROR);
+                notification("Please use a link that is usable, this link is invalid: ' " + txt_add_link.getText() + " '!", Alert.AlertType.ERROR);
             }
         });
 
         GridPane pane = new GridPane();
-        pane.add(lblTitle, 0, 0);
-        pane.add(txtTitle, 1, 0);
-        pane.add(lblPage, 0, 1);
-        pane.add(txtPage, 1, 1);
-        pane.add(lblLink, 0 , 2);
-        pane.add(txtLink, 1, 2);
-        pane.add(btnAdd, 0, 3);
+        pane.add(lbl_add_title, 0, 0);
+        pane.add(txt_add_title, 1, 0);
+        pane.add(lbl_add_page, 0, 1);
+        pane.add(txt_add_page, 1, 1);
+        pane.add(lbl_add_link, 0 , 2);
+        pane.add(txt_add_link, 1, 2);
+        pane.add(btn_add_add, 0, 3);
 
 
         addStage.setTitle("Add Bookmark");
@@ -256,37 +265,86 @@ public class Bookmark_App extends Application {
 
         for (Bookmark bookmark : bookmarks) {
 
-            Label lblNum = new Label((bookmark.getNumeration() + 1) + "");
-            Label lblTitle = new Label(bookmark.getTitle());
-            Label lblPage = new Label(bookmark.getPage());
+            Label lbl_view_num = new Label((bookmark.getNumeration() + 1) + "");
+            Label lbl_view_page = new Label(bookmark.getTitle());
+            Label lbl_view_title = new Label(bookmark.getPage());
 
-            Button btnLink = new Button("Book Link");
-            Button btnRemove = new Button("Delete");
-            Button btnEdit = new Button("Edit");
+            Button btn_view_remove = new Button("Delete");
+            Button btn_view_edit = new Button("Edit");
+            Button btn_view_link = new Button("Book Link");
 
-            lblNum.setFont(appFont);
-            lblTitle.setFont(appFont);
-            lblPage.setFont(appFont);
-
-            btnLink.setFont(appFont);
-            btnRemove.setFont(appFont);
-            btnEdit.setFont(appFont);
+            viewLbl_s.addAll(List.of(lbl_view_page, lbl_view_title, lbl_view_num));
+            viewBtn_s.addAll(List.of(btn_view_remove, btn_view_edit, btn_view_link));
 
             int id = bookmark.getNumeration();
-            btnLink.setOnAction(e -> getHostServices().showDocument(bookmark.getLink()));
-            btnEdit.setOnAction(e -> editWindow(id));
-            btnRemove.setOnAction(e -> deleteNotify(id, bookmark.getTitle()));
+            btn_view_link.setOnAction(e -> getHostServices().showDocument(bookmark.getLink()));
+            btn_view_edit.setOnAction(e -> editWindow(id));
+            btn_view_remove.setOnAction(e -> deleteNotify(id, bookmark.getTitle()));
 
-            grid.add(lblNum , 0, bookmark.getNumeration());
-            grid.add(lblTitle, 1, bookmark.getNumeration());
-            grid.add(lblPage, 2, bookmark.getNumeration());
-            grid.add(btnEdit, 3, bookmark.getNumeration());
-            grid.add(btnRemove, 4, bookmark.getNumeration());
-            grid.add(btnLink, 5, bookmark.getNumeration());
+            grid.add(lbl_view_num, 0, bookmark.getNumeration());
+            grid.add(lbl_view_title, 1, bookmark.getNumeration());
+            grid.add(lbl_view_page, 2, bookmark.getNumeration());
+            grid.add(btn_view_edit, 3, bookmark.getNumeration());
+            grid.add(btn_view_remove, 4, bookmark.getNumeration());
+            grid.add(btn_view_link, 5, bookmark.getNumeration());
         }
+
+        updateFont();
     }
 
     private void updateFont() {
+        for (Button btn : buttons) {
+            btn.setFont(appFont);
+        }
 
+        for (Label lbl : labels) {
+            lbl.setFont(appFont);
+        }
+
+        for (TextField txt : txtFields) {
+            txt.setFont(appFont);
+        }
+
+        for (Label lbl : viewLbl_s) {
+            lbl.setFont(appFont);
+        }
+
+        for (Button btn : viewBtn_s) {
+            btn.setFont(appFont);
+        }
+    }
+
+    private void initNodes() {
+        buttons.addAll(List.of(
+                btn_add = new Button(),
+
+                btn_add_add = new Button()
+        ));
+
+        labels.addAll(List.of(
+                lbl_search = new Label(),
+
+                lbl_edit_title = new Label(),
+                lbl_edit_page = new Label(),
+                lbl_edit_link = new Label(),
+
+                lbl_add_title = new Label(),
+                lbl_add_page = new Label(),
+                lbl_add_link = new Label()
+        ));
+
+        txtFields.addAll(List.of(
+                txt_search = new TextField(),
+
+                txt_edit_title = new TextField(),
+                txt_edit_page = new TextField(),
+                txt_edit_link = new TextField(),
+
+                txt_add_title = new TextField(),
+                txt_add_page = new TextField(),
+                txt_add_link = new TextField()
+        ));
+
+        updateFont();
     }
 }
