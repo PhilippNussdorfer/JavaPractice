@@ -15,6 +15,7 @@ public class TowerOfHanoi {
         System.out.println("Tower 1 => " + String.join(", ", tower_1.getStackInList()) + "\n");
         System.out.println("Tower 2 => " + String.join(", ", tower_2.getStackInList()) + "\n");
         System.out.println("Tower 3 => " + String.join(", ", tower_3.getStackInList()) + "\n");
+        System.out.println("=".repeat(30) + "\n");
     }
 
     private static void movePiece(Stack<TowerPiece> fromTower, Stack<TowerPiece> toTower) {
