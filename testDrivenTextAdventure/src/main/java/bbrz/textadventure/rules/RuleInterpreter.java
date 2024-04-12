@@ -30,7 +30,7 @@ public class RuleInterpreter {
     public boolean interpretRule(MapRuleMark prevLocation, MapRuleMark randomLocation) {
         for (Rule rule : rules) {
             if (rule.canHandle(prevLocation)) {
-                return rule.isInRules(prevLocation, randomLocation);
+                return rule.isInRules(randomLocation);
             }
         }
         return false;
