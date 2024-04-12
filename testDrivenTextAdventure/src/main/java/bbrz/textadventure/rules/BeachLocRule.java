@@ -10,9 +10,9 @@ public class BeachLocRule implements Rule {
     @Override
     public boolean isInRules(MapRuleMark randomLocation) {
         return randomLocation == MapRuleMark.BEACH ||
-                    randomLocation == MapRuleMark.CLIFF ||
-                        randomLocation == MapRuleMark.EDGE_OF_THE_FOREST ||
-                            randomLocation == MapRuleMark.MEADOW ||
-                                randomLocation == MapRuleMark.SEA;
+                randomLocation == MapRuleMark.CLIFF ||
+                randomLocation == MapRuleMark.EDGE_OF_THE_FOREST ||
+                randomLocation == MapRuleMark.MEADOW ||
+                randomLocation == MapRuleMark.SEA;
     }
 }
