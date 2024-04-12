@@ -1,12 +1,15 @@
 package bbrz.textadventure.rules;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RuleInterpreter {
+    @Getter
     private final List<Rule> rules = new ArrayList<>();
 
-    public void AddList(List<Rule> rules) {
+    public void addList(List<Rule> rules) {
         this.rules.addAll(rules);
     }
 

@@ -11,7 +11,7 @@ public class MapLocationPopulationCrawler {
     private static final RuleInterpreter ruleInterpreter = new RuleInterpreter();
 
     public MapLocationPopulationCrawler() {
-        ruleInterpreter.AddList(List.of(
+        ruleInterpreter.addList(List.of(
                 new BeachLocRule(),
                 new ClearingLocRule(),
                 new CliffLocRule(),
