@@ -6,6 +6,10 @@ import java.util.List;
 public class RuleInterpreter {
     private final List<Rule> rules = new ArrayList<>();
 
+    public RuleInterpreter() {
+        init();
+    }
+
     private void init() {
         rules.addAll(List.of(
             new StartingLocRule()
