@@ -9,16 +9,10 @@ import java.util.List;
 import java.util.Random;
 
 public class MapLocationPopulationCrawler {
-    private final RuleInterpreter ruleInterpreter = new RuleInterpreter();
+    private static final RuleInterpreter ruleInterpreter = new RuleInterpreter();
 
-    private static boolean isLocationSettable(Location prevLoc, Location currentLoc) {
-        if (prevLoc.getMark() == MapRuleMark.STARTING_LOCATION) {
-            return true;
-        }
-
-
-
-        return false;
+    private static boolean isLocationSettable(Location prevLoc, Location randomPickedLoc) {
+        return ruleInterpreter.interpretRule(prevLoc.getMark(), randomPickedLoc.getMark());
     }
 
     public static List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLoc, Location prevLoc) {
