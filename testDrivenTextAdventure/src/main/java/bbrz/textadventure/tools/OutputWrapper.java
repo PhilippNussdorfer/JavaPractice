@@ -1,6 +1,6 @@
 package bbrz.textadventure.tools;
 
-import bbrz.textadventure.colors.TextColor;
+import bbrz.textadventure.tools.colors.TextColor;
 
 public class OutputWrapper {
 

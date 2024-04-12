@@ -1,7 +1,7 @@
 package bbrz.textadventure;
 
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.colors.TextColor;
+import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.tools.Interpreter;

@@ -1,4 +1,4 @@
-package bbrz.textadventure.colors;
+package bbrz.textadventure.tools.colors;
 
 import lombok.Getter;
 

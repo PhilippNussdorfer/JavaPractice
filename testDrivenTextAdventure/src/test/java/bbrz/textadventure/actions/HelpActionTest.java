@@ -3,7 +3,7 @@ package bbrz.textadventure.actions;
 import bbrz.textadventure.Game;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
-import bbrz.textadventure.colors.TextColor;
+import bbrz.textadventure.tools.colors.TextColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

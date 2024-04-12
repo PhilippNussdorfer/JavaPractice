@@ -1,7 +1,7 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.colors.TextColor;
+import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Backpack;

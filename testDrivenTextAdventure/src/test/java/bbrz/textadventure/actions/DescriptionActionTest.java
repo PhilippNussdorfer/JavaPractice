@@ -5,7 +5,7 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.item.ItemStats;
 import bbrz.textadventure.item.ItemType;
 import bbrz.textadventure.tools.OutputWrapper;
-import bbrz.textadventure.colors.TextColor;
+import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.entity.Player;
