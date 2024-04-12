@@ -1,4 +1,4 @@
-package bbrz.textadventure.gameLoader;
+package bbrz.textadventure.rules;
 
 public enum MapRuleMark {
     WOODS,

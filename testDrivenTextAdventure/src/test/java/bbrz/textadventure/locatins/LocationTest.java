@@ -1,7 +1,7 @@
 package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
-import bbrz.textadventure.gameLoader.MapRuleMark;
+import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

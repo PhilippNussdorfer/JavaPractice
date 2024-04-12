@@ -5,7 +5,7 @@ import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.gameLoader.MazeGenerator;
-import bbrz.textadventure.gameLoader.MapRuleMark;
+import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.gameLoader.StaticGameLoader;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.tools.Interpreter;

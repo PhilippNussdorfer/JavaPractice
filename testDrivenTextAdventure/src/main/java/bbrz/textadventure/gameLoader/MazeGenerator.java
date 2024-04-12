@@ -6,7 +6,7 @@ import bbrz.textadventure.locatins.Location;
 import java.util.*;
 
 public class MazeGenerator {
-    private final Stack<MaceNode> stack = new Stack<>();
+    private final Stack<MazeNode> stack = new Stack<>();
     private final Random rand = new Random();
     private final Location[][] mace;
     private final Location replaceable;
@@ -20,14 +20,14 @@ public class MazeGenerator {
     }
 
     public void generateMaze() {
-        stack.push(new MaceNode(0, 0));
+        stack.push(new MazeNode(0, 0));
 
         while (!stack.empty()) {
-            MaceNode next = stack.pop();
+            MazeNode next = stack.pop();
 
             if (validNextNode(next)) {
                 mace[next.getY()][next.getX()] = replaceable;
-                ArrayList<MaceNode> neighbours = findNeighbours(next);
+                ArrayList<MazeNode> neighbours = findNeighbours(next);
                 randomlyAddNodesToStack(neighbours);
             }
         }
@@ -56,7 +56,7 @@ public class MazeGenerator {
         return result;
     }
 
-    private void randomlyAddNodesToStack(ArrayList<MaceNode> neighbours) {
+    private void randomlyAddNodesToStack(ArrayList<MazeNode> neighbours) {
         int targetIndex;
 
         while (!neighbours.isEmpty()) {
@@ -65,13 +65,13 @@ public class MazeGenerator {
         }
     }
 
-    private ArrayList<MaceNode> findNeighbours(MaceNode next) {
-        ArrayList<MaceNode> neighbours = new ArrayList<>();
+    private ArrayList<MazeNode> findNeighbours(MazeNode next) {
+        ArrayList<MazeNode> neighbours = new ArrayList<>();
 
         for (int y = next.getY() - 1; y < next.getY() + 2; y++) {
             for (int x = next.getX() - 1; x < next.getX() + 2; x++) {
                 if (pointOnGrid(x, y) && pointNotCorner(next, x, y) && pointNotNode(next, x, y)) {
-                    neighbours.add(new MaceNode(x, y));
+                    neighbours.add(new MazeNode(x, y));
                 }
             }
         }
@@ -79,11 +79,11 @@ public class MazeGenerator {
         return neighbours;
     }
 
-    private boolean pointNotCorner(MaceNode next, int x, int y) {
+    private boolean pointNotCorner(MazeNode next, int x, int y) {
         return (x == next.getX() || y == next.getY());
     }
 
-    private boolean validNextNode(MaceNode next) {
+    private boolean validNextNode(MazeNode next) {
         int numNeighbouringOnes = 0;
 
         for (int y = next.getY() - 1; y < next.getY() + 2; y++) {
@@ -96,7 +96,7 @@ public class MazeGenerator {
         return (numNeighbouringOnes < 3) && mace[next.getY()][next.getX()] != replaceable;
     }
 
-    private boolean pointNotNode(MaceNode next, int x, int y) {
+    private boolean pointNotNode(MazeNode next, int x, int y) {
         return !(x == next.getX() && y == next.getY());
     }
 

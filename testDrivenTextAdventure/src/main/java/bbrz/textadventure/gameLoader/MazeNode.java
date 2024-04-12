@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class MaceNode {
+public class MazeNode {
     private final int x;
     private final int y;
 }
