@@ -11,6 +11,7 @@ public class LakeLocRule implements Rule {
     public boolean isInRules(MapRuleMark randomLocation) {
         return randomLocation == MapRuleMark.WOODS ||
                 randomLocation == MapRuleMark.MEADOW ||
-                randomLocation == MapRuleMark.EDGE_OF_THE_SWAMP;
+                randomLocation == MapRuleMark.EDGE_OF_THE_SWAMP ||
+                randomLocation == MapRuleMark.EDGE_OF_THE_FOREST;
     }
 }
