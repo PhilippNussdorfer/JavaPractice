@@ -8,8 +8,8 @@ public class MeadowLocRule implements Rule {
     }
 
     @Override
-    public boolean isInRules(MapRuleMark prevLocation, MapRuleMark randomLocation) {
-        return prevLocation == randomLocation ||
+    public boolean isInRules(MapRuleMark randomLocation) {
+        return randomLocation == MapRuleMark.MEADOW ||
                 randomLocation == MapRuleMark.CLIFF ||
                 randomLocation == MapRuleMark.EDGE_OF_THE_FOREST ||
                 randomLocation == MapRuleMark.EDGE_OF_THE_SWAMP ||

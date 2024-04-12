@@ -8,8 +8,8 @@ public class WoodsLocRule implements Rule {
     }
 
     @Override
-    public boolean isInRules(MapRuleMark prevLocation, MapRuleMark randomLocation) {
-        return prevLocation == randomLocation ||
+    public boolean isInRules(MapRuleMark randomLocation) {
+        return randomLocation == MapRuleMark.WOODS ||
                 randomLocation == MapRuleMark.EDGE_OF_THE_FOREST ||
                 randomLocation == MapRuleMark.CLEARING ||
                 randomLocation == MapRuleMark.LAKE;

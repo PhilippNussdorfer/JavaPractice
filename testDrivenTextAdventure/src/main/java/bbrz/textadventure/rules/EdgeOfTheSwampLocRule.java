@@ -8,13 +8,12 @@ public class EdgeOfTheSwampLocRule implements Rule {
     }
 
     @Override
-    public boolean isInRules(MapRuleMark prevLocation, MapRuleMark randomLocation) {
-        return prevLocation != randomLocation && (
-                    randomLocation == MapRuleMark.SWAMP ||
-                        randomLocation == MapRuleMark.EDGE_OF_THE_FOREST ||
-                            randomLocation == MapRuleMark.MEADOW ||
-                                randomLocation == MapRuleMark.LAKE ||
-                                    randomLocation == MapRuleMark.CLIFF
-                );
+    public boolean isInRules(MapRuleMark randomLocation) {
+        return randomLocation == MapRuleMark.SWAMP ||
+                randomLocation == MapRuleMark.EDGE_OF_THE_FOREST ||
+                randomLocation == MapRuleMark.MEADOW ||
+                randomLocation == MapRuleMark.LAKE ||
+                randomLocation == MapRuleMark.CLIFF ||
+                randomLocation == MapRuleMark.EDGE_OF_THE_SWAMP;
     }
 }
