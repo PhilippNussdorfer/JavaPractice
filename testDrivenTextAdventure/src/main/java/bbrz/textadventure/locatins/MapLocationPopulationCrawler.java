@@ -1,7 +1,6 @@
 package bbrz.textadventure.locatins;
 
-import bbrz.textadventure.rules.MapRuleMark;
-import bbrz.textadventure.rules.RuleInterpreter;
+import bbrz.textadventure.rules.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +9,23 @@ import java.util.Random;
 
 public class MapLocationPopulationCrawler {
     private static final RuleInterpreter ruleInterpreter = new RuleInterpreter();
+
+    public MapLocationPopulationCrawler() {
+        ruleInterpreter.AddList(List.of(
+                new BeachLocRule(),
+                new ClearingLocRule(),
+                new CliffLocRule(),
+                new EdgeOfTheForestLocRule(),
+                new EdgeOfTheSwampLocRule(),
+                new LakeLocRule(),
+                new MeadowLocRule(),
+                new SeaLocRule(),
+                new StartingLocRule(),
+                new SwampLocRule(),
+                new WellLocRule(),
+                new WoodsLocRule()
+        ));
+    }
 
     private static boolean isLocationSettable(Location prevLoc, Location randomPickedLoc) {
         return ruleInterpreter.interpretRule(prevLoc.getMark(), randomPickedLoc.getMark());
