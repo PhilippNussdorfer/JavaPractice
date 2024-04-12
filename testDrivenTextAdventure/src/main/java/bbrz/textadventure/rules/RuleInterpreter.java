@@ -12,7 +12,18 @@ public class RuleInterpreter {
 
     private void init() {
         rules.addAll(List.of(
-            new StartingLocRule()
+                new StartingLocRule(),
+                new LakeLocRule(),
+                new WoodsLocRule(),
+                new SeaLocRule(),
+                new WellLocRule(),
+                new MeadowLocRule(),
+                new BeachLocRule(),
+                new ClearingLocRule(),
+                new CliffLocRule(),
+                new EdgeOfTheForestLocRule(),
+                new EdgeOfTheSwampLocRule(),
+                new SwampLocRule()
         ));
     }
 
