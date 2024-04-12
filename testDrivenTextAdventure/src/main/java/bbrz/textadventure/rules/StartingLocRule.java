@@ -9,6 +9,6 @@ public class StartingLocRule implements Rule {
 
     @Override
     public boolean isInRules(MapRuleMark randomLocation) {
-        return randomLocation != MapRuleMark.STARTING_LOCATION;
+        return randomLocation != MapRuleMark.STARTING_LOCATION && randomLocation != MapRuleMark.REPLACEABLE;
     }
 }
