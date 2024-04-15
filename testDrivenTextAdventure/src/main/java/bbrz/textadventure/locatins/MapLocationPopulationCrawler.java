@@ -94,7 +94,7 @@ public class MapLocationPopulationCrawler {
         if (x - 1 >= 0) {
             posList.add(new Position(x - 1, y));
         }
-        if (x + 1 < maze.size()) {
+        if (x + 1 < maze.get(0).size()) {
             posList.add(new Position(x + 1, y));
         }
 
@@ -105,6 +105,7 @@ public class MapLocationPopulationCrawler {
         Location tmpSave = null;
         Random random = new Random();
         int count = 0;
+
         while (count < 500) {
             tmpSave = possibleLoc.get(random.nextInt(possibleLoc.size()));
 
