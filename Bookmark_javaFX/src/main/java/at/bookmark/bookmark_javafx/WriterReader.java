@@ -49,11 +49,11 @@ public class WriterReader {
                 String currentLine;
 
                 while((currentLine = bufferedReader.readLine()) != null) {
-                    String[] arr = currentLine.split("\\|");
-                    if (isParseAble(arr[0]) && Integer.parseInt(arr[0]) == count) {
-                        bookmarks.add(new Bookmark(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3]));
+                    String[] bookmarkArr = currentLine.split("\\|");
+                    if (isParseAble(bookmarkArr[0]) && Integer.parseInt(bookmarkArr[0]) == count) {
+                        bookmarks.add(new Bookmark(Integer.parseInt(bookmarkArr[0]), bookmarkArr[1], bookmarkArr[2], bookmarkArr[3]));
                     } else {
-                        bookmarks.add(new Bookmark(count, arr[1], arr[2], arr[3]));
+                        bookmarks.add(new Bookmark(count, bookmarkArr[1], bookmarkArr[2], bookmarkArr[3]));
                     }
                     count ++;
                 }

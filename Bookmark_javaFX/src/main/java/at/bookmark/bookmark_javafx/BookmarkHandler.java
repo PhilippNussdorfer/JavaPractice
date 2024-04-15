@@ -11,10 +11,10 @@ public class BookmarkHandler {
     private final WriterReader writerReader = new WriterReader();
 
     public BookmarkHandler() {
-        init();
+        initBookmarks();
     }
 
-    private void init() {
+    private void initBookmarks() {
         bookmarks = writerReader.loadFile();
     }
 
@@ -28,11 +28,11 @@ public class BookmarkHandler {
         }
     }
 
-    public void save() {
+    public void saveInFile() {
         writerReader.writeFile(bookmarks);
     }
 
-    public boolean edit(int id, String title, String page, String link) {
+    public boolean editBookmark(int id, String title, String page, String link) {
         if (isLink(link)) {
             bookmarks.get(id).setTitle(title);
             bookmarks.get(id).setPage(page);
@@ -42,7 +42,7 @@ public class BookmarkHandler {
         return false;
     }
 
-    public boolean add(String title, String page, String link) {
+    public boolean addNewBookmark(String title, String page, String link) {
         if (isLink(link)) {
             int num = bookmarks.get(bookmarks.size() - 1).getNumeration();
             bookmarks.add(new Bookmark(num + 1, title, page, link));
@@ -55,16 +55,16 @@ public class BookmarkHandler {
         return this.bookmarks;
     }
 
-    public void shuffleList() {
-        List<Bookmark> reShuffled = new ArrayList<>();
+    public void collapseBookmarks() {
+        List<Bookmark> collapsedBookmark = new ArrayList<>();
         int count = 0;
 
         for (Bookmark bookmark : bookmarks) {
             bookmark.setNumeration(count);
-            reShuffled.add(bookmark);
+            collapsedBookmark.add(bookmark);
             count++;
         }
 
-        bookmarks = reShuffled;
+        bookmarks = collapsedBookmark;
     }
 }
