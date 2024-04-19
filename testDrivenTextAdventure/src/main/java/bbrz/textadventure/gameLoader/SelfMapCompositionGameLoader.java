@@ -2,6 +2,7 @@ package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.rules.*;
+import bbrz.textadventure.tools.LocationPointerTool;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
@@ -40,7 +41,7 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         var gen = new MazeGenerator(100, replaceable);
         gen.generateMaze();
 
-        var crawler = new MapLocationPopulationCrawler(initRuleInterpreter(), new Random());
+        var crawler = new MapLocationPopulationCrawler(initRuleInterpreter(), new Random(), new LocationPointerTool());
 
         var map = gen.getMazeAsList();
         map = crawler.populateMaze(map, 0, 0, locations, null);

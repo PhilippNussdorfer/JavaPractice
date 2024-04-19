@@ -2,6 +2,7 @@ package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.rules.RuleInterpreter;
+import bbrz.textadventure.tools.LocationPointerTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,8 @@ class MapLocationPopulationCrawlerTest {
     RuleInterpreter ruleInterpreter;
     @Mock
     Random random;
+    @Mock
+    LocationPointerTool tool;
 
     @BeforeEach
     void setUp() {
@@ -67,7 +70,7 @@ class MapLocationPopulationCrawlerTest {
 
     @Test
     void populateMaze() {
-        var crawler = new MapLocationPopulationCrawler(ruleInterpreter, random);
+        var crawler = new MapLocationPopulationCrawler(ruleInterpreter, random, tool);
 
         int countOfReplaceable = countReplaceable(map);
         var populatedMap = crawler.populateMaze(map, 0, 0, List.of(starting, meadow, lake), null);
