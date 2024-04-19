@@ -8,68 +8,39 @@ import java.util.List;
 import java.util.Random;
 
 public class MapLocationPopulationCrawler {
-    private static final RuleInterpreter ruleInterpreter = new RuleInterpreter();
+    private final RuleInterpreter ruleInterpreter;
+    Random random;
 
-    public MapLocationPopulationCrawler() {
-        ruleInterpreter.addList(List.of(
-                new BeachLocRule(),
-                new ClearingLocRule(),
-                new CliffLocRule(),
-                new EdgeOfTheForestLocRule(),
-                new EdgeOfTheSwampLocRule(),
-                new LakeLocRule(),
-                new MeadowLocRule(),
-                new SeaLocRule(),
-                new StartingLocRule(),
-                new SwampLocRule(),
-                new WellLocRule(),
-                new WoodsLocRule()
-        ));
+    public MapLocationPopulationCrawler(RuleInterpreter ruleInterpreter, Random random) {
+        this.ruleInterpreter = ruleInterpreter;
+        this.random = random;
     }
 
-    private static boolean isLocationSettable(Location prevLoc, Location randomPickedLoc) {
+    private boolean isLocationSettable(Location prevLoc, Location randomPickedLoc) {
         return ruleInterpreter.interpretRule(prevLoc.getMark(), randomPickedLoc.getMark());
     }
 
-    public static List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLoc, Location prevLoc) {
+    public List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLoc, Location prevLoc) {
         if (prevLoc == null) {
             maze.get(y).set(x, possibleLoc.get(0));
         } else {
             maze.get(y).set(x, getPossibleLoc(possibleLoc, prevLoc));
         }
 
-        int countLocationOccurrence = 0, currentX = x, currentY = y;
+        Position currentPos = new Position(x, y);
         boolean hasLocations = true;
 
         while (hasLocations) {
-            Location prev = maze.get(currentY).get(currentX);
-            List<Position> posList = possibleDirections(currentX, currentY, maze);
+            Location prev = maze.get(currentPos.getY()).get(currentPos.getX());
+            List<Position> posList = possibleDirections(currentPos.getX(), currentPos.getY(), maze);
             Iterator<Position> posDirIterator = posList.iterator();
 
-            while (posDirIterator.hasNext()) {
-                Position pos = posDirIterator.next();
-                int xDir = pos.getX(), yDir = pos.getY();
+            int countLocationOccurrence = filterInvalidDirections(maze, posDirIterator);
 
-                if (maze.get(yDir).get(xDir).getMark() == MapRuleMark.REPLACEABLE) {
-                    countLocationOccurrence ++;
-                } else {
-                    posDirIterator.remove();
-                }
-            }
+            if (countLocationOccurrence == 1)
+                currentPos = new Position(posList.get(0).getX(), posList.get(0).getY());
 
-            if (countLocationOccurrence > 1) {
-                for (int i = 0; i < countLocationOccurrence; i++) {
-                    maze = populateMaze(maze, posList.get(i).getX(), posList.get(i).getY(), possibleLoc, maze.get(currentY).get(currentX));
-                }
-            }
-
-            if (countLocationOccurrence == 1) {
-                currentX = posList.get(0).getX();
-                currentY = posList.get(0).getY();
-
-                Location tmpSave = getPossibleLoc(possibleLoc, prev);
-                maze.get(currentY).set(currentX, tmpSave);
-            }
+            maze = populateValidDirections(maze, possibleLoc, countLocationOccurrence, currentPos, prev, posList);
 
             if (countLocationOccurrence == 0) {
                 hasLocations = false;
@@ -81,7 +52,38 @@ public class MapLocationPopulationCrawler {
         return maze;
     }
 
-    private static List<Position> possibleDirections(int x, int y, List<List<Location>> maze) {
+    private List<List<Location>> populateValidDirections(List<List<Location>> maze, List<Location> possibleLoc, int countLocationOccurrence, Position pos, Location prev, List<Position> posList) {
+        if (countLocationOccurrence > 1) {
+            for (int i = 0; i < countLocationOccurrence; i++) {
+                maze = populateMaze(maze, posList.get(i).getX(), posList.get(i).getY(), possibleLoc, maze.get(pos.getY()).get(pos.getX()));
+            }
+        }
+
+        if (countLocationOccurrence == 1) {
+            Location tmpSave = getPossibleLoc(possibleLoc, prev);
+            maze.get(pos.getY()).set(pos.getX(), tmpSave);
+        }
+
+        return maze;
+    }
+
+    private int filterInvalidDirections(List<List<Location>> maze, Iterator<Position> posDirIterator) {
+        int countLocationOccurrence = 0;
+
+        while (posDirIterator.hasNext()) {
+            Position pos = posDirIterator.next();
+            int x = pos.getX(), y = pos.getY();
+
+            if (maze.get(y).get(x) != null && maze.get(y).get(x).getMark() == MapRuleMark.REPLACEABLE) {
+                countLocationOccurrence++;
+            } else {
+                posDirIterator.remove();
+            }
+        }
+        return countLocationOccurrence;
+    }
+
+    private List<Position> possibleDirections(int x, int y, List<List<Location>> maze) {
         List<Position> posList = new ArrayList<>();
 
         if (y - 1 >= 0) {
@@ -101,9 +103,9 @@ public class MapLocationPopulationCrawler {
         return posList;
     }
 
-    private static Location getPossibleLoc(List<Location> possibleLoc, Location prevLoc) {
+    private Location getPossibleLoc(List<Location> possibleLoc, Location prevLoc) {
         Location tmpSave = null;
-        Random random = new Random();
+
         int count = 0;
 
         while (count < 500) {
