@@ -1,6 +1,7 @@
 package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.rules.*;
+import bbrz.textadventure.tools.LocationPointerTool;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,11 +10,13 @@ import java.util.Random;
 
 public class MapLocationPopulationCrawler {
     private final RuleInterpreter ruleInterpreter;
-    Random random;
+    private final Random random;
+    private final LocationPointerTool tool;
 
-    public MapLocationPopulationCrawler(RuleInterpreter ruleInterpreter, Random random) {
+    public MapLocationPopulationCrawler(RuleInterpreter ruleInterpreter, Random random, LocationPointerTool tool) {
         this.ruleInterpreter = ruleInterpreter;
         this.random = random;
+        this.tool = tool;
     }
 
     private boolean isLocationSettable(Location prevLoc, Location randomPickedLoc) {
@@ -23,8 +26,12 @@ public class MapLocationPopulationCrawler {
     public List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLoc, Location prevLoc) {
         if (prevLoc == null) {
             maze.get(y).set(x, possibleLoc.get(0));
+            maze.get(y).get(x).addPosition(x, y);
         } else {
             maze.get(y).set(x, getPossibleLoc(possibleLoc, prevLoc));
+            maze.get(y).get(x).addPosition(x, y);
+
+            tool.addPointerToLocation(prevLoc, maze.get(y).get(x));
         }
 
         Position currentPos = new Position(x, y);
@@ -62,6 +69,9 @@ public class MapLocationPopulationCrawler {
         if (countLocationOccurrence == 1) {
             Location tmpSave = getPossibleLoc(possibleLoc, prev);
             maze.get(pos.getY()).set(pos.getX(), tmpSave);
+            maze.get(pos.getY()).get(pos.getX()).addPosition(pos);
+
+            tool.addPointerToLocation(prev, maze.get(pos.getY()).get(pos.getX()));
         }
 
         return maze;
