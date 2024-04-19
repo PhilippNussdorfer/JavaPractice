@@ -19,11 +19,17 @@ public class Location {
     private final List<LocationPointer> pointers = new ArrayList<>();
     @Getter
     private final List<Item> items = new ArrayList<>();
+    @Getter
+    private Position pos = null;
 
     public Location(String name, String description, MapRuleMark mark) {
         this.name = name;
         this.description = description;
         this.mark = mark;
+    }
+
+    public void addPosition(int x, int y) {
+        pos = new Position(x, y);
     }
 
     public Location getRoom(String direction) throws RoomNotFoundException {
