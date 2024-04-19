@@ -32,6 +32,10 @@ public class Location {
         pos = new Position(x, y);
     }
 
+    public void addPosition(Position pos) {
+        this.pos = pos;
+    }
+
     public Location getRoom(String direction) throws RoomNotFoundException {
         for (LocationPointer pointer : pointers) {
             if (pointer.isDirection(direction)) {
