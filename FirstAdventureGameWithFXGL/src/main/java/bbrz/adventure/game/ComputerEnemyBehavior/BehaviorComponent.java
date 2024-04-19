@@ -40,6 +40,13 @@ public class BehaviorComponent extends Component {
 
             /*double avoidanceStrength = 1 - (distance/minFollowingRadius);
             avoidanceDir.multiply(avoidanceStrength);*/
+             if (avoidanceDir.mag() < 150) {
+                 double mag = avoidanceDir.mag();
+                 double x = avoidanceDir.getX(), y = avoidanceDir.getY();
+
+                 avoidanceDir = new Vec((x/mag) * 150, (y/mag) / 150);
+                 avoidanceDir.normalize();
+             }
 
             steer.add(avoidanceDir);
             animationComponent.move();
@@ -73,8 +80,8 @@ public class BehaviorComponent extends Component {
             double distance = enemy.distance(obstacle);
             if (distance < separationDistance) {
                 Vec diff = Vec.sub(enemyPos, obstaclePos);
-                diff.normalize();
                 diff.div(distance);
+                diff.normalize();
                 steer.add(diff);
             }
         }
