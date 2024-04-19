@@ -105,7 +105,6 @@ public class MapLocationPopulationCrawler {
 
     private Location getPossibleLoc(List<Location> possibleLoc, Location prevLoc) {
         Location tmpSave = null;
-
         int count = 0;
 
         while (count < 500) {
