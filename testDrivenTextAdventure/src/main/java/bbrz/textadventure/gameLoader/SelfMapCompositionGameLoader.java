@@ -1,6 +1,7 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.rules.*;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
@@ -8,10 +9,10 @@ import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.locatins.MapLocationPopulationCrawler;
-import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.tools.OutputWrapper;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class SelfMapCompositionGameLoader implements GameLoader {
@@ -39,12 +40,35 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         var gen = new MazeGenerator(100, replaceable);
         gen.generateMaze();
 
+        var crawler = new MapLocationPopulationCrawler(initRuleInterpreter(), new Random());
+
         var map = gen.getMazeAsList();
-        map = MapLocationPopulationCrawler.populateMaze(map, 0, 0, locations, null);
+        map = crawler.populateMaze(map, 0, 0, locations, null);
 
         Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), locations.get(0), wrapper, map);
         game.addInterpreter(InterpreterInit.init(game, wrapper));
 
         return game;
+    }
+
+    public RuleInterpreter initRuleInterpreter() {
+        var ruleInterpreter = new RuleInterpreter();
+
+        ruleInterpreter.addList(List.of(
+                new BeachLocRule(),
+                new ClearingLocRule(),
+                new CliffLocRule(),
+                new EdgeOfTheForestLocRule(),
+                new EdgeOfTheSwampLocRule(),
+                new LakeLocRule(),
+                new MeadowLocRule(),
+                new SeaLocRule(),
+                new StartingLocRule(),
+                new SwampLocRule(),
+                new WellLocRule(),
+                new WoodsLocRule()
+        ));
+
+        return ruleInterpreter;
     }
 }
