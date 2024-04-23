@@ -2,12 +2,10 @@ package bbrz.textadventure;
 
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
+import bbrz.textadventure.gameLoader.SelfMapCompositionGameLoader;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
-import bbrz.textadventure.gameLoader.MazeGenerator;
-import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.gameLoader.StaticGameLoader;
-import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import jdk.jshell.spi.ExecutionControl;
@@ -27,10 +25,14 @@ public class GameLoop {
     }
 
     private void runGame() {
-        MazeGenerator mace = new MazeGenerator(100, new Location("none", "none", MapRuleMark.REPLACEABLE));
-        mace.generateMaze();
-        System.out.println(mace.getRawMaze());
-        initGame();
+        wrapper.outPrintlnColored("Do you want to play a normal game or an random (yes => normal / no => random):", TextColor.GREEN);
+        var input = scanner.nextLine();
+
+        if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("y")) {
+            initGame();
+        } else {
+            initRandomMazeGame();
+        }
 
         while (game.isLoopGame()) {
             wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName(), TextColor.BLUE);
@@ -57,6 +59,11 @@ public class GameLoop {
 
     private void initGame() {
         game = new StaticGameLoader().initGame(wrapper, scanner);
+        interpreter = game.getInterpreter();
+    }
+
+    private void initRandomMazeGame() {
+        game = new SelfMapCompositionGameLoader().initGame(wrapper, scanner);
         interpreter = game.getInterpreter();
     }
 }
