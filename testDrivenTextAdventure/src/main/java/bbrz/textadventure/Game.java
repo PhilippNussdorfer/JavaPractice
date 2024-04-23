@@ -19,8 +19,7 @@ public class Game {
     private Location currentLocation;
     private final OutputWrapper wrapper;
     private Interpreter interpreter;
-    private List<List<Location>> gameMap;
-    private int currentX = 0, currentY = 0;
+    private final List<List<Location>> gameMap;
     @Setter
     private boolean loopGame = true;
 

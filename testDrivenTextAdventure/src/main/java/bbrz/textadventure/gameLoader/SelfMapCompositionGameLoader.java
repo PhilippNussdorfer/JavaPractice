@@ -35,11 +35,12 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         var replaceable = new Location("Replaceable", "for the algorithm to indicate an replaceable location", MapRuleMark.REPLACEABLE);
         var locations = initLocations();
 
-        wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
-        String name = scanner.nextLine();
-
-        var gen = new MazeGenerator(100, replaceable);
+        var gen = new MazeGenerator(4, replaceable);
         gen.generateMaze();
+        System.out.println(gen.getRawMaze());
+
+        wrapper.outPrintColored("You are:\n> ", TextColor.GREEN);
+        String name = scanner.nextLine();
 
         var crawler = new MapLocationPopulationCrawler(initRuleInterpreter(), new Random(), new LocationPointerTool());
 

@@ -23,12 +23,12 @@ public class MapLocationPopulationCrawler {
         return ruleInterpreter.interpretRule(prevLoc.getMark(), randomPickedLoc.getMark());
     }
 
-    public List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLoc, Location prevLoc) {
+    public List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLocations, Location prevLoc) {
         if (prevLoc == null) {
-            maze.get(y).set(x, possibleLoc.get(0));
+            maze.get(y).set(x, possibleLocations.get(0));
             maze.get(y).get(x).addPosition(x, y);
         } else {
-            maze.get(y).set(x, getPossibleLoc(possibleLoc, prevLoc));
+            maze.get(y).set(x, getPossibleLoc(possibleLocations, prevLoc));
             maze.get(y).get(x).addPosition(x, y);
 
             tool.addPointerToLocation(prevLoc, maze.get(y).get(x));
@@ -47,7 +47,7 @@ public class MapLocationPopulationCrawler {
             if (countLocationOccurrence == 1)
                 currentPos = new Position(posList.get(0).getX(), posList.get(0).getY());
 
-            maze = populateValidDirections(maze, possibleLoc, countLocationOccurrence, currentPos, prev, posList);
+            maze = populateValidDirections(maze, possibleLocations, countLocationOccurrence, currentPos, prev, posList);
 
             if (countLocationOccurrence == 0) {
                 hasLocations = false;
