@@ -1,4 +1,4 @@
-package bbrz.textadventure.gameLoader;
+package bbrz.textadventure.tools;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.actions.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class InterpreterInit {
 
-    public static Interpreter init(Game game, OutputWrapper wrapper) {
+    public static Interpreter initActionInterpreter(Game game, OutputWrapper wrapper) {
         Interpreter interpreter = new Interpreter();
 
         interpreter.addActions(new HelpAction(game, "h", "help"));

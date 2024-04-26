@@ -1,6 +1,7 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.tools.InterpreterInit;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
@@ -56,7 +57,7 @@ public class StaticGameLoader implements GameLoader {
         String name = scanner.nextLine();
 
         Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), cottage, wrapper);
-        game.addInterpreter(InterpreterInit.init(game, wrapper));
+        game.addInterpreter(InterpreterInit.initActionInterpreter(game, wrapper));
 
         return game;
     }

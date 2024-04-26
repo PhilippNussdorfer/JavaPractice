@@ -2,6 +2,7 @@ package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.rules.*;
+import bbrz.textadventure.tools.InterpreterInit;
 import bbrz.textadventure.tools.LocationPointerTool;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.AttackCalc;
@@ -48,7 +49,7 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         map = crawler.populateMaze(map, 0, 0, locations, null);
 
         Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), wrapper, map);
-        game.addInterpreter(InterpreterInit.init(game, wrapper));
+        game.addInterpreter(InterpreterInit.initActionInterpreter(game, wrapper));
 
         return game;
     }

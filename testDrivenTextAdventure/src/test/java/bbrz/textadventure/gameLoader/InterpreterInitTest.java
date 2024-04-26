@@ -1,6 +1,7 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.tools.InterpreterInit;
 import bbrz.textadventure.tools.OutputWrapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
