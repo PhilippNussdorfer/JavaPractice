@@ -26,9 +26,9 @@ class AttackCalcTest {
     }
 
     @Test
-    void getDmgRole() {
+    void getDmgRoll() {
         for (int i = 0; i < 10; i++) {
-            int res = calc.getDmgRole(5);
+            int res = calc.getDmgRoll(5);
             System.out.println(res);
             assertTrue(List.of(3, 5, 4).contains(res));
         }

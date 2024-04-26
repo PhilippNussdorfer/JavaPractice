@@ -113,6 +113,6 @@ class MapLocationPopulationCrawlerTest {
 
     private List<Location> fillList(Location ... locations) {
 
-        return new ArrayList<>(Arrays.asList(locations));
+        return Arrays.asList(locations);
     }
 }

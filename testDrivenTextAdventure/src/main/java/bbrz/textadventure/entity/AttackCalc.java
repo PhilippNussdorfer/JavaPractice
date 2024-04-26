@@ -14,7 +14,7 @@ public class AttackCalc {
         return actualDmg;
     }
 
-    public int getDmgRole(int dmg) {
+    public int getDmgRoll(int dmg) {
         int minDmg = (int) ((double) (dmg) * 0.80);
 
         return new Random().nextInt(minDmg - 1, dmg + 1);

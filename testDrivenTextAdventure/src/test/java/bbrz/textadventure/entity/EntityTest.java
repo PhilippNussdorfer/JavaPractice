@@ -136,7 +136,7 @@ class EntityTest {
     void getDmgRole() {
         entity.roleDmg();
 
-        Mockito.verify(attackCalc, Mockito.times(1)).getDmgRole(5);
+        Mockito.verify(attackCalc, Mockito.times(1)).getDmgRoll(5);
     }
 
     @Test

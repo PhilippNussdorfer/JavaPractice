@@ -51,7 +51,7 @@ public abstract class Entity {
     }
 
     public int roleDmg() {
-        return attackCalc.getDmgRole(this.dmg);
+        return attackCalc.getDmgRoll(this.dmg);
     }
 
     public void attacked(int dmgTaken) {
