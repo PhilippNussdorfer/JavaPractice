@@ -25,10 +25,10 @@ public class MapLocationPopulationCrawler {
 
     public List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLocations, Location prevLoc) {
         if (prevLoc == null) {
-            maze.get(y).set(x, possibleLocations.get(0));
+            maze.get(y).set(x, possibleLocations.get(0).cloneLocation());
             maze.get(y).get(x).addPosition(x, y);
         } else {
-            maze.get(y).set(x, getPossibleLoc(possibleLocations, prevLoc));
+            maze.get(y).set(x, getPossibleLoc(possibleLocations, prevLoc).cloneLocation());
             maze.get(y).get(x).addPosition(x, y);
 
             tool.addPointerToLocation(prevLoc, maze.get(y).get(x));
@@ -68,7 +68,7 @@ public class MapLocationPopulationCrawler {
 
         if (countLocationOccurrence == 1) {
             Location tmpSave = getPossibleLoc(possibleLoc, prev);
-            maze.get(pos.getY()).set(pos.getX(), tmpSave);
+            maze.get(pos.getY()).set(pos.getX(), tmpSave.cloneLocation());
             maze.get(pos.getY()).get(pos.getX()).addPosition(pos);
 
             tool.addPointerToLocation(prev, maze.get(pos.getY()).get(pos.getX()));
@@ -118,7 +118,11 @@ public class MapLocationPopulationCrawler {
         int count = 0;
 
         while (count < 500) {
-            tmpSave = possibleLoc.get(random.nextInt(possibleLoc.size()));
+            int rndNum = random.nextInt(possibleLoc.size());
+            if (rndNum == 0)
+                rndNum ++;
+
+            tmpSave = possibleLoc.get(rndNum);
 
             if (isLocationSettable(prevLoc, tmpSave))
                 break;
