@@ -94,4 +94,13 @@ class LocationTest {
 
         assertEquals(0, location.getItems().size());
     }
+
+    @Test
+    void cloneLocation() {
+        var res = location.cloneLocation();
+
+        assertEquals(res.getMark(), location.getMark());
+        assertEquals(res.getName(), location.getName());
+        assertEquals(res.getDescription(), location.getDescription());
+    }
 }
