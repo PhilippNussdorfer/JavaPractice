@@ -14,10 +14,12 @@ class LocationPointerTest {
     Location location;
 
     LocationPointer pointer;
+    LocationPointer secPointer;
 
     @BeforeEach
     void setUp() {
         pointer = new LocationPointer("s", location);
+        secPointer = new LocationPointer("W", location);
     }
 
     @Test
@@ -25,8 +27,14 @@ class LocationPointerTest {
         var res = pointer.isDirection("w");
         assertFalse(res);
 
-        res = pointer.isDirection("s");
+        res = pointer.isDirection("S");
         assertTrue(res);
+
+        res = secPointer.isDirection("w");
+        assertTrue(res);
+
+        res = secPointer.isDirection("East");
+        assertFalse(res);
     }
 
     @Test
