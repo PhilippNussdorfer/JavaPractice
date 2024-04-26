@@ -14,7 +14,7 @@ public class PlayerInfoAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) {
+    public void execute(String... commandAndParams) {
         Player player = game.getPlayer();
         var playerStats = player.getBoostedStats();
 

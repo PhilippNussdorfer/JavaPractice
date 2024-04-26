@@ -10,8 +10,8 @@ public class MoveAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) {
-        game.move(params[0]);
+    public void execute(String... commandAndParams) {
+        game.move(commandAndParams[0]);
     }
 
     @Override

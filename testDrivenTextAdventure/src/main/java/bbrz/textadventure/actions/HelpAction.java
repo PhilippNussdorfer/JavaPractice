@@ -13,7 +13,7 @@ public class HelpAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) {
+    public void execute(String... commandAndParams) {
         game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
         for (Action action : game.getInterpreter().getActionList()) {
             game.getWrapper().outPrintlnColored(action.helpMessage(), TextColor.CYAN);

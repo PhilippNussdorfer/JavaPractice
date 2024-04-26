@@ -15,16 +15,16 @@ public class SwapEquipmentAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) throws CommandNotFoundException, NoFreeSpaceException {
-        if (params.length > 2) {
+    public void execute(String... commandAndParams) throws CommandNotFoundException, NoFreeSpaceException {
+        if (commandAndParams.length > 2) {
             for (Item equippedItem : game.getPlayer().getEquipped().getEquippedList()) {
-                if (equippedItem.getName().equalsIgnoreCase(params[1])) {
+                if (equippedItem.getName().equalsIgnoreCase(commandAndParams[1])) {
 
-                    if (swapItems(equippedItem, params, game.getCurrentLocation().getItems())) {
+                    if (swapItems(equippedItem, commandAndParams, game.getCurrentLocation().getItems())) {
                         return;
                     }
 
-                    if (swapItems(equippedItem, params, game.getPlayer().getBp().getBackpack())) {
+                    if (swapItems(equippedItem, commandAndParams, game.getPlayer().getBp().getBackpack())) {
                         return;
                     }
                 }

@@ -10,11 +10,11 @@ public class PickUpAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) throws NoFreeSpaceException {
-        if (params.length <= 1) {
+    public void execute(String... commandAndParams) throws NoFreeSpaceException {
+        if (commandAndParams.length <= 1) {
             throw new IllegalArgumentException("An item name is needed to pickup an item!");
         } else {
-            String itemName = params[1];
+            String itemName = commandAndParams[1];
 
             for (Item item : this.game.getCurrentLocation().getItems()) {
                 if (item.getName().equalsIgnoreCase(itemName)) {

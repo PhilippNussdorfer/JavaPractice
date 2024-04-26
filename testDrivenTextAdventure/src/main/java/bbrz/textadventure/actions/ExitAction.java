@@ -8,7 +8,7 @@ public class ExitAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) {
+    public void execute(String... commandAndParams) {
         game.setLoopGame(false);
     }
 

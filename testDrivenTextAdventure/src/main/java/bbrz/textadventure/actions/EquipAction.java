@@ -12,19 +12,19 @@ public class EquipAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) throws CommandNotFoundException {
-        if (params.length < 2) {
+    public void execute(String... commandAndParams) throws CommandNotFoundException {
+        if (commandAndParams.length < 2) {
             throw new CommandNotFoundException("The item name is missing!");
         }
-        if (goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(params)) {
+        if (goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(commandAndParams)) {
             return;
         }
-        IterateOverCurrentLocationItemsAddToPlayerEquipmentAndRemoveFromList(params);
+        IterateOverCurrentLocationItemsAddToPlayerEquipmentAndRemoveFromList(commandAndParams);
     }
 
-    private boolean goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(String[] params) {
+    private boolean goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(String[] commandAndParams) {
         for (Item item : game.getPlayer().getBp().getBackpack()) {
-            if (item.getName().equalsIgnoreCase(params[1])) {
+            if (item.getName().equalsIgnoreCase(commandAndParams[1])) {
                 var res = game.getPlayer().getEquipped().eqAddItems(item);
                 if (res) {
                     game.getPlayer().getBp().bpRemoveItems(item);

@@ -48,10 +48,10 @@ public class DescriptionAction extends AbAction {
         }
     }
 
-    private void showItemDescription(String[] params) throws NoItemFoundException {
+    private void showItemDescription(String[] commandAndParams) throws NoItemFoundException {
         var locationItems = game.getCurrentLocation().getItems();
         var playerBp = game.getPlayer().getBp().getBackpack();
-        var itemName = params[2];
+        var itemName = commandAndParams[2];
 
         var item = getItemFromString(locationItems, itemName);
         if (item == null) {

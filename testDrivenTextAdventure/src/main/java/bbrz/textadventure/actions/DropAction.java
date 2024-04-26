@@ -10,11 +10,11 @@ public class DropAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) {
-        if (params.length <= 1) {
+    public void execute(String... commandAndParams) {
+        if (commandAndParams.length <= 1) {
             throw new IllegalArgumentException("To drop an item the item name is needed!");
         } else {
-            String itemName = params[1];
+            String itemName = commandAndParams[1];
 
             for (Item item : this.game.getPlayer().getBp().getBackpack()) {
                 if (item.getName().equalsIgnoreCase(itemName)) {

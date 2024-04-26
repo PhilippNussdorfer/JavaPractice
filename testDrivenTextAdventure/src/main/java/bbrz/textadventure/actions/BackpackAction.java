@@ -9,7 +9,7 @@ public class BackpackAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) {
+    public void execute(String... commandAndParams) {
         game.printBPItems();
     }
 

@@ -12,10 +12,10 @@ public class DropEquipmentAction extends AbAction {
     }
 
     @Override
-    public void execute(String... params) throws NoItemFoundException, NoFreeSpaceException {
-        if (params.length > 1) {
+    public void execute(String... commandAndParams) throws NoItemFoundException, NoFreeSpaceException {
+        if (commandAndParams.length > 1) {
             for (Item item : game.getPlayer().getEquipped().getEquippedList()) {
-                if (item.getName().equalsIgnoreCase(params[1])) {
+                if (item.getName().equalsIgnoreCase(commandAndParams[1])) {
                     game.getPlayer().dropEquipment(game, item);
                 }
             }

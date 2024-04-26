@@ -70,6 +70,10 @@ class MapLocationPopulationCrawlerTest {
 
     @Test
     void populateMaze() {
+        Mockito.when(starting.cloneLocation()).thenReturn(starting);
+        Mockito.when(meadow.cloneLocation()).thenReturn(meadow);
+        Mockito.when(lake.cloneLocation()).thenReturn(lake);
+
         var crawler = new MapLocationPopulationCrawler(ruleInterpreter, random, tool);
 
         int countOfReplaceable = countReplaceable(map);
