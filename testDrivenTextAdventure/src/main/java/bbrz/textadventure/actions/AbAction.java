@@ -21,7 +21,6 @@ public abstract class AbAction implements Action {
         return false;
     }
 
-
     @Override
     public String getName() {
         return this.name;

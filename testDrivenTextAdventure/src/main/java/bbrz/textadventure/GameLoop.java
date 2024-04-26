@@ -37,6 +37,7 @@ public class GameLoop {
         while (game.isLoopGame()) {
             wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName(), TextColor.BLUE);
             game.printLocationItems();
+
             wrapper.outPrintlnColored("Your possible directions are: ", TextColor.BLUE);
             game.printPossibleDirections();
 
