@@ -13,5 +13,4 @@ public class LocationPointer {
         char[] directionChars = direction.toLowerCase().toCharArray();
         return this.direction.toLowerCase().toCharArray()[0] == directionChars[0];
     }
-
 }
