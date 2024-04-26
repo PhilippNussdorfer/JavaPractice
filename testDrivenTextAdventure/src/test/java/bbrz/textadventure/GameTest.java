@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTest {
 
     Game game;
+    Game secGame;
     @Mock
     Player player;
     @Mock
@@ -41,6 +42,10 @@ class GameTest {
     Interpreter interpreter;
     @Mock
     Backpack bp;
+    @Mock
+    List<List<Location>> map;
+    @Mock
+    List<Location> locations;
 
     @BeforeEach
     void setUp() {
@@ -57,6 +62,37 @@ class GameTest {
 
         game.move("n");
         assertEquals(game.getCurrentLocation(), location);
+    }
+
+    @Test
+    void moveNextRoomWithOtherConstructor() throws RoomNotFoundException {
+        Mockito.when(map.get(Mockito.anyInt())).thenReturn(locations);
+        Mockito.when(locations.get(Mockito.anyInt())).thenReturn(location);
+        Mockito.when(location.getRoom("s")).thenReturn(secLocation);
+
+        secGame = new Game(player, wrapper, map);
+
+        secGame.move("s");
+        assertEquals(secGame.getCurrentLocation(), secLocation);
+    }
+
+    @Test
+    void getter() {
+        Mockito.when(map.get(Mockito.anyInt())).thenReturn(locations);
+        Mockito.when(locations.get(Mockito.anyInt())).thenReturn(location);
+        secGame = new Game(player, wrapper, map);
+
+        var player = game.getPlayer();
+        assertEquals(this.player, player);
+
+        var wrapper = game.getWrapper();
+        assertEquals(this.wrapper , wrapper);
+
+        var gameMap = secGame.getGameMap();
+        assertEquals(map, gameMap);
+
+        var runLoop = game.isLoopGame();
+        assertEquals(runLoop, game.isLoopGame());
     }
 
     @Test
