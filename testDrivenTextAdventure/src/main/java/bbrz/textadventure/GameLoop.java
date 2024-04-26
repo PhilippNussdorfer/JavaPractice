@@ -42,7 +42,7 @@ public class GameLoop {
 
             wrapper.outPrintColored("\n\nEnter your commands:\n>", TextColor.BLUE);
             String userInput = scanner.nextLine();
-            System.out.println();
+            wrapper.outPrintln("");
 
             try {
                 interpreter.interpret(userInput);
