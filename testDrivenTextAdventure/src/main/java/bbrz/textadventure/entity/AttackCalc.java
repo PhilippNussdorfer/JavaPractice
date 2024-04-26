@@ -7,7 +7,7 @@ public class AttackCalc {
         double damageReduction = (double) (armor) / 100;
         int actualDmg = (int) (dmg - dmg * damageReduction);
 
-        if (actualDmg == 0) {
+        if (actualDmg <= 0) {
             actualDmg = 1;
         }
 

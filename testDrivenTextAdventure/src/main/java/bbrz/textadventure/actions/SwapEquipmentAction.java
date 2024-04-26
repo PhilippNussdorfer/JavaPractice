@@ -30,7 +30,7 @@ public class SwapEquipmentAction extends AbAction {
                 }
             }
         } else {
-            throw new CommandNotFoundException("Not the correct input use help if you have problems on hao to enter this command");
+            throw new CommandNotFoundException("Not the correct input use help if you have problems on how to enter this command");
         }
     }
 
