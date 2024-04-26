@@ -90,7 +90,7 @@ class DescriptionActionTest {
         Mockito.when(itemStats.getItemStats()).thenReturn(List.of(0, 0, 0));
         Mockito.when(item.getType()).thenReturn(ItemType.CONSUMABLE);
 
-        action.execute("d", "ItemName", "Candle");
+        action.execute("d", "ItemDesc", "Candle");
         Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("Hello World, it is a: CONSUMABLE, bonus stats Hp: 0, Armor: 0, Dmg: 0", TextColor.DARK_BROWN);
     }
 

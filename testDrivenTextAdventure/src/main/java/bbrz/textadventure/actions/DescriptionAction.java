@@ -14,10 +14,10 @@ import java.util.List;
 public class DescriptionAction extends AbAction {
     private final static String LOCATION = "location";
     private final static String LOCATION_NAME = "locationName";
-    private final static String ITEM_NAME = "itemName";
+    private final static String ITEM_DESC = "itemDesc";
 
     @Getter
-    private final List<String> additionList = List.of(LOCATION, LOCATION_NAME, ITEM_NAME);
+    private final List<String> additionList = List.of(LOCATION, LOCATION_NAME, ITEM_DESC);
     OutputWrapper wrapper;
     public DescriptionAction(Game game, OutputWrapper wrapper, String ... possibleCommands) {
         super(game, "Describe", "To describe an location, item or get the location name <Command> <Addition> <Item name>", possibleCommands);
@@ -37,7 +37,7 @@ public class DescriptionAction extends AbAction {
                 return;
             }
 
-            if (params.length > 2 && params[1].equalsIgnoreCase(ITEM_NAME)) {
+            if (params.length > 2 && params[1].equalsIgnoreCase(ITEM_DESC)) {
                 showItemDescription(params);
                 return;
             }
@@ -81,6 +81,6 @@ public class DescriptionAction extends AbAction {
     public String helpMessage() {
         return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
                 + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()))
-                + " | Additions => " + formatter.formatStringLength(30, LOCATION + ", " + LOCATION_NAME + ", " + ITEM_NAME);
+                + " | Additions => " + formatter.formatStringLength(30, LOCATION + ", " + LOCATION_NAME + ", " + ITEM_DESC);
     }
 }
