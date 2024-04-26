@@ -68,4 +68,8 @@ public class Location {
 
         return result;
     }
+
+    public Location cloneLocation() {
+        return new Location(this.name, this.description, this.mark);
+    }
 }
