@@ -42,7 +42,7 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         wrapper.outPrintColored("You are:\n> ", TextColor.GREEN);
         String name = scanner.nextLine();
 
-        var crawler = new MapLocationPopulationCrawler(initRuleInterpreter(), new Random(), new LocationPointerTool());
+        var crawler = new MapLocationPopulationCrawler(InterpreterInit.initRuleInterpreter(), new Random(), new LocationPointerTool());
 
         var map = gen.getMazeAsList();
         map = crawler.populateMaze(map, 0, 0, locations, null);
@@ -51,26 +51,5 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         game.addInterpreter(InterpreterInit.init(game, wrapper));
 
         return game;
-    }
-
-    public RuleInterpreter initRuleInterpreter() {
-        var ruleInterpreter = new RuleInterpreter();
-
-        ruleInterpreter.addList(List.of(
-                new BeachLocRule(),
-                new ClearingLocRule(),
-                new CliffLocRule(),
-                new EdgeOfTheForestLocRule(),
-                new EdgeOfTheSwampLocRule(),
-                new LakeLocRule(),
-                new MeadowLocRule(),
-                new SeaLocRule(),
-                new StartingLocRule(),
-                new SwampLocRule(),
-                new WellLocRule(),
-                new WoodsLocRule()
-        ));
-
-        return ruleInterpreter;
     }
 }

@@ -2,8 +2,11 @@ package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.actions.*;
+import bbrz.textadventure.rules.*;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
+
+import java.util.List;
 
 public class InterpreterInit {
 
@@ -23,5 +26,26 @@ public class InterpreterInit {
         interpreter.addActions(new SwapEquipmentAction(game, "swap", "swap-eq", "swap-equipment"));
 
         return interpreter;
+    }
+
+    public static RuleInterpreter initRuleInterpreter() {
+        var ruleInterpreter = new RuleInterpreter();
+
+        ruleInterpreter.addList(List.of(
+                new BeachLocRule(),
+                new ClearingLocRule(),
+                new CliffLocRule(),
+                new EdgeOfTheForestLocRule(),
+                new EdgeOfTheSwampLocRule(),
+                new LakeLocRule(),
+                new MeadowLocRule(),
+                new SeaLocRule(),
+                new StartingLocRule(),
+                new SwampLocRule(),
+                new WellLocRule(),
+                new WoodsLocRule()
+        ));
+
+        return ruleInterpreter;
     }
 }
