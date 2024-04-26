@@ -11,7 +11,7 @@ public class LocationPointer {
 
     public boolean isDirection(String direction) {
         char[] directionChars = direction.toLowerCase().toCharArray();
-        return this.direction.toCharArray()[0] == directionChars[0];
+        return this.direction.toLowerCase().toCharArray()[0] == directionChars[0];
     }
 
 }
