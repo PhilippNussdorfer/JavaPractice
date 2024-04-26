@@ -35,7 +35,4 @@ public abstract class AbAction implements Action {
     public String[] getPossibleCommands() {
         return this.possibleCommands;
     }
-
-    @Override
-    public abstract String helpMessage();
 }
