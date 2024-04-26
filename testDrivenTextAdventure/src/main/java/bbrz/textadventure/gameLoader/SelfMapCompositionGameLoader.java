@@ -47,7 +47,7 @@ public class SelfMapCompositionGameLoader implements GameLoader {
         var map = gen.getMazeAsList();
         map = crawler.populateMaze(map, 0, 0, locations, null);
 
-        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), locations.get(0), wrapper, map);
+        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), wrapper, map);
         game.addInterpreter(InterpreterInit.init(game, wrapper));
 
         return game;

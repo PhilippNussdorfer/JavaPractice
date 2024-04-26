@@ -30,7 +30,7 @@ public class Game {
         this.gameMap = null;
     }
 
-    public Game(Player player, Location currentLocation, OutputWrapper wrapper, List<List<Location>> gameMap) {
+    public Game(Player player, OutputWrapper wrapper, List<List<Location>> gameMap) {
         this.player = player;
         this.currentLocation = gameMap.get(0).get(0);
         this.wrapper = wrapper;
