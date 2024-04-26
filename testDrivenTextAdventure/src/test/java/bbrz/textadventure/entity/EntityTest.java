@@ -175,4 +175,14 @@ class EntityTest {
         assertEquals(entity.getArmor() + 7, list.get(1));
         assertEquals(entity.getDmg() + 4, list.get(2));
     }
+
+    @Test
+    void getter() {
+        assertEquals("Bob", entity.getName());
+        assertEquals(10, entity.getActualHp());
+        assertEquals(wrapper, entity.getWrapper());
+        assertEquals(attackCalc, entity.getAttackCalc());
+        assertEquals(backpack, entity.getBp());
+        assertEquals(equipped, entity.getEquipped());
+    }
 }
