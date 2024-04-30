@@ -2,6 +2,7 @@ package at.bookmark.bookmark_javafx;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,23 +10,28 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Bookmark_App extends Application {
 
+    private final String config = "config.prop";
+    private final WriterReader writerReader = new WriterReader();
     private final BookmarkHandler handler = new BookmarkHandler();
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
     private Font appFont = new Font(16);
     private final int popupWidth = 480;
     private final int popupHeight = 240;
+    private double x = 0;
+    private double y = 0;
+    int width = 1280;
+    int height = 640;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
+    private int screenIndex = 0;
 
     private final List<Node> startNodes = new ArrayList<>();
     private final List<Node> editNodes = new ArrayList<>();
@@ -38,8 +44,7 @@ public class Bookmark_App extends Application {
 
     @Override
     public void start(Stage stage) {
-        int width = 1280;
-        int height = 640;
+        loadAndSetupWindowPosition(stage);
 
         gridMain.setHgap(10);
         gridMain.setVgap(10);
@@ -96,6 +101,74 @@ public class Bookmark_App extends Application {
         stage.show();
 
         setGrid(gridMain, handler.getBookmarks());
+
+        stage.setOnCloseRequest(event -> writerReader.saveConfig(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight(),
+                getScreenIndex(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight()), config));
+    }
+
+    private void loadAndSetupWindowPosition(Stage stage) {
+        Screen screen;
+        Rectangle2D screenBounds;
+
+        loadProperties();
+
+        if (x != 0 || y != 0) {
+            if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
+                screen = Screen.getScreens().get(screenIndex);
+            } else {
+                screen = Screen.getPrimary();
+            }
+
+            screenBounds = screen.getVisualBounds();
+
+            if (x < screenBounds.getMinX()) {
+                x = screenBounds.getMinX();
+            }
+            if (x + width > screenBounds.getMaxX()) {
+                x = screenBounds.getMaxX() - width;
+            }
+            if (y < screenBounds.getMinY()) {
+                y = screenBounds.getMinY();
+            }
+            if (y + height > screenBounds.getMaxY()) {
+                y = screenBounds.getMaxY() - height;
+            }
+
+            setStagePosition(stage, x, y);
+        }
+    }
+
+    private void loadProperties() {
+        Properties prop = writerReader.loadConfig(config);
+        if (prop != null) {
+            try {
+                x = Double.parseDouble(prop.getProperty("x"));
+                y = Double.parseDouble(prop.getProperty("y"));
+                width = Integer.parseInt(prop.getProperty("width"));
+                height = Integer.parseInt(prop.getProperty("height"));
+                screenIndex = Integer.parseInt(prop.getProperty("screenIndex"));
+
+            } catch (NumberFormatException e) {
+                System.out.println("One or multiple numbers for the monitor position are missing");
+            }
+        }
+    }
+
+    private int getScreenIndex(double x, double y, int width, int height) {
+        int index = 0;
+        var screens = Screen.getScreensForRectangle(x, y, width, height);
+
+        if (screens.size() > 1)
+            return 0;
+        else
+            for (Screen screen : Screen.getScreens()) {
+                if (screen == screens.get(0))
+                    return index;
+                else
+                    index++;
+            }
+
+        return index;
     }
 
     private MenuBar createAndFillMenuBar(int fontsize) {
@@ -122,6 +195,7 @@ public class Bookmark_App extends Application {
         editNodes.clear();
 
         Stage editStage = new Stage();
+        setStagePosition(editStage, x + 200, y + 200);
         Bookmark bookmark = handler.getBookmarks().get(id);
 
         TextField txt_edit_title = new TextField(bookmark.getTitle());
@@ -170,6 +244,7 @@ public class Bookmark_App extends Application {
 
     private void notification(String msg, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
+        setAlertPosition(alert);
         alert.setContentText(msg);
 
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
@@ -179,6 +254,7 @@ public class Bookmark_App extends Application {
 
     private void deleteNotify(int id, String title) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        setAlertPosition(alert);
         alert.setContentText("Are you sure want to delete: " + title);
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -195,10 +271,16 @@ public class Bookmark_App extends Application {
         }
     }
 
+    private void setAlertPosition(Alert alert) {
+        alert.setX(x + 200);
+        alert.setY(y + 200);
+    }
+
     private void addWindow() {
         addNodes.clear();
 
         Stage addStage = new Stage();
+        setStagePosition(addStage, x + 200, y + 200);
 
         TextField txt_add_title = new TextField();
         TextField txt_add_page = new TextField();
@@ -243,6 +325,11 @@ public class Bookmark_App extends Application {
         addStage.show();
 
         updateFont(addNodes);
+    }
+
+    private void setStagePosition(Stage addStage, double windowXPos, double windowYPos) {
+        addStage.setX(windowXPos);
+        addStage.setY(windowYPos);
     }
 
     private List<Bookmark> searchForBookmark(String input) {
