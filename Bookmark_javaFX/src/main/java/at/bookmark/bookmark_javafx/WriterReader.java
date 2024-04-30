@@ -93,7 +93,7 @@ public class WriterReader {
         String path = "C:" + fileSeparator + "Java Programs" + fileSeparator + "Bookmark" + fileSeparator + filename;
 
         prop.setProperty("x", String.valueOf(x));
-        prop.setProperty("y", String.valueOf(x));
+        prop.setProperty("y", String.valueOf(y));
         prop.setProperty("width", String.valueOf(width));
         prop.setProperty("height", String.valueOf(height));
         prop.setProperty("screenIndex", String.valueOf(screenIndex));
