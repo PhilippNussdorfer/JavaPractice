@@ -28,10 +28,11 @@ public class Bookmark_App extends Application {
     private final int popupHeight = 240;
     private double x = 0;
     private double y = 0;
-    int width = 1280;
-    int height = 640;
+    double width = 1280;
+    double height = 640;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
     private int screenIndex = 0;
+    private boolean isFullscreen = false;
 
     private final List<Node> startNodes = new ArrayList<>();
     private final List<Node> editNodes = new ArrayList<>();
@@ -57,7 +58,7 @@ public class Bookmark_App extends Application {
         Button btn_add = new Button("Add Bookmark");
 
         TextField txt_search = new TextField();
-        txt_search.setPrefWidth(width - (double) (width / 3));
+        txt_search.setPrefWidth(860);
         txt_search.textProperty().addListener((observer, oldValue, newValue) -> {
 
             if (newValue.equals("")) {
@@ -103,7 +104,7 @@ public class Bookmark_App extends Application {
         setGrid(gridMain, handler.getBookmarks());
 
         stage.setOnCloseRequest(event -> writerReader.saveConfig(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight(),
-                getScreenIndex(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight()), config));
+                getScreenIndex(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight()), stage.isFullScreen(), config));
     }
 
     private void loadAndSetupWindowPosition(Stage stage) {
@@ -112,31 +113,38 @@ public class Bookmark_App extends Application {
 
         loadConfigProperties();
 
-        if (x != 0 || y != 0) {
-            if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
-                screen = Screen.getScreens().get(screenIndex);
-            } else {
-                screen = Screen.getPrimary();
-            }
+        if (!isFullscreen) {
+            if (x != 0 || y != 0) {
+                if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
+                    screen = Screen.getScreens().get(screenIndex);
+                } else {
+                    screen = Screen.getPrimary();
+                }
 
-            screenBounds = screen.getVisualBounds();
+                screenBounds = screen.getVisualBounds();
+                if (width > screenBounds.getWidth())
+                    width = screenBounds.getWidth();
+                if (height > screenBounds.getHeight())
+                    height = screenBounds.getHeight();
 
-            if (x < screenBounds.getMinX()) {
-                x = screenBounds.getMinX();
-            }
-            if (x + width > screenBounds.getMaxX()) {
-                x = screenBounds.getMaxX() - width;
-            }
+                if (x < screenBounds.getMinX()) {
+                    x = screenBounds.getMinX();
+                }
+                if (x + width > screenBounds.getMaxX()) {
+                    x = screenBounds.getMaxX() - width;
+                }
 
-            if (y < screenBounds.getMinY()) {
-                y = screenBounds.getMinY();
+                if (y < screenBounds.getMinY()) {
+                    y = screenBounds.getMinY();
+                }
+                if (y + height > screenBounds.getMaxY()) {
+                    y = screenBounds.getMaxY() - height;
+                }
             }
-            if (y + height > screenBounds.getMaxY()) {
-                y = screenBounds.getMaxY() - height;
-            }
-
-            setStagePosition(stage, x, y);
+        } else {
+            stage.setFullScreen(true);
         }
+        setStagePosition(stage, x, y);
     }
 
     private void loadConfigProperties() {
@@ -148,6 +156,7 @@ public class Bookmark_App extends Application {
                 width = Integer.parseInt(prop.getProperty("width"));
                 height = Integer.parseInt(prop.getProperty("height"));
                 screenIndex = Integer.parseInt(prop.getProperty("screenIndex"));
+                isFullscreen = Boolean.parseBoolean(prop.getProperty("isFullscreen"));
 
             } catch (NumberFormatException e) {
                 System.out.println("One or multiple numbers for the monitor position are missing");

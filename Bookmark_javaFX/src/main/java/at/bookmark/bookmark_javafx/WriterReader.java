@@ -88,7 +88,7 @@ public class WriterReader {
         return prop;
     }
 
-    public void saveConfig(double x,  double y, int width, int height, int screenIndex, String filename) {
+    public void saveConfig(double x,  double y, int width, int height, int screenIndex, boolean isFullscreen, String filename) {
         Properties prop = new Properties();
         String path = "C:" + fileSeparator + "Java Programs" + fileSeparator + "Bookmark" + fileSeparator + filename;
 
@@ -97,6 +97,7 @@ public class WriterReader {
         prop.setProperty("width", String.valueOf(width));
         prop.setProperty("height", String.valueOf(height));
         prop.setProperty("screenIndex", String.valueOf(screenIndex));
+        prop.setProperty("isFullscreen", String.valueOf(isFullscreen));
 
         try (OutputStream output = new FileOutputStream(path)) {
             prop.store(output, null);
