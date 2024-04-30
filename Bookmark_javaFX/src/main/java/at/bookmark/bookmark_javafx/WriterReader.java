@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class WriterReader {
     private final String fileSeparator = FileSystems.getDefault().getSeparator();
@@ -71,6 +72,36 @@ public class WriterReader {
             return true;
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    public Properties loadConfig(String filename) {
+        Properties prop = new Properties();
+        String path = "C:" + fileSeparator + "Java Programs" + fileSeparator + "Bookmark" + fileSeparator + filename;
+
+        try (InputStream inputStream = new FileInputStream(path)) {
+            prop.load(inputStream);
+        } catch (IOException e) {
+            return null;
+        }
+
+        return prop;
+    }
+
+    public void saveConfig(double x,  double y, int width, int height, int screenIndex, String filename) {
+        Properties prop = new Properties();
+        String path = "C:" + fileSeparator + "Java Programs" + fileSeparator + "Bookmark" + fileSeparator + filename;
+
+        prop.setProperty("x", String.valueOf(x));
+        prop.setProperty("y", String.valueOf(x));
+        prop.setProperty("width", String.valueOf(width));
+        prop.setProperty("height", String.valueOf(height));
+        prop.setProperty("screenIndex", String.valueOf(screenIndex));
+
+        try (OutputStream output = new FileOutputStream(path)) {
+            prop.store(output, null);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
