@@ -110,7 +110,7 @@ public class Bookmark_App extends Application {
         Screen screen;
         Rectangle2D screenBounds;
 
-        loadProperties();
+        loadConfigProperties();
 
         if (x != 0 || y != 0) {
             if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
@@ -127,6 +127,7 @@ public class Bookmark_App extends Application {
             if (x + width > screenBounds.getMaxX()) {
                 x = screenBounds.getMaxX() - width;
             }
+
             if (y < screenBounds.getMinY()) {
                 y = screenBounds.getMinY();
             }
@@ -138,7 +139,7 @@ public class Bookmark_App extends Application {
         }
     }
 
-    private void loadProperties() {
+    private void loadConfigProperties() {
         Properties prop = writerReader.loadConfig(config);
         if (prop != null) {
             try {
