@@ -90,7 +90,7 @@ public class Bookmark_App extends Application {
         ScrollPane scrollPane = new ScrollPane(grid);
         scrollPane.setFitToHeight(true);
 
-        MenuBar menu = createAndFillMenuBar(32);
+        MenuBar menu = createAndFillMenuBar(32, stage);
         VBox vbox = new VBox(menu, scrollPane);
 
         Scene scene = new Scene(vbox, width, height);
@@ -130,14 +130,14 @@ public class Bookmark_App extends Application {
                 if (x < screenBounds.getMinX()) {
                     x = screenBounds.getMinX();
                 }
-                if (x + width > screenBounds.getMaxX()) {
+                else if (x + width > screenBounds.getMaxX()) {
                     x = screenBounds.getMaxX() - width;
                 }
 
                 if (y < screenBounds.getMinY()) {
                     y = screenBounds.getMinY();
                 }
-                if (y + height > screenBounds.getMaxY()) {
+                else if (y + height > screenBounds.getMaxY()) {
                     y = screenBounds.getMaxY() - height;
                 }
             }
@@ -181,9 +181,11 @@ public class Bookmark_App extends Application {
         return index;
     }
 
-    private MenuBar createAndFillMenuBar(int fontsize) {
+    private MenuBar createAndFillMenuBar(int fontsize, Stage stage) {
         MenuBar menu = new MenuBar();
         Menu fontSize = new Menu("Font Size");
+
+        Menu fullscreen = createFullscreenMenu(stage);
 
         for (int i = 8; i < fontsize + 2; i += 2) {
             MenuItem size = new MenuItem(i + "");
@@ -198,7 +200,18 @@ public class Bookmark_App extends Application {
         }
 
         menu.getMenus().add(fontSize);
+        menu.getMenus().add(fullscreen);
         return menu;
+    }
+
+    private Menu createFullscreenMenu(Stage stage) {
+        Menu fullscreen = new Menu("Fullscreen");
+        MenuItem fullscreenItem = new MenuItem("activate");
+
+        fullscreen.getItems().add(fullscreenItem);
+
+        fullscreenItem.setOnAction(t -> stage.setFullScreen(true));
+        return fullscreen;
     }
 
     private void editWindow(int id) {
