@@ -165,9 +165,21 @@ public class Bookmark_App extends Application {
     }
 
     private int getScreenIndex(double x, double y, int width, int height) {
-        Rectangle2D windowBounds = new Rectangle2D(x, y, width, height);
-
         int maxIntersection = -18, screenIndex = 0;
+        var list = Screen.getScreensForRectangle(x, y, width, height);
+
+        if (list.size() == 1) {
+            for (Screen screen : Screen.getScreens()) {
+                if (screen == list.get(0)) {
+                    return screenIndex;
+                } else {
+                    screenIndex ++;
+                }
+            }
+        }
+
+        Rectangle2D windowBounds = new Rectangle2D(x, y, width, height);
+        screenIndex = 0;
 
         for (Screen screen : Screen.getScreens()) {
             Rectangle2D screenBounds = screen.getBounds();
