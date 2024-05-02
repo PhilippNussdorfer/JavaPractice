@@ -165,20 +165,26 @@ public class Bookmark_App extends Application {
     }
 
     private int getScreenIndex(double x, double y, int width, int height) {
-        int index = 0;
-        var screens = Screen.getScreensForRectangle(x, y, width, height);
+        Rectangle2D windowBounds = new Rectangle2D(x, y, width, height);
 
-        if (screens.size() > 1)
-            return 0;
-        else
-            for (Screen screen : Screen.getScreens()) {
-                if (screen == screens.get(0))
-                    return index;
-                else
-                    index++;
+        int maxIntersection = -18, screenIndex = 0;
+
+        for (Screen screen : Screen.getScreens()) {
+            Rectangle2D screenBounds = screen.getBounds();
+
+            double widthInter = screenBounds.getWidth() - windowBounds.getWidth();
+            double heightInter = screenBounds.getHeight() - windowBounds.getHeight();
+            System.out.println(widthInter);
+            System.out.println(heightInter);
+
+            if (widthInter > maxIntersection && heightInter > maxIntersection) {
+                return screenIndex;
+            } else {
+                screenIndex ++;
             }
+        }
 
-        return index;
+        return screenIndex;
     }
 
     private MenuBar createAndFillMenuBar(int fontsize, Stage stage) {
