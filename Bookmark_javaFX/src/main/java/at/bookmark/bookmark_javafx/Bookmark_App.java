@@ -103,8 +103,38 @@ public class Bookmark_App extends Application {
 
         setGrid(gridMain, handler.getBookmarks());
 
-        stage.setOnCloseRequest(event -> writerReader.saveConfig(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight(),
-                getScreenIndex(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight()), stage.isFullScreen(), config));
+        saveOnCloseAction(stage);
+    }
+
+    private void saveOnCloseAction(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            var screen = getCurrentScreenFromStage(stage);
+
+            double width = screen.getBounds().getWidth();
+            double height = screen.getBounds().getHeight();
+
+            if (stage.getHeight() <= height) {
+                height = stage.getHeight();
+
+                if (height - this.height <= 40 && height - this.height >= 0) {
+                    height = this.height;
+                }
+            }
+
+            if (stage.getWidth() <= width) {
+                width = stage.getWidth();
+
+                if (width - this.width <= 40 && width - this.width >= 0) {
+                    width = this.width;
+                }
+            }
+
+            if (height > screen.getBounds().getHeight() - 60)
+                height = screen.getBounds().getHeight() - 60;
+
+            writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
+                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), config);
+        });
     }
 
     private void loadAndSetupWindowPosition(Stage stage) {
@@ -113,19 +143,22 @@ public class Bookmark_App extends Application {
         loadConfigProperties();
 
         if (!isFullscreen) {
-            if (x != 0 || y != 0) {
-                if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
-                    screen = Screen.getScreens().get(screenIndex);
-                } else {
-                    screen = Screen.getPrimary();
-                }
-
-                adjustWindowOnMonitor(screen);
+            if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
+                screen = Screen.getScreens().get(screenIndex);
+            } else {
+                screen = Screen.getPrimary();
             }
+
+            adjustWindowOnMonitor(screen);
         } else {
             stage.setFullScreen(true);
         }
         setStagePosition(stage, x, y);
+    }
+
+    private Screen getCurrentScreenFromStage(Stage stage) {
+        int screenIndex = getScreenIndex(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight());
+        return Screen.getScreens().get(screenIndex);
     }
 
     private void adjustWindowOnMonitor(Screen screen) {
@@ -136,18 +169,22 @@ public class Bookmark_App extends Application {
         if (height > screenBounds.getHeight())
             height = screenBounds.getHeight();
 
-        if (x < screenBounds.getMinX()) {
-            x = screenBounds.getMinX();
-        }
-        if (x + width > screenBounds.getMaxX()) {
-            x = screenBounds.getMaxX() - width;
+        if (x != 0) {
+            if (x < screenBounds.getMinX()) {
+                x = screenBounds.getMinX();
+            }
+            if (x + width > screenBounds.getMaxX()) {
+                x = screenBounds.getMaxX() - width;
+            }
         }
 
-        if (y < screenBounds.getMinY()) {
-            y = screenBounds.getMinY();
-        }
-        if (y + height > screenBounds.getMaxY()) {
-            y = screenBounds.getMaxY() - height;
+        if (y != 0) {
+            if (y < screenBounds.getMinY()) {
+                y = screenBounds.getMinY();
+            }
+            if (y + height > screenBounds.getMaxY()) {
+                y = screenBounds.getMaxY() - height;
+            }
         }
     }
 
@@ -190,8 +227,6 @@ public class Bookmark_App extends Application {
 
             double widthInter = screenBounds.getWidth() - windowBounds.getWidth();
             double heightInter = screenBounds.getHeight() - windowBounds.getHeight();
-            System.out.println(widthInter);
-            System.out.println(heightInter);
 
             if (widthInter > maxIntersection && heightInter > maxIntersection) {
                 return screenIndex;
