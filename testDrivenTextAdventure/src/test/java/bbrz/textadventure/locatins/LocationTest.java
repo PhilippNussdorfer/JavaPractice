@@ -25,6 +25,8 @@ class LocationTest {
     Item item;
     @Mock
     Item secItem;
+    @Mock
+    Position pos;
 
     @BeforeEach
     void setUp() {
@@ -102,5 +104,20 @@ class LocationTest {
         assertEquals(res.getMark(), location.getMark());
         assertEquals(res.getName(), location.getName());
         assertEquals(res.getDescription(), location.getDescription());
+    }
+
+    @Test
+    void setPositionWithXAndY() {
+        location.setPosition(10, 11);
+
+        assertEquals(10, location.getPos().getX());
+        assertEquals(11, location.getPos().getY());
+    }
+
+    @Test
+    void setPositionWithPosition() {
+        location.setPosition(pos);
+
+        assertEquals(pos, location.getPos());
     }
 }
