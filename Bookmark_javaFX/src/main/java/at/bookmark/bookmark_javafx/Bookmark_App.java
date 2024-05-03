@@ -165,6 +165,7 @@ public class Bookmark_App extends Application {
     private void adjustWindowOnMonitor(Screen screen) {
         Rectangle2D screenBounds;
         screenBounds = screen.getVisualBounds();
+
         if (width > screenBounds.getWidth())
             width = screenBounds.getWidth();
         if (height > screenBounds.getHeight())
