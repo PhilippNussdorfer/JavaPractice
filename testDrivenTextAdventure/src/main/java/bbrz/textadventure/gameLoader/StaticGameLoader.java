@@ -16,6 +16,18 @@ import java.util.Scanner;
 public class StaticGameLoader implements GameLoader {
 
     public Game initGame(OutputWrapper wrapper, Scanner scanner) {
+        Location cottage = initLocationsAndGetStartingLocation();
+
+        wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
+        String name = scanner.nextLine();
+
+        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), cottage, wrapper);
+        game.addInterpreter(InterpreterInit.initActionInterpreter(game, wrapper));
+
+        return game;
+    }
+
+    private Location initLocationsAndGetStartingLocation() {
         Item candle = Item.builder().type(ItemType.CONSUMABLE).description("When lit the world around you will be illuminated").stats(new ItemStats()).name("Candle").value(10).build();
         Item matches = Item.builder().name("Matches").description("Can start a fire.").value(6).stats(new ItemStats()).type(ItemType.CONSUMABLE).build();
         Item oldIronHelmet = Item.builder().name("Old-Iron-Helmet").description("It's olb butt still protects.").value(15).stats(new ItemStats(3, 5, 0)).type(ItemType.HELMET).build();
@@ -53,12 +65,6 @@ public class StaticGameLoader implements GameLoader {
         lake.addPointers(new LocationPointer("n", woods),
                 new LocationPointer("e", beach));
 
-        wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
-        String name = scanner.nextLine();
-
-        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), cottage, wrapper);
-        game.addInterpreter(InterpreterInit.initActionInterpreter(game, wrapper));
-
-        return game;
+        return cottage;
     }
 }
