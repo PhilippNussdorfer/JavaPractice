@@ -33,6 +33,7 @@ public class Bookmark_App extends Application {
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
     private int screenIndex = 0;
     private boolean isFullscreen = false;
+    private final int adjustScreen = 5;
 
     private final List<Node> startNodes = new ArrayList<>();
     private final List<Node> editNodes = new ArrayList<>();
@@ -93,7 +94,7 @@ public class Bookmark_App extends Application {
         MenuBar menu = createAndFillMenuBar(32, stage);
         VBox vbox = new VBox(menu, scrollPane);
 
-        Scene scene = new Scene(vbox, width, height);
+        Scene scene = new Scene(vbox, width - adjustScreen, height);
         scene.setFill(Color.LIGHTGRAY);
 
         stage.setTitle("Bookmark");
@@ -102,7 +103,6 @@ public class Bookmark_App extends Application {
         stage.show();
 
         setGrid(gridMain, handler.getBookmarks());
-
         saveOnCloseAction(stage);
     }
 
@@ -112,6 +112,7 @@ public class Bookmark_App extends Application {
 
             double width = screen.getBounds().getWidth();
             double height = screen.getBounds().getHeight();
+            int taskbarHeight = 60;
 
             if (stage.getHeight() <= height) {
                 height = stage.getHeight();
@@ -129,8 +130,8 @@ public class Bookmark_App extends Application {
                 }
             }
 
-            if (height > screen.getBounds().getHeight() - 60)
-                height = screen.getBounds().getHeight() - 60;
+            if (height > screen.getBounds().getHeight() - taskbarHeight)
+                height = screen.getBounds().getHeight() - taskbarHeight;
 
             writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
                     getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), config);
@@ -153,7 +154,7 @@ public class Bookmark_App extends Application {
         } else {
             stage.setFullScreen(true);
         }
-        setStagePosition(stage, x, y);
+        setStagePosition(stage, x - adjustScreen, y);
     }
 
     private Screen getCurrentScreenFromStage(Stage stage) {
