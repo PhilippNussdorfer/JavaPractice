@@ -17,6 +17,7 @@ public class DropEquipmentAction extends AbAction {
             for (Item item : game.getPlayer().getEquipped().getEquippedList()) {
                 if (item.getName().equalsIgnoreCase(commandAndParams[1])) {
                     game.getPlayer().dropEquipment(game, item);
+                    return;
                 }
             }
         } else {
