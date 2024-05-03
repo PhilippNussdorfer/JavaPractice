@@ -134,7 +134,7 @@ public class Bookmark_App extends Application {
                 height = screen.getBounds().getHeight() - taskbarHeight;
 
             writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
-                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), config);
+                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), appFont.getSize(), config);
         });
     }
 
@@ -199,6 +199,7 @@ public class Bookmark_App extends Application {
                 height = Integer.parseInt(prop.getProperty("height"));
                 screenIndex = Integer.parseInt(prop.getProperty("screenIndex"));
                 isFullscreen = Boolean.parseBoolean(prop.getProperty("isFullscreen"));
+                appFont = new Font(Double.parseDouble(prop.getProperty("fontSize")));
 
             } catch (NumberFormatException e) {
                 System.out.println("One or multiple numbers for the monitor position are missing");
