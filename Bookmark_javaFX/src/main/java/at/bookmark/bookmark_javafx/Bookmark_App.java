@@ -109,7 +109,6 @@ public class Bookmark_App extends Application {
 
     private void loadAndSetupWindowPosition(Stage stage) {
         Screen screen;
-        Rectangle2D screenBounds;
 
         loadConfigProperties();
 
@@ -121,30 +120,35 @@ public class Bookmark_App extends Application {
                     screen = Screen.getPrimary();
                 }
 
-                screenBounds = screen.getVisualBounds();
-                if (width > screenBounds.getWidth())
-                    width = screenBounds.getWidth();
-                if (height > screenBounds.getHeight())
-                    height = screenBounds.getHeight();
-
-                if (x < screenBounds.getMinX()) {
-                    x = screenBounds.getMinX();
-                }
-                else if (x + width > screenBounds.getMaxX()) {
-                    x = screenBounds.getMaxX() - width;
-                }
-
-                if (y < screenBounds.getMinY()) {
-                    y = screenBounds.getMinY();
-                }
-                else if (y + height > screenBounds.getMaxY()) {
-                    y = screenBounds.getMaxY() - height;
-                }
+                adjustWindowOnMonitor(screen);
             }
         } else {
             stage.setFullScreen(true);
         }
         setStagePosition(stage, x, y);
+    }
+
+    private void adjustWindowOnMonitor(Screen screen) {
+        Rectangle2D screenBounds;
+        screenBounds = screen.getVisualBounds();
+        if (width > screenBounds.getWidth())
+            width = screenBounds.getWidth();
+        if (height > screenBounds.getHeight())
+            height = screenBounds.getHeight();
+
+        if (x < screenBounds.getMinX()) {
+            x = screenBounds.getMinX();
+        }
+        if (x + width > screenBounds.getMaxX()) {
+            x = screenBounds.getMaxX() - width;
+        }
+
+        if (y < screenBounds.getMinY()) {
+            y = screenBounds.getMinY();
+        }
+        if (y + height > screenBounds.getMaxY()) {
+            y = screenBounds.getMaxY() - height;
+        }
     }
 
     private void loadConfigProperties() {
