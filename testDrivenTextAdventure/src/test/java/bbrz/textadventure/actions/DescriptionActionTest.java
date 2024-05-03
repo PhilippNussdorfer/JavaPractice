@@ -103,7 +103,7 @@ class DescriptionActionTest {
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
 
-        assertThrows(NoItemFoundException.class, () -> action.execute("d", "itemName", "name"));
+        assertThrows(NoItemFoundException.class, () -> action.execute("d", "itemDesc", "name"));
     }
 
     @Test
@@ -122,6 +122,6 @@ class DescriptionActionTest {
 
     @Test
     void helpMessage() {
-        assertEquals("Describe        => To describe an location, item or get the location name <Command> <Addition> <Item name>              | Commands => desc, describe, d              | Additions => location, locationName, itemName", action.helpMessage());
+        assertEquals("Describe        => To describe an location, item or get the location name <Command> <Addition> <Item name>              | Commands => desc, describe, d              | Additions => location, locationName, itemDesc", action.helpMessage());
     }
 }
