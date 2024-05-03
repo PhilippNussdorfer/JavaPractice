@@ -44,7 +44,7 @@ class MapLocationPopulationCrawlerTest {
         Mockito.when(meadow.getMark()).thenReturn(MapRuleMark.MEADOW);
         Mockito.when(lake.getMark()).thenReturn(MapRuleMark.LAKE);
 
-        Mockito.when(random.nextInt(3)).thenReturn(1, 1, 2, 2, 1, 1, 1, 1, 2, 1,
+        Mockito.when(random.nextInt(3)).thenReturn(1, 1, 2, 2, 0, 2, 1, 1, 1, 1, 2, 1,
                                                     1, 2, 1, 2, 2, 1, 1, 1, 1, 1,
                                                     2, 1, 1, 2, 1, 2, 1, 1, 2, 1,
                                                     2, 1, 1, 2, 1, 1, 1, 2, 1, 1,

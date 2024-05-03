@@ -28,11 +28,11 @@ public class Location {
         this.mark = mark;
     }
 
-    public void addPosition(int x, int y) {
+    public void setPosition(int x, int y) {
         pos = new Position(x, y);
     }
 
-    public void addPosition(Position pos) {
+    public void setPosition(Position pos) {
         this.pos = pos;
     }
 

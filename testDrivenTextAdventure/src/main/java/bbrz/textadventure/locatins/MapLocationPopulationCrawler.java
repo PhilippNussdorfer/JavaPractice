@@ -26,10 +26,10 @@ public class MapLocationPopulationCrawler {
     public List<List<Location>> populateMaze(List<List<Location>> maze, int x, int y, List<Location> possibleLocations, Location prevLoc) {
         if (prevLoc == null) {
             maze.get(y).set(x, possibleLocations.get(0).cloneLocation());
-            maze.get(y).get(x).addPosition(x, y);
+            maze.get(y).get(x).setPosition(x, y);
         } else {
             maze.get(y).set(x, getPossibleLoc(possibleLocations, prevLoc).cloneLocation());
-            maze.get(y).get(x).addPosition(x, y);
+            maze.get(y).get(x).setPosition(x, y);
 
             tool.addPointerToLocation(prevLoc, maze.get(y).get(x));
         }
@@ -69,7 +69,7 @@ public class MapLocationPopulationCrawler {
         if (countLocationOccurrence == 1) {
             Location tmpSave = getPossibleLoc(possibleLoc, prev);
             maze.get(pos.getY()).set(pos.getX(), tmpSave.cloneLocation());
-            maze.get(pos.getY()).get(pos.getX()).addPosition(pos);
+            maze.get(pos.getY()).get(pos.getX()).setPosition(pos);
 
             tool.addPointerToLocation(prev, maze.get(pos.getY()).get(pos.getX()));
         }
