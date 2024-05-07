@@ -112,49 +112,67 @@ public class Bookmark_App extends Application {
 
             double width = screen.getBounds().getWidth();
             double height = screen.getBounds().getHeight();
-            int taskbarHeight = 60;
 
-            if (stage.getHeight() <= height) {
-                height = stage.getHeight();
-
-                if (height - this.height <= 40 && height - this.height >= 0) {
-                    height = this.height;
-                }
-            }
-
-            if (stage.getWidth() <= width) {
-                width = stage.getWidth();
-
-                if (width - this.width <= 40 && width - this.width >= 0) {
-                    width = this.width;
-                }
-            }
-
-            if (height > screen.getBounds().getHeight() - taskbarHeight)
-                height = screen.getBounds().getHeight() - taskbarHeight;
+            height = getHeight(stage, height);
+            height = getCheckedHeight(screen, height);
+            width = getWidth(stage, width);
 
             writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
                     getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), appFont.getSize(), config);
         });
     }
 
-    private void loadAndSetupWindowPosition(Stage stage) {
-        Screen screen;
+    private double getCheckedHeight(Screen screen, double height) {
+        int taskbarHeight = 60;
 
+        if (height > screen.getBounds().getHeight() - taskbarHeight)
+            height = screen.getBounds().getHeight() - taskbarHeight;
+        return height;
+    }
+
+    private double getWidth(Stage stage, double width) {
+        if (stage.getWidth() <= width) {
+            width = stage.getWidth();
+
+            if (width - this.width <= 40 && width - this.width >= 0) {
+                width = this.width;
+            }
+        }
+        return width;
+    }
+
+    private double getHeight(Stage stage, double height) {
+        if (stage.getHeight() <= height) {
+            height = stage.getHeight();
+
+            if (height - this.height <= 40 && height - this.height >= 0) {
+                height = this.height;
+            }
+        }
+        return height;
+    }
+
+    private void loadAndSetupWindowPosition(Stage stage) {
         loadConfigProperties();
 
         if (!isFullscreen) {
-            if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
-                screen = Screen.getScreens().get(screenIndex);
-            } else {
-                screen = Screen.getPrimary();
-            }
-
-            adjustWindowOnMonitor(screen);
+            adjustWindowOnMonitor(getScreen());
         } else {
             stage.setFullScreen(true);
         }
         setStagePosition(stage, x - adjustScreen, y);
+    }
+
+    private Screen getScreen() {
+        Screen screen;
+
+        if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
+            screen = Screen.getScreens().get(screenIndex);
+        } else {
+            screen = Screen.getPrimary();
+        }
+
+        return screen;
     }
 
     private Screen getCurrentScreenFromStage(Stage stage) {
@@ -171,21 +189,28 @@ public class Bookmark_App extends Application {
         if (height > screenBounds.getHeight())
             height = screenBounds.getHeight();
 
-        if (x != 0) {
-            if (x < screenBounds.getMinX()) {
-                x = screenBounds.getMinX();
-            }
-            if (x + width > screenBounds.getMaxX()) {
-                x = screenBounds.getMaxX() - width;
-            }
-        }
+        adjustXPos(screenBounds);
+        adjustYPos(screenBounds);
+    }
 
+    private void adjustYPos(Rectangle2D screenBounds) {
         if (y != 0) {
             if (y < screenBounds.getMinY()) {
                 y = screenBounds.getMinY();
             }
             if (y + height > screenBounds.getMaxY()) {
                 y = screenBounds.getMaxY() - height;
+            }
+        }
+    }
+
+    private void adjustXPos(Rectangle2D screenBounds) {
+        if (x != 0) {
+            if (x < screenBounds.getMinX()) {
+                x = screenBounds.getMinX();
+            }
+            if (x + width > screenBounds.getMaxX()) {
+                x = screenBounds.getMaxX() - width;
             }
         }
     }
@@ -410,9 +435,9 @@ public class Bookmark_App extends Application {
         updateFont(addNodes);
     }
 
-    private void setStagePosition(Stage addStage, double windowXPos, double windowYPos) {
-        addStage.setX(windowXPos);
-        addStage.setY(windowYPos);
+    private void setStagePosition(Stage stage, double windowXPos, double windowYPos) {
+        stage.setX(windowXPos);
+        stage.setY(windowYPos);
     }
 
     private List<Bookmark> searchForBookmark(String input) {
