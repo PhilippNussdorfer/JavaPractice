@@ -4,7 +4,7 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locations.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

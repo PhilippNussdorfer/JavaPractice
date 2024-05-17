@@ -2,11 +2,11 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.tools.colors.TextColor;
-import bbrz.textadventure.tools.StringFormatting;
+import bbrz.textadventure.tools.StringFormatter;
 
 public class HelpAction extends AbAction {
 
-    private final StringFormatting formatter = new StringFormatting();
+    private final StringFormatter formatter = new StringFormatter();
 
     public HelpAction(Game game, String ... possibleCommands) {
         super(game, "Help", "Shows the help for all possible Commands <Command>", possibleCommands);

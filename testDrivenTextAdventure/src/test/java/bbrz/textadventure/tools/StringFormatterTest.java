@@ -13,9 +13,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class StringFormattingTest {
+class StringFormatterTest {
 
-    StringFormatting formatter;
+    StringFormatter formatter;
     @Mock
     Item item;
     @Mock
@@ -23,7 +23,7 @@ class StringFormattingTest {
 
     @BeforeEach
     void setUp() {
-        formatter = new StringFormatting();
+        formatter = new StringFormatter();
     }
 
     @Test

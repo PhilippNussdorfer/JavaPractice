@@ -1,4 +1,4 @@
-package bbrz.textadventure.locatins;
+package bbrz.textadventure.locations;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.rules.MapRuleMark;

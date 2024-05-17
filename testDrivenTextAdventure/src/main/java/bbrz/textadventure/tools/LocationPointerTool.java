@@ -1,8 +1,8 @@
 package bbrz.textadventure.tools;
 
-import bbrz.textadventure.locatins.Location;
-import bbrz.textadventure.locatins.LocationPointer;
-import bbrz.textadventure.locatins.Position;
+import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.locations.LocationPointer;
+import bbrz.textadventure.locations.Position;
 
 public class LocationPointerTool {
 

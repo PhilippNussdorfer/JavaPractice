@@ -1,6 +1,6 @@
 package bbrz.textadventure.rules;
 
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locations.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

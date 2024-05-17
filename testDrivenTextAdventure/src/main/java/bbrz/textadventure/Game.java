@@ -3,10 +3,10 @@ package bbrz.textadventure;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locations.Location;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
-import bbrz.textadventure.tools.StringFormatting;
+import bbrz.textadventure.tools.StringFormatter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Getter
 public class Game {
-    private final StringFormatting formatter = new StringFormatting();
+    private final StringFormatter formatter = new StringFormatter();
     private final Player player;
     private Location currentLocation;
     private final OutputWrapper wrapper;

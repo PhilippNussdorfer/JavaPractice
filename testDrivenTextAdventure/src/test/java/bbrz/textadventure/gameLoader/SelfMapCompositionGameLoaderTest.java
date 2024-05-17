@@ -1,8 +1,8 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.locatins.Location;
-import bbrz.textadventure.locatins.MapLocationPopulationCrawler;
+import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.locations.MapLocationPopulationCrawler;
 import bbrz.textadventure.tools.OutputWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

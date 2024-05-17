@@ -2,12 +2,10 @@ package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.tools.InterpreterInit;
-import bbrz.textadventure.tools.colors.TextColor;
-import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.*;
-import bbrz.textadventure.locatins.Location;
-import bbrz.textadventure.locatins.LocationPointer;
+import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.locations.LocationPointer;
 import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.tools.OutputWrapper;
 

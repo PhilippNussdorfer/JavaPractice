@@ -1,7 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.tools.StringFormatting;
+import bbrz.textadventure.tools.StringFormatter;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -10,7 +10,7 @@ public abstract class AbAction implements Action {
     private String name;
     private String description;
     private String[] possibleCommands;
-    protected final StringFormatting formatter = new StringFormatting();
+    protected final StringFormatter formatter = new StringFormatter();
 
     @Override
     public boolean canHandle(String command) {

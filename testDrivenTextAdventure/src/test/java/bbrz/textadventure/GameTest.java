@@ -5,7 +5,7 @@ import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locations.Location;
 import bbrz.textadventure.tools.Interpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import org.junit.jupiter.api.BeforeEach;

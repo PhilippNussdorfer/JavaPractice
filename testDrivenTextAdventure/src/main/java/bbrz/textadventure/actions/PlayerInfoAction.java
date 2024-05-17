@@ -3,11 +3,11 @@ package bbrz.textadventure.actions;
 import bbrz.textadventure.Game;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.tools.StringFormatting;
+import bbrz.textadventure.tools.StringFormatter;
 
 public class PlayerInfoAction extends AbAction {
 
-    private final StringFormatting formatter = new StringFormatting();
+    private final StringFormatter formatter = new StringFormatter();
 
     public PlayerInfoAction(Game game, String ... possibleCommands) {
         super(game, "Player info", "Shows information about the player and his equipment <Command>", possibleCommands);

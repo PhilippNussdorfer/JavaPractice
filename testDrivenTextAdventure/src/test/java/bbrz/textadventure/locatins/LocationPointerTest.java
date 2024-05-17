@@ -1,5 +1,7 @@
 package bbrz.textadventure.locatins;
 
+import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.locations.LocationPointer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

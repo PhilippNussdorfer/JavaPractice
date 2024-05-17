@@ -4,8 +4,8 @@ import bbrz.textadventure.Game;
 import bbrz.textadventure.rules.*;
 import bbrz.textadventure.tools.InterpreterInit;
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.locatins.Location;
-import bbrz.textadventure.locatins.MapLocationPopulationCrawler;
+import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.locations.MapLocationPopulationCrawler;
 import bbrz.textadventure.tools.OutputWrapper;
 import lombok.AllArgsConstructor;
 

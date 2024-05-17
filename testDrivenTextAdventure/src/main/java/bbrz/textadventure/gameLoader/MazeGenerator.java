@@ -1,19 +1,19 @@
 // MazeGenerator from https://github.com/oppenheimj
 package bbrz.textadventure.gameLoader;
 
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locations.Location;
 
 import java.util.*;
 
 public class MazeGenerator {
     private final Stack<MazeNode> stack = new Stack<>();
     private final Random rand = new Random();
-    private final Location[][] mace;
+    private final Location[][] maze;
     private final Location replaceable;
     private final int dimensions;
 
     public MazeGenerator(int dimensions, Location replaceable) {
-        mace = new Location[dimensions][dimensions];
+        maze = new Location[dimensions][dimensions];
 
         this.dimensions = dimensions;
         this.replaceable = replaceable;
@@ -26,7 +26,7 @@ public class MazeGenerator {
             MazeNode next = stack.pop();
 
             if (validNextNode(next)) {
-                mace[next.getY()][next.getX()] = replaceable;
+                maze[next.getY()][next.getX()] = replaceable;
                 ArrayList<MazeNode> neighbours = findNeighbours(next);
                 randomlyAddNodesToStack(neighbours);
             }
@@ -35,7 +35,7 @@ public class MazeGenerator {
 
     public String getRawMaze() {
         StringBuilder builder = new StringBuilder();
-        for (Location[] row : mace) {
+        for (Location[] row : maze) {
             for (Location loc : row) {
                 if (loc == null) {
                     builder.append("  ");
@@ -50,7 +50,7 @@ public class MazeGenerator {
 
     public List<List<Location>> getMazeAsList() {
         List<List<Location>> result = new ArrayList<>();
-        for (Location[] row : mace) {
+        for (Location[] row : maze) {
             result.add(Arrays.asList(row));
         }
         return result;
@@ -88,12 +88,12 @@ public class MazeGenerator {
 
         for (int y = next.getY() - 1; y < next.getY() + 2; y++) {
             for (int x = next.getX() - 1; x < next.getX() + 2; x++) {
-                if (pointOnGrid(x, y) && pointNotNode(next, x, y) && mace[y][x] == replaceable) {
+                if (pointOnGrid(x, y) && pointNotNode(next, x, y) && maze[y][x] == replaceable) {
                     numNeighbouringOnes++;
                 }
             }
         }
-        return (numNeighbouringOnes < 3) && mace[next.getY()][next.getX()] != replaceable;
+        return (numNeighbouringOnes < 3) && maze[next.getY()][next.getX()] != replaceable;
     }
 
     private boolean pointNotNode(MazeNode next, int x, int y) {

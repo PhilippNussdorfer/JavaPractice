@@ -1,5 +1,7 @@
 package bbrz.textadventure.locatins;
 
+import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.locations.MapLocationPopulationCrawler;
 import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.rules.RuleInterpreter;
 import bbrz.textadventure.tools.LocationPointerTool;

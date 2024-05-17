@@ -5,7 +5,7 @@ import bbrz.textadventure.item.Item;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StringFormatting {
+public class StringFormatter {
 
     public String formatStringLength(int length, String strToFormat) {
         return String.format("%1$-" + length + "s", strToFormat);

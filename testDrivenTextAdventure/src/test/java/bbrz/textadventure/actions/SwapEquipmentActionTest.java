@@ -8,7 +8,7 @@ import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.item.ItemType;
-import bbrz.textadventure.locatins.Location;
+import bbrz.textadventure.locations.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,7 +76,7 @@ class SwapEquipmentActionTest {
         Mockito.when(secItem.getName()).thenReturn("iron helmet");
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
 
-        action.execute("swap", "bronze helmet", "iron");
+        assertThrows(CommandNotFoundException.class, () -> action.execute("swap", "bronze helmet", "iron"));
         Mockito.verify(player, Mockito.times(0)).dropEquipment(game, item);
     }
 
