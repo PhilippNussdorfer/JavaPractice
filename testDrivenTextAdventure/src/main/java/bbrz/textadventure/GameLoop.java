@@ -3,6 +3,7 @@ package bbrz.textadventure;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
 import bbrz.textadventure.entity.AttackCalc;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.gameLoader.MazeGenerator;
 import bbrz.textadventure.gameLoader.SelfMapCompositionGameLoader;
@@ -101,7 +102,8 @@ public class GameLoop {
     private Player createPlayer() {
         wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
         String name = scanner.nextLine();
+        var stats = new EntityStats(10, 2, 0, new Backpack(wrapper), new Equipped(wrapper), new AttackCalc(), wrapper);
 
-        return new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper));
+        return new Player(name, stats);
     }
 }

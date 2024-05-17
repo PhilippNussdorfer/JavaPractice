@@ -12,26 +12,26 @@ import java.util.List;
 
 @Getter
 public abstract class Entity {
-    private String name;
+    private final String name;
     private final int hp;
     private int actualHp;
-    private int armor;
-    private int dmg;
+    private final int armor;
+    private final int dmg;
     private final OutputWrapper wrapper;
     private final AttackCalc attackCalc;
     private final Backpack bp;
     private final Equipped equipped;
 
-    public Entity(String name, int hp, int armor, int dmg, OutputWrapper wrapper, AttackCalc attackCalc, Backpack bp, Equipped equipped) {
+    public Entity(String name, EntityStats stats) {
         this.name = name;
-        this.hp = hp;
+        this.hp = stats.getHp();
         this.actualHp = hp;
-        this.armor = armor;
-        this.dmg = dmg;
-        this.wrapper = wrapper;
-        this.attackCalc = attackCalc;
-        this.bp = bp;
-        this.equipped = equipped;
+        this.armor = stats.getArmor();
+        this.dmg = stats.getDmg();
+        this.wrapper = stats.getWrapper();
+        this.attackCalc = stats.getAttackCalc();
+        this.bp = stats.getBp();
+        this.equipped = stats.getEq();
     }
 
     public void bpAdd(Item ... items) throws NoFreeSpaceException {
