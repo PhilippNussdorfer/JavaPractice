@@ -1,16 +1,15 @@
 package bbrz.textadventure.gameLoader;
 
+import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.tools.OutputWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Scanner;
 
-import static bbrz.textadventure.tools.colors.TextColor.GREEN;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,6 +21,8 @@ class StaticGameLoaderTest {
     OutputWrapper wrapper;
     @Mock
     Scanner scanner;
+    @Mock
+    Player player;
 
     @BeforeEach
     void setUp() {
@@ -30,13 +31,11 @@ class StaticGameLoaderTest {
 
     @Test
     void initGame() {
-        Mockito.when(scanner.nextLine()).thenReturn("Bob");
+        var game = gameLoader.initGame(wrapper, scanner, player);
 
-        var game = gameLoader.initGame(wrapper, scanner);
-
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintColored("You are:\n>", GREEN);
-        assertEquals("Bob", game.getPlayer().getName());
+        assertEquals(player, game.getPlayer());
         assertEquals(wrapper, game.getWrapper());
         assertEquals("Cottage", game.getCurrentLocation().getName());
+        assertNull(game.getGameMap());
     }
 }
