@@ -3,21 +3,19 @@ package bbrz.textadventure.gameLoader;
 import bbrz.textadventure.Game;
 import bbrz.textadventure.rules.*;
 import bbrz.textadventure.tools.InterpreterInit;
-import bbrz.textadventure.tools.LocationPointerTool;
-import bbrz.textadventure.tools.colors.TextColor;
-import bbrz.textadventure.entity.AttackCalc;
 import bbrz.textadventure.entity.Player;
-import bbrz.textadventure.item.Backpack;
-import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.locatins.Location;
 import bbrz.textadventure.locatins.MapLocationPopulationCrawler;
 import bbrz.textadventure.tools.OutputWrapper;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
+@AllArgsConstructor
 public class SelfMapCompositionGameLoader implements GameLoader {
+    private MazeGenerator gen;
+    private MapLocationPopulationCrawler crawler;
 
     private List<Location> initLocations() {
         return List.of(
@@ -32,23 +30,14 @@ public class SelfMapCompositionGameLoader implements GameLoader {
     }
 
     @Override
-    public Game initGame(OutputWrapper wrapper, Scanner scanner) {
-        var replaceable = new Location("Replaceable", "for the algorithm to indicate an replaceable location", MapRuleMark.REPLACEABLE);
+    public Game initGame(OutputWrapper wrapper, Scanner scanner, Player player) {
         var locations = initLocations();
 
-        var gen = new MazeGenerator(4, replaceable);
         gen.generateMaze();
-        System.out.println(gen.getRawMaze());
-
-        wrapper.outPrintColored("You are:\n> ", TextColor.GREEN);
-        String name = scanner.nextLine();
-
-        var crawler = new MapLocationPopulationCrawler(InterpreterInit.initRuleInterpreter(), new Random(), new LocationPointerTool());
-
         var map = gen.getMazeAsList();
         map = crawler.populateMaze(map, 0, 0, locations, null);
 
-        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), wrapper, map);
+        Game game = new Game(player, wrapper, map);
         game.addInterpreter(InterpreterInit.initActionInterpreter(game, wrapper));
 
         return game;

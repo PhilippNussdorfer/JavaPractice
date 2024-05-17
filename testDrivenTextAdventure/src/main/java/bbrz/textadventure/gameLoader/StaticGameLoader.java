@@ -15,13 +15,10 @@ import java.util.Scanner;
 
 public class StaticGameLoader implements GameLoader {
 
-    public Game initGame(OutputWrapper wrapper, Scanner scanner) {
+    public Game initGame(OutputWrapper wrapper, Scanner scanner, Player player) {
         Location cottage = initLocationsAndGetStartingLocation();
 
-        wrapper.outPrintColored("You are:\n>", TextColor.GREEN);
-        String name = scanner.nextLine();
-
-        Game game = new Game(new Player(name, 10, 0, 2, wrapper, new AttackCalc(), new Backpack(wrapper), new Equipped(wrapper)), cottage, wrapper);
+        Game game = new Game(player, cottage, wrapper);
         game.addInterpreter(InterpreterInit.initActionInterpreter(game, wrapper));
 
         return game;
