@@ -39,6 +39,45 @@ public class GameLoop {
     }
 
     private void runGame() {
+        askForGameLoader();
+
+        while (game.isLoopGame()) {
+            currentInfo();
+            String userInput = askForCommands();
+
+            interpretAndHandleErrors(userInput);
+        }
+
+        if (!game.isLoopGame()) {
+            wrapper.outPrintlnColored("\nGoodbye and have a nice day!", TextColor.MAGENTA);
+        }
+    }
+
+    private void interpretAndHandleErrors(String userInput) {
+        try {
+            interpreter.interpret(userInput);
+        } catch (CommandNotFoundException | ExecutionControl.NotImplementedException | IllegalArgumentException |
+                 NoItemFoundException | NoFreeSpaceException exc) {
+            wrapper.outErr(exc.getMessage());
+        }
+    }
+
+    private String askForCommands() {
+        wrapper.outPrintColored("\n\nEnter your commands:\n>", TextColor.BLUE);
+        String userInput = scanner.nextLine();
+        wrapper.outPrintln("");
+        return userInput;
+    }
+
+    private void currentInfo() {
+        wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName(), TextColor.BLUE);
+        game.printLocationItems();
+
+        wrapper.outPrintlnColored("Your possible directions are: ", TextColor.BLUE);
+        game.printPossibleDirections();
+    }
+
+    private void askForGameLoader() {
         wrapper.outPrintlnColored("Do you want to play a normal game or an random (yes => normal / no => random):", TextColor.GREEN);
         var input = scanner.nextLine();
 
@@ -46,29 +85,6 @@ public class GameLoop {
             initGame();
         } else {
             initRandomMazeGame();
-        }
-
-        while (game.isLoopGame()) {
-            wrapper.outPrintlnColored("You are at the: " + game.getCurrentLocation().getName(), TextColor.BLUE);
-            game.printLocationItems();
-
-            wrapper.outPrintlnColored("Your possible directions are: ", TextColor.BLUE);
-            game.printPossibleDirections();
-
-            wrapper.outPrintColored("\n\nEnter your commands:\n>", TextColor.BLUE);
-            String userInput = scanner.nextLine();
-            wrapper.outPrintln("");
-
-            try {
-                interpreter.interpret(userInput);
-            } catch (CommandNotFoundException | ExecutionControl.NotImplementedException | IllegalArgumentException |
-                     NoItemFoundException | NoFreeSpaceException exc) {
-                wrapper.outErr(exc.getMessage());
-            }
-        }
-
-        if (!game.isLoopGame()) {
-            wrapper.outPrintlnColored("\nGoodbye and have a nice day!", TextColor.MAGENTA);
         }
     }
 
