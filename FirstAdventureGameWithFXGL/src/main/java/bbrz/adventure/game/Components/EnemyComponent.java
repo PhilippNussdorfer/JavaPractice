@@ -25,7 +25,7 @@ public class EnemyComponent extends Component {
     @Getter
     private double hp;
     @Getter
-    private final int speed = 120;
+    private final int speed = 140;
     private final double maxHp;
     private final int maxDmg;
     private final int minDmg;

@@ -38,13 +38,13 @@ public class BehaviorComponent extends Component {
             avoidanceDir.sub(currentDir);
             avoidanceDir.normalize();
 
-            /*double avoidanceStrength = 1 - (distance/minFollowingRadius);
-            avoidanceDir.multiply(avoidanceStrength);*/
-             if (avoidanceDir.mag() < 150) {
+            int minMag = 150;
+
+             if (avoidanceDir.mag() < minMag) {
                  double mag = avoidanceDir.mag();
                  double x = avoidanceDir.getX(), y = avoidanceDir.getY();
 
-                 avoidanceDir = new Vec((x/mag) * 150, (y/mag) / 150);
+                 avoidanceDir = new Vec((x/mag) * minMag, (y/mag) * minMag);
                  avoidanceDir.normalize();
              }
 
@@ -93,13 +93,18 @@ public class BehaviorComponent extends Component {
         List<Entity> entityList = getEntityThatIsToClose(separationDistance, enemy, target, allEntity_s);
         var acceleration = new Vec();
 
-        var rule1 = follow(target, enemy, animationComponent);
-        var rule2 = separateFromOtherEntity_s(enemy, entityList);
+        var followRule = follow(target, enemy, animationComponent);
+        var separationRule = separateFromOtherEntity_s(enemy, entityList);
 
-        rule2.multiply(6);
+        separationRule.multiply(3);
+        followRule.multiply(2);
 
-        acceleration.add(rule1);
-        acceleration.add(rule2);
+        acceleration.add(followRule);
+        acceleration.add(separationRule);
+
+        acceleration.normalize();
+        acceleration.multiply(2);
+
         acceleration.limit(maxSpeed);
 
         return new Vec2(acceleration.getY(), acceleration.getX());
