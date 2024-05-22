@@ -25,17 +25,16 @@ public class BehaviorComponent extends Component {
      * @return returns a Vec with the x and y cords.
      */
     private Vec follow(Entity target, Entity followingEntity, EnemyAnimationComponent animationComponent) {
-        Vec steer = new Vec();
+        Vec steer = new Vec(0, 0);
         Vec targetPos = new Vec(target.getX(), target.getY());
         Vec followerPos = new Vec(followingEntity.getX(), followingEntity.getY());
 
         double distance = followingEntity.distance(target);
-        if (distance < sightRadius) {
+        if (distance <= sightRadius) {
+
             Vec followDir = getDirAndNormalizeVec(followingEntity, targetPos, followerPos, distance);
-
-            followDir = checkMinMag(followDir);
-
             steer.add(followDir);
+
             animationComponent.move();
         } else {
             animationComponent.idle();
@@ -50,12 +49,11 @@ public class BehaviorComponent extends Component {
         Vec currentDir = getVelocityFromEntity(followingEntity);
 
         if (distance < minFollowingRadius) {
-            //followDir.normalize();
             currentDir.normalize();
         }
 
         followDir.sub(currentDir);
-        followDir.normalize();
+        followDir = checkMinMag(followDir);
 
         return followDir;
     }
@@ -96,7 +94,7 @@ public class BehaviorComponent extends Component {
             Vec obstaclePos = new Vec(obstacle.getX(), obstacle.getY());
 
             double distance = enemy.distance(obstacle);
-            if (distance < minFollowingRadius) {
+            if (distance < separationDistance) {
                 Vec diff = Vec.sub(enemyPos, obstaclePos);
                 diff.div(distance);
                 diff.normalize();
@@ -114,8 +112,7 @@ public class BehaviorComponent extends Component {
         var followRule = follow(target, enemy, animationComponent);
         var separationRule = separateFromOtherEntity_s(enemy, entityList);
 
-        separationRule.multiply(4);
-        followRule.multiply(2);
+        separationRule.multiply(1.5);
 
         acceleration.add(followRule);
         acceleration.add(separationRule);
