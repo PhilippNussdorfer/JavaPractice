@@ -44,9 +44,7 @@ public class GameLoop {
 
         while (game.isLoopGame()) {
             currentInfo();
-            String userInput = askForCommands();
-
-            interpretAndHandleErrors(userInput);
+            interpretAndHandleErrors(askForCommands());
         }
 
         if (!game.isLoopGame()) {
