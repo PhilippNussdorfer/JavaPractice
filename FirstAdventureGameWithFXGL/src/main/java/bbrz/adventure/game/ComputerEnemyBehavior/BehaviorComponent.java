@@ -30,25 +30,25 @@ public class BehaviorComponent extends Component {
 
         double distance = followingEntity.distance(target);
         if (distance < sightRadius && distance > minFollowingRadius) {
-            Vec avoidanceDir = Vec.sub(targetPos, followerPos);
-            avoidanceDir.normalize();
+            Vec followDir = Vec.sub(targetPos, followerPos);
+            followDir.normalize();
 
             Vec currentDir = getVelocityFromEntity(followingEntity);
             currentDir.normalize();
-            avoidanceDir.sub(currentDir);
-            avoidanceDir.normalize();
+            followDir.sub(currentDir);
+            followDir.normalize();
 
             int minMag = 150;
 
-             if (avoidanceDir.mag() < minMag) {
-                 double mag = avoidanceDir.mag();
-                 double x = avoidanceDir.getX(), y = avoidanceDir.getY();
+             if (followDir.mag() < minMag) {
+                 double mag = followDir.mag();
+                 double x = followDir.getX(), y = followDir.getY();
 
-                 avoidanceDir = new Vec((x/mag) * minMag, (y/mag) * minMag);
-                 avoidanceDir.normalize();
+                 followDir = new Vec((x/mag) * minMag, (y/mag) * minMag);
+                 followDir.normalize();
              }
 
-            steer.add(avoidanceDir);
+            steer.add(followDir);
             animationComponent.move();
         } else {
             animationComponent.idle();
