@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,24 +30,10 @@ public class BehaviorComponent extends Component {
         Vec followerPos = new Vec(followingEntity.getX(), followingEntity.getY());
 
         double distance = followingEntity.distance(target);
-        if (distance < sightRadius && distance > minFollowingRadius) {
-            Vec followDir = Vec.sub(targetPos, followerPos);
-            followDir.normalize();
+        if (distance < sightRadius) {
+            Vec followDir = getDirAndNormalizeVec(followingEntity, targetPos, followerPos, distance);
 
-            Vec currentDir = getVelocityFromEntity(followingEntity);
-            currentDir.normalize();
-            followDir.sub(currentDir);
-            followDir.normalize();
-
-            int minMag = 150;
-
-             if (followDir.mag() < minMag) {
-                 double mag = followDir.mag();
-                 double x = followDir.getX(), y = followDir.getY();
-
-                 followDir = new Vec((x/mag) * minMag, (y/mag) * minMag);
-                 followDir.normalize();
-             }
+            followDir = checkMinMag(followDir);
 
             steer.add(followDir);
             animationComponent.move();
@@ -55,6 +42,37 @@ public class BehaviorComponent extends Component {
         }
 
         return steer;
+    }
+
+    @NotNull
+    private Vec getDirAndNormalizeVec(Entity followingEntity, Vec targetPos, Vec followerPos, double distance) {
+        Vec followDir = Vec.sub(targetPos, followerPos);
+        Vec currentDir = getVelocityFromEntity(followingEntity);
+
+        if (distance < minFollowingRadius) {
+            //followDir.normalize();
+            currentDir.normalize();
+        }
+
+        followDir.sub(currentDir);
+        followDir.normalize();
+
+        return followDir;
+    }
+
+    @NotNull
+    private Vec checkMinMag(Vec followDir) {
+        int minMag = 150;
+
+        if (followDir.mag() < minMag) {
+            double mag = followDir.mag();
+            double x = followDir.getX(), y = followDir.getY();
+
+            followDir = new Vec((x/mag) * minMag, (y/mag) * minMag);
+            followDir.normalize();
+        }
+
+        return followDir;
     }
 
     private List<Entity> getEntityThatIsToClose(double distance, Entity enemy, Entity target, List<Entity> entityList) {
@@ -78,7 +96,7 @@ public class BehaviorComponent extends Component {
             Vec obstaclePos = new Vec(obstacle.getX(), obstacle.getY());
 
             double distance = enemy.distance(obstacle);
-            if (distance < separationDistance) {
+            if (distance < minFollowingRadius) {
                 Vec diff = Vec.sub(enemyPos, obstaclePos);
                 diff.div(distance);
                 diff.normalize();
@@ -96,7 +114,7 @@ public class BehaviorComponent extends Component {
         var followRule = follow(target, enemy, animationComponent);
         var separationRule = separateFromOtherEntity_s(enemy, entityList);
 
-        separationRule.multiply(3);
+        separationRule.multiply(4);
         followRule.multiply(2);
 
         acceleration.add(followRule);
