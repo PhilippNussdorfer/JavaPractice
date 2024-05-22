@@ -75,12 +75,12 @@ public class PlayerComponent extends Component {
     }
 
     public void calculateRunning() {
-        if (maxStamina() > 0 && FXGL.geti("isRunning") == 1) {
+        if (stamina > 0 && FXGL.geti("isRunning") == 1) {
             incStamina(-1);
             if (speed() < 350)
                 incPlayerMoveSpeed(2);
         } else {
-            if (maxStamina() > 150)
+            if (speed() > 150)
                 incPlayerMoveSpeed(-2);
         }
     }
