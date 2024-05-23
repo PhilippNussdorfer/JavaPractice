@@ -97,7 +97,7 @@ public class MamblsAdventure extends GameApplication {
         int maxHealth = (int) playerComponent.getMaxHp();
         int maxStamina = playerComponent.getMaxStamina();
         int stamina = playerComponent.getStamina();
-        int health = (int) playerComponent.getHp();
+        int health = playerComponent.getHp();
 
         Texture secStaminaBar = getTexture("gui/secStaminaBar.png", 89, getAppHeight() - 58, 10, getBarWidth(140, maxStamina, stamina));
         Texture staminaBar = getTexture("gui/staminaBar.png", 89, getAppHeight() - 58, 10, getBarWidth(135, maxStamina, stamina));
