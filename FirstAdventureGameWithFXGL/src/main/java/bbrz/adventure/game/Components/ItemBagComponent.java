@@ -18,7 +18,7 @@ public class ItemBagComponent extends Component {
 
     @Getter
     private final InventoryView itemBagWindow = new InventoryView(170, 160, 12);
-    private boolean switchForItemBag = false;
+    private boolean isItemBagOpen = false;
 
     public ItemBagComponent() {
         itemBagWindow.getInvNode(
@@ -29,8 +29,13 @@ public class ItemBagComponent extends Component {
         itemBagWindow.addTakeAllButton((BorderPane) itemBagWindow.getRoot());
     }
 
+    @Override
+    public void onUpdate(double tpf) {
+        closeAndRemoveIfEmpty();
+    }
+
     public void deleteEntityIfItemListIsEmpty() {
-        if (this.itemBagWindow.getInventory().isEmpty())
+        if (this.itemBagWindow.isEmpty())
             entity.removeFromWorld();
     }
 
@@ -45,15 +50,21 @@ public class ItemBagComponent extends Component {
             itembag = i.get();
         }
         if (itembag != null && getPlayer().isColliding(itembag)) {
-            switchForItemBag = switchWindowOnOff(switchForItemBag, itemBagWindow.getInventoryNode());
+            isItemBagOpen = switchWindowOnOff(isItemBagOpen, itemBagWindow.getInventoryNode());
+        }
+    }
+
+    private void closeAndRemoveIfEmpty() {
+        if (isItemBagOpen && itemBagWindow.isEmpty()) {
+            isItemBagOpen = switchWindowOnOff(isItemBagOpen, itemBagWindow.getInventoryNode());
             deleteEntityIfItemListIsEmpty();
         }
     }
 
     public void checkIfItemBagIsOpen() {
-        if (this.switchForItemBag) {
+        if (this.isItemBagOpen) {
             FXGL.removeUINode(this.itemBagWindow.getInventoryNode());
-            this.switchForItemBag = false;
+            this.isItemBagOpen = false;
         }
     }
 

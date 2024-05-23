@@ -45,6 +45,16 @@ public class InventoryView extends Region {
         listeners.enableDragAndSwitch(this);
     }
 
+    public boolean isEmpty() {
+        for (Item item : inventory) {
+            if (item.getDesignation() != ItemDesignation.NULL) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private void setRoot(Node node) {
         getChildren().add(node);
     }
