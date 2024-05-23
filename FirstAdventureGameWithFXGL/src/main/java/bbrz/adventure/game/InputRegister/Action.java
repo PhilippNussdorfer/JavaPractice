@@ -38,6 +38,7 @@ public class Action extends UserAction {
     @Override
     protected void onAction() {
         AnimationIndicator animationIndicator;
+        getPlayer().getComponent(PlayerComponent.class).isMoving = true;
 
         if (FXGL.geti("runningActive") != 0) {
             if (FXGL.geti("isRunning") != 1)
@@ -63,6 +64,7 @@ public class Action extends UserAction {
         inputStatus.unsetDirection(direction);
         getAxis(0);
         getPlayer().getComponent(PlayerAnimationComponent.class).loopAnimation(direction, AnimationIndicator.IDLE);
+        getPlayer().getComponent(PlayerComponent.class).isMoving = false;
 
         if (FXGL.geti("isRunning") != 0)
             FXGL.set("isRunning", 0);

@@ -122,7 +122,7 @@ public class AdventureFactory implements EntityFactory {
 
     private static PhysicsComponent getPhysicsComponent() {
         PhysicsComponent physics = new PhysicsComponent();
-        physics.setFixtureDef(new FixtureDef().friction(0f).density(3.1f));
+        physics.setFixtureDef(new FixtureDef().friction(0f).density(0.1f));
         BodyDef bd = new BodyDef();
         bd.setFixedRotation(true);
         bd.setType(BodyType.DYNAMIC);

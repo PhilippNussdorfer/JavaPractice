@@ -4,6 +4,7 @@ import bbrz.adventure.game.Inventory.InventoryView;
 import bbrz.adventure.game.Items.Stats;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.texture.Texture;
@@ -22,6 +23,7 @@ public class PlayerComponent extends Component {
     @Getter
     private int playerMoveSpeed = 150;
     private final int SpeedSave = 150;
+    public boolean isMoving = false;
     private int increasedSpeed = 0;
     @Getter
     private int stamina = 300;
@@ -46,7 +48,9 @@ public class PlayerComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        entity.translate(0, 0);
+        if (!isMoving) {
+            entity.getComponent(PhysicsComponent.class).setLinearVelocity(0, 0);
+        }
     }
 
     private int maxDmg() {
