@@ -43,6 +43,8 @@ public class InventoryView extends Region {
         updateInv();
 
         listeners.enableDragAndSwitch(this);
+        setVisible(false);
+        setManaged(visibleProperty().get());
     }
 
     public boolean isEmpty() {
@@ -66,8 +68,10 @@ public class InventoryView extends Region {
     public List<Item> setInventory(List<Item> items) {
         for (int j = 0; j < items.size(); j++) {
             if (items.get(j).getDesignation() != ItemDesignation.NULL) {
+
                 for (int i = 0; i < inventory.size(); i++) {
                     if (inventory.get(i).getDesignation() == ItemDesignation.NULL) {
+
                         inventory.set(i, items.get(j));
                         items.set(j, Item.createNullItem());
                         break;
@@ -75,6 +79,7 @@ public class InventoryView extends Region {
                 }
             }
         }
+
         for (Item item : items) {
             if (item.getDesignation() != ItemDesignation.NULL)
                 return items;
@@ -104,7 +109,6 @@ public class InventoryView extends Region {
         takeAllBtn.setBackground(new Background(new BackgroundImage(FXGL.image("gui/button.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(windowWidth, 30, false, false, false, false))));
         takeAllBtn.setCenter(lbl);
-
 
         listeners.makePressable(this, takeAllBtn);
         listeners.makeHoverAble(takeAllBtn, FXGL.image("gui/buttonHover.png"), FXGL.image("gui/button.png"), 35);
@@ -268,10 +272,9 @@ public class InventoryView extends Region {
 
         this.setRoot(mainBody);
         listeners.makeDraggable(this, titleBar);
-        listeners.makeFocusable(this);
     }
 
-    public void getInvNode(Image bodyImage, Image headImage, String labelStr) {
+    public void buildInvNode(Image bodyImage, Image headImage, String labelStr) {
         Pane root = new Pane();
         constructWindowForInv(bodyImage, headImage, labelStr);
         root.getChildren().add(this);

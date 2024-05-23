@@ -42,8 +42,8 @@ public class PlayerComponent extends Component {
 
     public PlayerComponent() {
 
-        this.inventoryview.getInvNode(FXGL.getAssetLoader().loadImage("gui/inventoryBodyWithoutBorder.png"),
-                FXGL.getAssetLoader().loadImage("gui/inventoryHead.png"), "Inventory");;
+        this.inventoryview.buildInvNode(FXGL.getAssetLoader().loadImage("gui/inventoryBodyWithoutBorder.png"),
+                FXGL.getAssetLoader().loadImage("gui/inventoryHead.png"), "Inventory");
     }
 
     @Override

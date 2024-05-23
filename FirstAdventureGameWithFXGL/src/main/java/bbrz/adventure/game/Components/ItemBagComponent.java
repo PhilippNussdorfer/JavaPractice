@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import lombok.Getter;
 import java.util.List;
 
-import static bbrz.adventure.game.MamblsAdventure.switchWindowOnOff;
+import static bbrz.adventure.game.MamblsAdventure.showInventory;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameWorld;
 
 public class ItemBagComponent extends Component {
@@ -21,17 +21,19 @@ public class ItemBagComponent extends Component {
     private boolean isItemBagOpen = false;
 
     public ItemBagComponent() {
-        itemBagWindow.getInvNode(
+        itemBagWindow.buildInvNode(
                 FXGL.getAssetLoader()
                         .loadImage("gui/inventoryBodyWithoutBorder.png"),
                 FXGL.getAssetLoader()
                         .loadImage("gui/inventoryHead.png"), "Item Bag");
         itemBagWindow.addTakeAllButton((BorderPane) itemBagWindow.getRoot());
+
+        FXGL.addUINode(itemBagWindow);
     }
 
     @Override
     public void onUpdate(double tpf) {
-        closeAndRemoveIfEmpty();
+        closeAndRemoveSelfIfEmpty();
     }
 
     public void deleteEntityIfItemListIsEmpty() {
@@ -50,13 +52,13 @@ public class ItemBagComponent extends Component {
             itembag = i.get();
         }
         if (itembag != null && getPlayer().isColliding(itembag)) {
-            isItemBagOpen = switchWindowOnOff(isItemBagOpen, itemBagWindow.getInventoryNode());
+            isItemBagOpen = showInventory(isItemBagOpen, itemBagWindow);
         }
     }
 
-    private void closeAndRemoveIfEmpty() {
+    private void closeAndRemoveSelfIfEmpty() {
         if (isItemBagOpen && itemBagWindow.isEmpty()) {
-            isItemBagOpen = switchWindowOnOff(isItemBagOpen, itemBagWindow.getInventoryNode());
+            isItemBagOpen = showInventory(isItemBagOpen, itemBagWindow);
             deleteEntityIfItemListIsEmpty();
         }
     }

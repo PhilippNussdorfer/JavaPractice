@@ -40,10 +40,6 @@ public class ListenersForTheInventoryView {
                 BackgroundPosition.CENTER, backgroundSize))));
     }
 
-    public void makeFocusable(InventoryView view) {
-        view.setOnMouseClicked(e -> view.toFront());
-    }
-
     public void makeDraggable(InventoryView view, Node node) {
 
         AtomicReference<Double> xOffset = new AtomicReference<>((double) 0);
@@ -53,7 +49,7 @@ public class ListenersForTheInventoryView {
             xOffset.set(e.getSceneX() - view.getLayoutX());
             yOffset.set(e.getSceneY() - view.getLayoutY());
 
-            view.toFront();
+            //view.toFront();
         });
 
         node.setOnMouseDragged(e -> {

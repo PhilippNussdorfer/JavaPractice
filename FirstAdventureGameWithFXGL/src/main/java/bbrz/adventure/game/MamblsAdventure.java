@@ -5,6 +5,7 @@ import bbrz.adventure.game.Components.*;
 import bbrz.adventure.game.InputRegister.Action;
 import bbrz.adventure.game.InputRegister.Direction;
 import bbrz.adventure.game.InputRegister.InputStatus;
+import bbrz.adventure.game.Inventory.InventoryView;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -38,7 +39,7 @@ public class MamblsAdventure extends GameApplication {
     private static final int width = 1280, height = 720;
     private static final String gameMap = "begin.tmx";
     private List<Texture> oldTextures;
-    private boolean switchForInv = false;
+    private boolean isInventoryOpen = false;
     private static final InputStream fontPathWithGetClass = MamblsAdventure.class.getClassLoader().getResourceAsStream("assets/ui/fonts/font/MinimalPixelv2.ttf");
     public static final Font gameFont = Font.loadFont(fontPathWithGetClass, 20);
     private static PlayerComponent playerComponent;
@@ -89,6 +90,7 @@ public class MamblsAdventure extends GameApplication {
 
         FXGL.addUINode(background);
         FXGL.addUINode(playerHead);
+        FXGL.addUINode(playerComponent.getInventoryview());
 
         addLabelToUI(114, FXGL.getAppHeight() - 31, "currency", Color.WHITE, 1);
     }
@@ -268,7 +270,7 @@ public class MamblsAdventure extends GameApplication {
     UserAction showInventoryOrClose = new UserAction("Toggle Inventory") {
         @Override
         protected void onActionBegin() {
-            switchForInv = switchWindowOnOff(switchForInv, playerComponent.getInventoryview().getInventoryNode());
+            isInventoryOpen = showInventory(isInventoryOpen, playerComponent.getInventoryview());
         }
     };
 
@@ -318,14 +320,22 @@ public class MamblsAdventure extends GameApplication {
       }
     };
 
-    public static boolean switchWindowOnOff(boolean isOn, Node uiNode) {
-        if (isOn) {
-            FXGL.removeUINode(uiNode);
-            return false;
-        } else {
-            FXGL.addUINode(uiNode);
-            return true;
+    public static boolean showInventory(boolean showInv, InventoryView uiNode) {
+        for (Node node : FXGL.getGameScene().getUINodes()) {
+
+            if (node instanceof InventoryView inv) {
+
+                if (uiNode.equals(inv)) {
+
+                    node.setVisible(!showInv);
+                    node.setManaged(!showInv);
+
+                    return !showInv;
+                }
+            }
         }
+
+        return showInv;
     }
 
     private void attack() {
