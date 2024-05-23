@@ -108,7 +108,7 @@ public class ListenersForTheInventoryView {
             child.setOnDragDetected(event -> {
                 if (child.getCenter() != null) {
                     dataInstance.setSourceInvView(view);
-                    dragboardSetup(child);
+                    dragBoardSetup(child);
                     event.consume();
                 }
             });
@@ -166,7 +166,7 @@ public class ListenersForTheInventoryView {
         return row >= 0 && row < twoDList.size() && col >= 0 && col < twoDList.get(0).size();
     }
 
-    private void dragboardSetup(BorderPane child) {
+    private void dragBoardSetup(BorderPane child) {
         Node centerImgView = child.getCenter();
         if (centerImgView instanceof ImageView itemImgView) {
             Dragboard dragboard = itemImgView.startDragAndDrop(TransferMode.MOVE);

@@ -9,7 +9,6 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
-import com.almasb.fxgl.pathfinding.astar.AStarGrid;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -25,8 +24,6 @@ import javafx.scene.transform.Rotate;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
 public class AdventureFactory implements EntityFactory {
-    private final int cellWidthAndHeight = 16;
-    private final AStarGrid grid = new AStarGrid(FXGL.getAppWidth()/cellWidthAndHeight, FXGL.getAppHeight()/cellWidthAndHeight);
 
     @Spawns("player")
     public Entity spawnPlayer(SpawnData data) {
@@ -51,7 +48,7 @@ public class AdventureFactory implements EntityFactory {
                 .with(physics)
                 .with(new EnemyComponent(data.getX(), data.getY(), 1, 5, 15, EnemyIndicator.SKELETON))
                 .with(new EnemyAnimationComponent("skeleton"))
-                .with(new BehaviorComponent(200, 50, 60))
+                .with(new BehaviorComponent(200, 60, 60))
                 .collidable()
                 .build();
     }
@@ -125,7 +122,7 @@ public class AdventureFactory implements EntityFactory {
 
     private static PhysicsComponent getPhysicsComponent() {
         PhysicsComponent physics = new PhysicsComponent();
-        physics.setFixtureDef(new FixtureDef().friction(0).density(0.1f));
+        physics.setFixtureDef(new FixtureDef().friction(0f).density(3.1f));
         BodyDef bd = new BodyDef();
         bd.setFixedRotation(true);
         bd.setType(BodyType.DYNAMIC);

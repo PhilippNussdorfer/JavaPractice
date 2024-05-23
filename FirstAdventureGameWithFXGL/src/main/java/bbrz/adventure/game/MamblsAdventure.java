@@ -58,7 +58,6 @@ public class MamblsAdventure extends GameApplication {
         var.put("currency", 0);
         var.put("isRunning", 0);
         var.put("runningActive", 0);
-        var.put("lastPointLookedAt", 2);
         var.put("time", 0);
     }
 
