@@ -198,7 +198,4 @@ public class ListenersForTheInventoryView {
                 (dataInstance.getSourceCol() == dataInstance.getTargetCol() &&
                         dataInstance.getSourceRow() == dataInstance.getTargetRow());
     }
-
-    private void setCursor() {
-    }
 }
