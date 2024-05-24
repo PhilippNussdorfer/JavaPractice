@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Directions {
-    NORTH,
-    WEST,
-    SOUTH,
-    EAST;
+    NORTH("north", "n"),
+    WEST("west", "w"),
+    SOUTH("south", "s"),
+    EAST("east", "e");
 
     @Getter
     private final List<String> values = new ArrayList<>();
