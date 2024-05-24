@@ -16,7 +16,7 @@ public class DropAction extends AbAction {
         } else {
             String itemName = commandAndParams[1];
 
-            for (Item item : this.game.getPlayer().getBp().getBackpack()) {
+            for (Item item : this.game.getPlayer().getStats().getBp().getBackpack()) {
                 if (item.getName().equalsIgnoreCase(itemName)) {
                     this.game.getCurrentLocation().addItems(item);
                     this.game.getPlayer().bpDrop(item);
@@ -27,7 +27,7 @@ public class DropAction extends AbAction {
 
     @Override
     public String helpMessage() {
-        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
-                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
+        return game.getFormatter().formatStringLength(15, getName()) + " => " + game.getFormatter().formatStringLength(100, getDescription())
+                + " | Commands => " + game.getFormatter().formatStringLength(30, game.getFormatter().getPrintableCollection(getPossibleCommands()));
     }
 }

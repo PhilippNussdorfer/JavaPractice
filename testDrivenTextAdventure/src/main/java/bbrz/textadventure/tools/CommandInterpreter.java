@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
-public class Interpreter {
+public class CommandInterpreter {
     @Getter
     private final List<Action> actionList = new ArrayList<>();
 

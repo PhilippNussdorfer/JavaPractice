@@ -10,7 +10,6 @@ public abstract class AbAction implements Action {
     private String name;
     private String description;
     private String[] possibleCommands;
-    protected final StringFormatter formatter = new StringFormatter();
 
     @Override
     public boolean canHandle(String command) {

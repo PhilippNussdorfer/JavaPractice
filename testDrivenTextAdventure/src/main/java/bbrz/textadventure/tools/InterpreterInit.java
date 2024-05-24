@@ -2,30 +2,48 @@ package bbrz.textadventure.tools;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.actions.*;
+import bbrz.textadventure.locations.Directions;
 import bbrz.textadventure.rules.*;
-import bbrz.textadventure.tools.Interpreter;
-import bbrz.textadventure.tools.OutputWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InterpreterInit {
 
-    public static Interpreter initActionInterpreter(Game game, OutputWrapper wrapper) {
-        Interpreter interpreter = new Interpreter();
+    public static CommandInterpreter initActionInterpreter(Game game, OutputWrapper wrapper) {
 
-        interpreter.addActions(new HelpAction(game, "h", "help"));
-        interpreter.addActions(new MoveAction(game, "west", "north", "east", "south", "n", "s", "w", "e"));
-        interpreter.addActions(new ExitAction(game, "ex", "x", "exit"));
-        interpreter.addActions(new DescriptionAction(game, wrapper, "d", "desc", "describe"));
-        interpreter.addActions(new PickUpAction(game, "pickup", "pick"));
-        interpreter.addActions(new DropAction(game, "drop"));
-        interpreter.addActions(new BackpackAction(game, "bp", "backpack"));
-        interpreter.addActions(new PlayerInfoAction(game, "player-info", "p-info", "pi"));
-        interpreter.addActions(new EquipAction(game, "eq", "equip"));
-        interpreter.addActions(new DropEquipmentAction(game, "de", "drop-equipment", "drop-eq"));
-        interpreter.addActions(new SwapEquipmentAction(game, "swap", "swap-eq", "swap-equipment"));
+        CommandInterpreter commandInterpreter = new CommandInterpreter();
 
-        return interpreter;
+        commandInterpreter.addActions(new HelpAction(game, "h", "help"));
+        commandInterpreter.addActions(new MoveAction(game, combineListsAndGetStringArray()));
+        commandInterpreter.addActions(new ExitAction(game, "ex", "x", "exit"));
+        commandInterpreter.addActions(new DescriptionAction(game, wrapper, "d", "desc", "describe"));
+        commandInterpreter.addActions(new PickUpAction(game, "pickup", "pick"));
+        commandInterpreter.addActions(new DropAction(game, "drop"));
+        commandInterpreter.addActions(new BackpackAction(game, "bp", "backpack"));
+        commandInterpreter.addActions(new PlayerInfoAction(game, "player-info", "p-info", "pi"));
+        commandInterpreter.addActions(new EquipAction(game, "eq", "equip"));
+        commandInterpreter.addActions(new DropEquipmentAction(game, "de", "drop-equipment", "drop-eq"));
+        commandInterpreter.addActions(new SwapEquipmentAction(game, "swap", "swap-eq", "swap-equipment"));
+
+        return commandInterpreter;
+    }
+
+    private static String[] combineListsAndGetStringArray() {
+        List<String> directionsList = new ArrayList<>();
+
+        directionsList.addAll(Directions.NORTH.getValues());
+        directionsList.addAll(Directions.EAST.getValues());
+        directionsList.addAll(Directions.WEST.getValues());
+        directionsList.addAll(Directions.SOUTH.getValues());
+
+        String[] directions = new String[directionsList.size()];
+
+        for (int i = 0; i < directionsList.size(); i++) {
+            directions[i] = directionsList.get(i);
+        }
+
+        return directions;
     }
 
     public static RuleInterpreter initRuleInterpreter() {

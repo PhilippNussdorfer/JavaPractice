@@ -1,6 +1,7 @@
 package bbrz.textadventure.item;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.entity.Player;
@@ -33,6 +34,8 @@ class EquippedTest {
     Backpack backpack;
     @Mock
     List<Item> list;
+    @Mock
+    EntityStats stats;
 
     @Mock
     Item item;
@@ -142,7 +145,8 @@ class EquippedTest {
     void eqRemoveItems() throws NoFreeSpaceException {
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getBp()).thenReturn(backpack);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         Mockito.when(backpack.getBACKPACK_SPACE()).thenReturn(12);
         Mockito.when(backpack.getBackpack()).thenReturn(list);
         Mockito.when(list.size()).thenReturn(0);
@@ -159,7 +163,8 @@ class EquippedTest {
     void removeItemAndFillBackpack() throws NoFreeSpaceException {
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getBp()).thenReturn(backpack);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         Mockito.when(backpack.getBACKPACK_SPACE()).thenReturn(12);
         Mockito.when(backpack.getBackpack()).thenReturn(list);
         Mockito.when(list.size()).thenReturn(11);
@@ -174,7 +179,8 @@ class EquippedTest {
     void removeEquipmentWhenBackpackIsFull() throws NoFreeSpaceException {
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getBp()).thenReturn(backpack);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         Mockito.when(backpack.getBACKPACK_SPACE()).thenReturn(12);
         Mockito.when(backpack.getBackpack()).thenReturn(list);
         Mockito.when(list.size()).thenReturn(12);

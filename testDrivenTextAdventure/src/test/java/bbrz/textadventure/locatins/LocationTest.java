@@ -1,6 +1,7 @@
 package bbrz.textadventure.locatins;
 
 import bbrz.textadventure.customException.RoomNotFoundException;
+import bbrz.textadventure.locations.Directions;
 import bbrz.textadventure.locations.Location;
 import bbrz.textadventure.locations.LocationPointer;
 import bbrz.textadventure.locations.Position;
@@ -45,28 +46,28 @@ class LocationTest {
         Mockito.when(pointer.isDirection("s")).thenReturn(true);
         Mockito.when(pointer.getTarget()).thenReturn(secLocation);
 
-        var res = location.getRoom("s");
+        var res = location.getLocation("s");
         assertEquals(secLocation, res);
 
         Mockito.when(secPointer.isDirection("n")).thenReturn(true);
         Mockito.when(secPointer.getTarget()).thenReturn(location);
 
-        res = secLocation.getRoom("n");
+        res = secLocation.getLocation("n");
         assertEquals(location, res);
     }
 
     @Test
     void getPointerDirections() {
-        Mockito.when(pointer.getDirection()).thenReturn("n");
+        Mockito.when(pointer.getDirection()).thenReturn(Directions.NORTH);
         Mockito.when(pointer.getTarget()).thenReturn(secLocation);
 
         var res = location.getPointerDirections();
-        assertEquals(res.get(0), "n => secRoom");
+        assertEquals(res.get(0), "north, n => secRoom");
     }
 
     @Test
     void noRoomFound() {
-        assertThrows(RoomNotFoundException.class, ()-> location.getRoom("n"));
+        assertThrows(RoomNotFoundException.class, ()-> location.getLocation("n"));
     }
 
     @Test

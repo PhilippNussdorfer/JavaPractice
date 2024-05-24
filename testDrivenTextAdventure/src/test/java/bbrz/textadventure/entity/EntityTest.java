@@ -46,20 +46,24 @@ class EntityTest {
     Equipped equipped;
     @Mock
     AttackCalc attackCalc;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
-        entity = new Player("Bob", 10, 10, 5, wrapper, attackCalc, backpack, equipped);
+        entity = new Player("Bob", stats);
     }
 
     @Test
     void BPAddMultipleItems() throws NoFreeSpaceException {
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         entity.bpAdd(item, secItem);
         Mockito.verify(backpack, Mockito.times(1)).bpAddItems(item, secItem);
     }
 
     @Test
     void addOneItemToEquipped() {
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         entity.addEquipment(item);
 
         Mockito.verify(equipped, Mockito.times(1)).eqAddItems(item);
@@ -67,6 +71,7 @@ class EntityTest {
 
     @Test
     void removeSingleItemFromEquipped() throws NoFreeSpaceException {
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         entity.addEquipment(item);
         entity.dropEquipment(game, item);
 
@@ -77,6 +82,7 @@ class EntityTest {
 
     @Test
     void removeMultipleItemsFromEquipped() throws NoFreeSpaceException {
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         entity.addEquipment(item);
         entity.addEquipment(secItem);
         entity.dropEquipment(game, item, secItem);
@@ -88,6 +94,7 @@ class EntityTest {
 
     @Test
     void BPAddOneItem() throws NoFreeSpaceException {
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         entity.bpAdd(item);
 
         Mockito.verify(backpack, Mockito.times(1)).bpAddItems(item);
@@ -95,6 +102,7 @@ class EntityTest {
 
     @Test
     void BPTryRemoveFromEmptyItems() {
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         entity.bpDrop(item);
 
         Mockito.verify(backpack, Mockito.times(1)).bpRemoveItems(item);
@@ -102,6 +110,7 @@ class EntityTest {
 
     @Test
     void BPRemoveMultipleItems() throws NoFreeSpaceException {
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         entity.bpAdd(item, secItem);
         entity.bpDrop(item, secItem);
 
@@ -111,6 +120,7 @@ class EntityTest {
 
     @Test
     void BPRemoveItem() throws NoFreeSpaceException {
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         entity.bpAdd(secItem, item);
         entity.bpDrop(secItem);
 
@@ -120,6 +130,8 @@ class EntityTest {
 
     @Test
     void getsAttacked() {
+        Mockito.when(stats.getAttackCalc()).thenReturn(attackCalc);
+        Mockito.when(stats.getArmor()).thenReturn(10);
         entity.attacked(10);
 
         Mockito.verify(attackCalc, Mockito.times(1)).getsAttacked(10, 10);
@@ -127,6 +139,8 @@ class EntityTest {
 
     @Test
     void getsAttackedWhereDamageShouldBeOne() {
+        Mockito.when(stats.getAttackCalc()).thenReturn(attackCalc);
+        Mockito.when(stats.getArmor()).thenReturn(10);
         entity.attacked(1);
 
         Mockito.verify(attackCalc, Mockito.times(1)).getsAttacked(1, 10);
@@ -134,6 +148,8 @@ class EntityTest {
 
     @Test
     void getDmgRole() {
+        Mockito.when(stats.getAttackCalc()).thenReturn(attackCalc);
+        Mockito.when(stats.getDmg()).thenReturn(5);
         entity.roleDmg();
 
         Mockito.verify(attackCalc, Mockito.times(1)).getDmgRoll(5);
@@ -141,48 +157,63 @@ class EntityTest {
 
     @Test
     void getBoostedStatsWithoutEquipment() {
+        Mockito.when(stats.getHp()).thenReturn(0);
+        Mockito.when(stats.getHp()).thenReturn(1);
+        Mockito.when(stats.getHp()).thenReturn(2);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
+
         var list = entity.getBoostedStats();
 
-        assertEquals(entity.getHp(), list.get(0));
-        assertEquals(entity.getArmor(), list.get(1));
-        assertEquals(entity.getDmg(), list.get(2));
+        assertEquals(entity.getStats().getHp(), list.get(0));
+        assertEquals(entity.getStats().getArmor(), list.get(1));
+        assertEquals(entity.getStats().getDmg(), list.get(2));
     }
 
     @Test
     void getBoostedStatsWithEquipment() {
+        Mockito.when(stats.getHp()).thenReturn(0);
+        Mockito.when(stats.getHp()).thenReturn(1);
+        Mockito.when(stats.getHp()).thenReturn(2);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
+
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item));
         Mockito.when(item.getStats()).thenReturn(itemStats);
         Mockito.when(itemStats.getItemStats()).thenReturn(List.of(2, 3, 1));
+
         var list = entity.getBoostedStats();
 
-        assertEquals(entity.getHp() + 2, list.get(0));
-        assertEquals(entity.getArmor() + 3, list.get(1));
-        assertEquals(entity.getDmg() + 1, list.get(2));
+        assertEquals(entity.getStats().getHp() + 2, list.get(0));
+        assertEquals(entity.getStats().getArmor() + 3, list.get(1));
+        assertEquals(entity.getStats().getDmg() + 1, list.get(2));
     }
 
     @Test
     void getBoostedStatsWithMultipleItemsEquipped() {
+        Mockito.when(stats.getHp()).thenReturn(0);
+        Mockito.when(stats.getHp()).thenReturn(1);
+        Mockito.when(stats.getHp()).thenReturn(2);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item, secItem, thirdItem));
+
         Mockito.when(item.getStats()).thenReturn(itemStats);
         Mockito.when(secItem.getStats()).thenReturn(secItemStats);
         Mockito.when(thirdItem.getStats()).thenReturn(thirdItemStats);
+
         Mockito.when(itemStats.getItemStats()).thenReturn(List.of(2, 3, 1));
         Mockito.when(secItemStats.getItemStats()).thenReturn(List.of(3, 4, 1));
         Mockito.when(thirdItemStats.getItemStats()).thenReturn(List.of(1, 0, 2));
+
         var list = entity.getBoostedStats();
 
-        assertEquals(entity.getHp() + 6, list.get(0));
-        assertEquals(entity.getArmor() + 7, list.get(1));
-        assertEquals(entity.getDmg() + 4, list.get(2));
+        assertEquals(entity.getStats().getHp() + 6, list.get(0));
+        assertEquals(entity.getStats().getArmor() + 7, list.get(1));
+        assertEquals(entity.getStats().getDmg() + 4, list.get(2));
     }
 
     @Test
     void getter() {
         assertEquals("Bob", entity.getName());
-        assertEquals(10, entity.getActualHp());
-        assertEquals(wrapper, entity.getWrapper());
-        assertEquals(attackCalc, entity.getAttackCalc());
-        assertEquals(backpack, entity.getBp());
-        assertEquals(equipped, entity.getEquipped());
+        assertEquals(stats, entity.getStats());
+        assertEquals(0, entity.getActualHp());
     }
 }

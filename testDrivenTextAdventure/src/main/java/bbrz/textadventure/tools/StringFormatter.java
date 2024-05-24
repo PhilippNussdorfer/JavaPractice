@@ -15,8 +15,8 @@ public class StringFormatter {
         return String.join(", ", strArr);
     }
 
-    public String getPrintableCollection(List<String> strArr) {
-        return String.join(", ", strArr);
+    public String getPrintableCollection(List<String> strList) {
+        return String.join(", ", strList);
     }
 
     public String getPrintableStringFromItemList(List<Item> items) {

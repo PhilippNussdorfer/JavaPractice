@@ -23,11 +23,11 @@ public class EquipAction extends AbAction {
     }
 
     private boolean goTroughPlayerBackpackAddToPlayerEquipmentAndRemoveFromList(String[] commandAndParams) {
-        for (Item item : game.getPlayer().getBp().getBackpack()) {
+        for (Item item : game.getPlayer().getStats().getBp().getBackpack()) {
             if (item.getName().equalsIgnoreCase(commandAndParams[1])) {
-                var res = game.getPlayer().getEquipped().eqAddItems(item);
+                var res = game.getPlayer().getStats().getEq().eqAddItems(item);
                 if (res) {
-                    game.getPlayer().getBp().bpRemoveItems(item);
+                    game.getPlayer().getStats().getBp().bpRemoveItems(item);
                     return true;
                 }
             }
@@ -41,7 +41,7 @@ public class EquipAction extends AbAction {
         while (iterator.hasNext()) {
             Item item = iterator.next();
             if (item.getName().equalsIgnoreCase(params[1])) {
-                var res = game.getPlayer().getEquipped().eqAddItems(item);
+                var res = game.getPlayer().getStats().getEq().eqAddItems(item);
                 if (res) {
                     iterator.remove();
                 }
@@ -51,7 +51,7 @@ public class EquipAction extends AbAction {
 
     @Override
     public String helpMessage() {
-        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
-                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
+        return game.getFormatter().formatStringLength(15, getName()) + " => " + game.getFormatter().formatStringLength(100, getDescription())
+                + " | Commands => " + game.getFormatter().formatStringLength(30, game.getFormatter().getPrintableCollection(getPossibleCommands()));
     }
 }

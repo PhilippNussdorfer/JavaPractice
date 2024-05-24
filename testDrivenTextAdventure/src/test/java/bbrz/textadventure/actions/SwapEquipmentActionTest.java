@@ -3,6 +3,7 @@ package bbrz.textadventure.actions;
 import bbrz.textadventure.Game;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoFreeSpaceException;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
@@ -39,6 +40,8 @@ class SwapEquipmentActionTest {
     Location location;
     @Mock
     Backpack backpack;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
@@ -48,8 +51,9 @@ class SwapEquipmentActionTest {
     @Test
     void execute() throws NoFreeSpaceException, CommandNotFoundException {
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
-        Mockito.when(player.getBp()).thenReturn(backpack);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item));
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);
@@ -67,8 +71,9 @@ class SwapEquipmentActionTest {
     @Test
     void executeWithOneNotExistingItem() throws NoFreeSpaceException, CommandNotFoundException {
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
-        Mockito.when(player.getBp()).thenReturn(backpack);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item));
         Mockito.when(item.getName()).thenReturn("bronze helmet");
@@ -89,8 +94,9 @@ class SwapEquipmentActionTest {
     @Test
     void throwsIllegalArgumentException() {
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
-        Mockito.when(player.getBp()).thenReturn(backpack);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
+        Mockito.when(stats.getBp()).thenReturn(backpack);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item));
         Mockito.when(item.getType()).thenReturn(ItemType.HELMET);

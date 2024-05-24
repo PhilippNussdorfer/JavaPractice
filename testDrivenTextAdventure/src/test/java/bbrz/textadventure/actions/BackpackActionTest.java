@@ -1,6 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +20,8 @@ class BackpackActionTest {
 
     @Mock
     Game game;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -54,6 +57,10 @@ class BackpackActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Backpack       ", "Shows you your items in the backpack <Command>                                                      ", "bp, Backpack                  ");
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("bp, Backpack                  ");
+
         assertEquals("Backpack        => Shows you your items in the backpack <Command>                                                       | Commands => bp, Backpack                  ", action.helpMessage());
     }
 }

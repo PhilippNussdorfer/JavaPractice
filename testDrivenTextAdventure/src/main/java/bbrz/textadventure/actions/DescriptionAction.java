@@ -50,7 +50,7 @@ public class DescriptionAction extends AbAction {
 
     private void showItemDescription(String[] commandAndParams) throws NoItemFoundException {
         var locationItems = game.getCurrentLocation().getItems();
-        var playerBp = game.getPlayer().getBp().getBackpack();
+        var playerBp = game.getPlayer().getStats().getBp().getBackpack();
         var itemName = commandAndParams[2];
 
         var item = getItemFromString(locationItems, itemName);
@@ -79,8 +79,8 @@ public class DescriptionAction extends AbAction {
 
     @Override
     public String helpMessage() {
-        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
-                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()))
-                + " | Additions => " + formatter.formatStringLength(30, LOCATION + ", " + LOCATION_NAME + ", " + ITEM_DESC);
+        return game.getFormatter().formatStringLength(15, getName()) + " => " + game.getFormatter().formatStringLength(100, getDescription())
+                + " | Commands => " + game.getFormatter().formatStringLength(30, game.getFormatter().getPrintableCollection(getPossibleCommands()))
+                + " | Additions => " + game.getFormatter().formatStringLength(30, LOCATION + ", " + LOCATION_NAME + ", " + ITEM_DESC);
     }
 }

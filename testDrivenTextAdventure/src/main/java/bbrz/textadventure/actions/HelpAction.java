@@ -6,8 +6,6 @@ import bbrz.textadventure.tools.StringFormatter;
 
 public class HelpAction extends AbAction {
 
-    private final StringFormatter formatter = new StringFormatter();
-
     public HelpAction(Game game, String ... possibleCommands) {
         super(game, "Help", "Shows the help for all possible Commands <Command>", possibleCommands);
     }
@@ -15,7 +13,7 @@ public class HelpAction extends AbAction {
     @Override
     public void execute(String... commandAndParams) {
         game.getWrapper().outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
-        for (Action action : game.getInterpreter().getActionList()) {
+        for (Action action : game.getCommandInterpreter().getActionList()) {
             game.getWrapper().outPrintlnColored(action.helpMessage(), TextColor.CYAN);
         }
         game.getWrapper().outPrintlnColored("=".repeat(210) + "\n", TextColor.DARK_BROWN);
@@ -23,7 +21,7 @@ public class HelpAction extends AbAction {
 
     @Override
     public String helpMessage() {
-        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
-                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
+        return game.getFormatter().formatStringLength(15, getName()) + " => " + game.getFormatter().formatStringLength(100, getDescription())
+                + " | Commands => " + game.getFormatter().formatStringLength(30, game.getFormatter().getPrintableCollection(getPossibleCommands()));
     }
 }

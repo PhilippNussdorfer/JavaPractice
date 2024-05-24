@@ -17,7 +17,7 @@ import bbrz.textadventure.tools.LocationPointerTool;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.gameLoader.StaticGameLoader;
-import bbrz.textadventure.tools.Interpreter;
+import bbrz.textadventure.tools.CommandInterpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import jdk.jshell.spi.ExecutionControl;
 
@@ -27,7 +27,7 @@ import java.util.Scanner;
 public class GameLoop {
 
     private Game game;
-    private Interpreter interpreter;
+    private CommandInterpreter commandInterpreter;
     private final Scanner scanner = new Scanner(System.in);
     private final OutputWrapper wrapper = new OutputWrapper();
     private final Location replaceable = new Location("Replaceable", "for the algorithm to indicate an replaceable location", MapRuleMark.REPLACEABLE);
@@ -54,7 +54,7 @@ public class GameLoop {
 
     private void interpretAndHandleErrors(String userInput) {
         try {
-            interpreter.interpret(userInput);
+            commandInterpreter.interpret(userInput);
         } catch (CommandNotFoundException | ExecutionControl.NotImplementedException | IllegalArgumentException |
                  NoItemFoundException | NoFreeSpaceException exc) {
             wrapper.outErr(exc.getMessage());
@@ -89,12 +89,12 @@ public class GameLoop {
 
     private void initGame() {
         game = new StaticGameLoader().initGame(wrapper, scanner, createPlayer());
-        interpreter = game.getInterpreter();
+        commandInterpreter = game.getCommandInterpreter();
     }
 
     private void initRandomMazeGame() {
         game = new SelfMapCompositionGameLoader(gen, crawler).initGame(wrapper, scanner, createPlayer());
-        interpreter = game.getInterpreter();
+        commandInterpreter = game.getCommandInterpreter();
     }
 
     private Player createPlayer() {

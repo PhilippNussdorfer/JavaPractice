@@ -4,7 +4,6 @@ import bbrz.textadventure.Game;
 
 public class MoveAction extends AbAction {
 
-
     public MoveAction(Game game, String ... possibleCommands) {
         super(game, "Move", "To move to an other location <Command>", possibleCommands);
     }
@@ -16,7 +15,7 @@ public class MoveAction extends AbAction {
 
     @Override
     public String helpMessage() {
-        return formatter.formatStringLength(15, getName()) + " => " + formatter.formatStringLength(100, getDescription())
-                + " | Commands => " + formatter.formatStringLength(30, formatter.getPrintableCollection(getPossibleCommands()));
+        return game.getFormatter().formatStringLength(15, getName()) + " => " + game.getFormatter().formatStringLength(100, getDescription())
+                + " | Commands => " + game.getFormatter().formatStringLength(30, game.getFormatter().getPrintableCollection(getPossibleCommands()));
     }
 }

@@ -4,7 +4,7 @@ import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.locations.Location;
-import bbrz.textadventure.tools.Interpreter;
+import bbrz.textadventure.tools.CommandInterpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.tools.StringFormatter;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Game {
     private final Player player;
     private Location currentLocation;
     private final OutputWrapper wrapper;
-    private Interpreter interpreter;
+    private CommandInterpreter commandInterpreter;
     private final List<List<Location>> gameMap;
     @Setter
     private boolean loopGame = true;
@@ -38,21 +38,21 @@ public class Game {
     }
 
     public void printLocationItems() {
-        wrapper.outPrintlnColored("\nThese are all items you can see: " + formatter.getPrintableStringFromItemList(currentLocation.getItems()) + "\n", TextColor.GREEN);
+        wrapper.outPrintlnColored("\nThese are all items you can see:\n" + formatter.getPrintableStringFromItemList(currentLocation.getItems()) + "\n", TextColor.GREEN);
     }
 
     public void printBPItems() {
-        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + formatter.getPrintableStringFromItemList(player.getBp().getBackpack()) + "\n" +
-                "You have " + (player.getBp().getBACKPACK_SPACE() - player.getBp().getBackpack().size()) + " backpack slots free.\n", TextColor.GREEN);
+        wrapper.outPrintlnColored("\nThese are all items in your Backpack: " + formatter.getPrintableStringFromItemList(player.getStats().getBp().getBackpack()) + "\n" +
+                "You have " + (player.getStats().getBp().getBACKPACK_SPACE() - player.getStats().getBp().getBackpack().size()) + " backpack slots free.\n", TextColor.GREEN);
     }
 
-    public void addInterpreter(Interpreter interpreter) {
-        this.interpreter = interpreter;
+    public void addInterpreter(CommandInterpreter commandInterpreter) {
+        this.commandInterpreter = commandInterpreter;
     }
 
     public void move(String direction) {
         try {
-            currentLocation = currentLocation.getRoom(direction);
+            currentLocation = currentLocation.getLocation(direction);
         } catch (RoomNotFoundException roomNotFound) {
             wrapper.outErr(roomNotFound.getMessage());
         }

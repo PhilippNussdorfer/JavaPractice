@@ -2,6 +2,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.item.ItemStats;
 import bbrz.textadventure.item.ItemType;
 import bbrz.textadventure.tools.OutputWrapper;
@@ -43,6 +44,8 @@ class DescriptionActionTest {
     Backpack bp;
     @Mock
     ItemStats itemStats;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void beforeEach() {
@@ -82,7 +85,8 @@ class DescriptionActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(item.getName()).thenReturn("candle");
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
         Mockito.when(item.getDescription()).thenReturn("Hello World");
@@ -99,7 +103,8 @@ class DescriptionActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(item.getName()).thenReturn("candle");
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(location.getItems()).thenReturn(new ArrayList<>());
 

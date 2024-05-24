@@ -1,7 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
-import bbrz.textadventure.tools.Interpreter;
+import bbrz.textadventure.tools.CommandInterpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import bbrz.textadventure.tools.colors.TextColor;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ class HelpActionTest {
     @Mock
     Action thirdAction;
     @Mock
-    Interpreter interpreter;
+    CommandInterpreter commandInterpreter;
 
     @BeforeEach
     void setUp() {
@@ -37,9 +37,9 @@ class HelpActionTest {
 
     @Test
     void executeOnceDescribe() {
-        Mockito.when(game.getInterpreter()).thenReturn(interpreter);
+        Mockito.when(game.getCommandInterpreter()).thenReturn(commandInterpreter);
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
-        Mockito.when(interpreter.getActionList()).thenReturn(List.of(secAction));
+        Mockito.when(commandInterpreter.getActionList()).thenReturn(List.of(secAction));
         Mockito.when(secAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ");
         
         action.execute("h");
@@ -50,10 +50,10 @@ class HelpActionTest {
 
     @Test
     void executeOtherAction() {
-        Mockito.when(game.getInterpreter()).thenReturn(interpreter);
+        Mockito.when(game.getCommandInterpreter()).thenReturn(commandInterpreter);
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
 
-        Mockito.when(interpreter.getActionList()).thenReturn(List.of(thirdAction));
+        Mockito.when(commandInterpreter.getActionList()).thenReturn(List.of(thirdAction));
         Mockito.when(thirdAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                      ");
 
         action.execute("h");
@@ -62,10 +62,10 @@ class HelpActionTest {
 
     @Test
     void executeMultipleActions() {
-        Mockito.when(game.getInterpreter()).thenReturn(interpreter);
+        Mockito.when(game.getCommandInterpreter()).thenReturn(commandInterpreter);
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
 
-        Mockito.when(interpreter.getActionList()).thenReturn(List.of(thirdAction, secAction));
+        Mockito.when(commandInterpreter.getActionList()).thenReturn(List.of(thirdAction, secAction));
         Mockito.when(secAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                       | Additions => addition                      ");
         Mockito.when(thirdAction.helpMessage()).thenReturn("name            => description                                                                                          | Commands => Commands                      ");
 

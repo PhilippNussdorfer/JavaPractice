@@ -1,6 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
@@ -31,6 +32,8 @@ class DropActionTest {
     Item item;
     @Mock
     Backpack bp;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
@@ -42,7 +45,8 @@ class DropActionTest {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(item.getName()).thenReturn("name");
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
 
         action.execute("Drop", "name");

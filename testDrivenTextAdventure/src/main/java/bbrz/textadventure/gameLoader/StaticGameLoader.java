@@ -1,6 +1,7 @@
 package bbrz.textadventure.gameLoader;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.locations.Directions;
 import bbrz.textadventure.tools.InterpreterInit;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.*;
@@ -37,28 +38,28 @@ public class StaticGameLoader implements GameLoader {
         Location lake = new Location("Lake", "It's a small lake separated from the sea and where the clear blue water that reflects the moon.", MapRuleMark.LAKE);
 
         cottage.addItems(candle, matches);
-        cottage.addPointers(new LocationPointer("s", well));
+        cottage.addPointers(new LocationPointer(Directions.SOUTH, well));
 
         well.addItems(oldIronHelmet);
-        well.addPointers(new LocationPointer("n", cottage),
-                new LocationPointer("s", woods),
-                new LocationPointer("w", cliff));
+        well.addPointers(new LocationPointer(Directions.NORTH, cottage),
+                new LocationPointer(Directions.SOUTH, woods),
+                new LocationPointer(Directions.WEST, cliff));
 
         cliff.addItems(oldBronzeSword);
-        cliff.addPointers(new LocationPointer("e", well),
-                new LocationPointer("s", beach));
+        cliff.addPointers(new LocationPointer(Directions.EAST, well),
+                new LocationPointer(Directions.SOUTH, beach));
 
-        woods.addPointers(new LocationPointer("n", well),
-                new LocationPointer("e", clearing),
-                new LocationPointer("s", lake));
+        woods.addPointers(new LocationPointer(Directions.NORTH, well),
+                new LocationPointer(Directions.EAST, clearing),
+                new LocationPointer(Directions.SOUTH, lake));
 
-        beach.addPointers(new LocationPointer("n", cliff),
-                new LocationPointer("w", lake));
+        beach.addPointers(new LocationPointer(Directions.NORTH, cliff),
+                new LocationPointer(Directions.WEST, lake));
 
-        clearing.addPointers(new LocationPointer("w", woods));
+        clearing.addPointers(new LocationPointer(Directions.WEST, woods));
 
-        lake.addPointers(new LocationPointer("n", woods),
-                new LocationPointer("e", beach));
+        lake.addPointers(new LocationPointer(Directions.NORTH, woods),
+                new LocationPointer(Directions.EAST, beach));
 
         return cottage;
     }

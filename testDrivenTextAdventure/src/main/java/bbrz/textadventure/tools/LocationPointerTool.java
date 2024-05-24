@@ -1,5 +1,6 @@
 package bbrz.textadventure.tools;
 
+import bbrz.textadventure.locations.Directions;
 import bbrz.textadventure.locations.Location;
 import bbrz.textadventure.locations.LocationPointer;
 import bbrz.textadventure.locations.Position;
@@ -12,23 +13,23 @@ public class LocationPointerTool {
 
         if (currentPos != null && prevPos != null) {
             if (prevPos.getX() > currentPos.getX()) {
-                prev.addPointers(new LocationPointer("W", current));
-                current.addPointers(new LocationPointer("E", prev));
+                prev.addPointers(new LocationPointer(Directions.WEST, current));
+                current.addPointers(new LocationPointer(Directions.EAST, prev));
             }
 
             if (prevPos.getX() < currentPos.getX()) {
-                prev.addPointers(new LocationPointer("E", current));
-                current.addPointers(new LocationPointer("W", prev));
+                prev.addPointers(new LocationPointer(Directions.EAST, current));
+                current.addPointers(new LocationPointer(Directions.WEST, prev));
             }
 
             if (prevPos.getY() > currentPos.getY()) {
-                prev.addPointers(new LocationPointer("N", current));
-                current.addPointers(new LocationPointer("S", prev));
+                prev.addPointers(new LocationPointer(Directions.NORTH, current));
+                current.addPointers(new LocationPointer(Directions.SOUTH, prev));
             }
 
             if (prevPos.getY() < currentPos.getY()) {
-                prev.addPointers(new LocationPointer("S", current));
-                current.addPointers(new LocationPointer("N", prev));
+                prev.addPointers(new LocationPointer(Directions.SOUTH, current));
+                current.addPointers(new LocationPointer(Directions.NORTH, prev));
             }
         }
     }

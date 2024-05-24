@@ -3,6 +3,7 @@ package bbrz.textadventure.actions;
 import bbrz.textadventure.Game;
 import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.customException.NoItemFoundException;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
@@ -32,6 +33,8 @@ class DropEquipmentActionTest {
     Item item;
     @Mock
     Item secItem;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
@@ -41,7 +44,8 @@ class DropEquipmentActionTest {
     @Test
     void execute() throws NoFreeSpaceException, NoItemFoundException {
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item, secItem));
         Mockito.when(item.getName()).thenReturn("Wooden Round Shield");
         Mockito.when(secItem.getName()).thenReturn("Ring");

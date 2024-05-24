@@ -71,8 +71,8 @@ public class Equipped {
 
     public void eqRemoveItems(Game game, Item ... items) throws NoFreeSpaceException {
         for (Item item : items) {
-            if (game.getPlayer().getBp().getBackpack().size() < game.getPlayer().getBp().getBACKPACK_SPACE()) {
-                game.getPlayer().getBp().bpAddItems(item);
+            if (game.getPlayer().getStats().getBp().getBackpack().size() < game.getPlayer().getStats().getBp().getBACKPACK_SPACE()) {
+                game.getPlayer().getStats().getBp().bpAddItems(item);
                 equippedList.remove(item);
             } else {
                 game.getCurrentLocation().addItems(item);

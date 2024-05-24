@@ -1,5 +1,6 @@
 package bbrz.textadventure.tools;
 
+import bbrz.textadventure.locations.Directions;
 import bbrz.textadventure.locations.Location;
 import bbrz.textadventure.locations.LocationPointer;
 import bbrz.textadventure.locations.Position;
@@ -42,11 +43,11 @@ class LocationPointerToolTest {
         tool.addPointerToLocation(prev, current);
 
         Mockito.verify(prev, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("E", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.EAST, locationCaptor.getValue().getDirection());
         assertEquals(current, locationCaptor.getValue().getTarget());
 
         Mockito.verify(current, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("W", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.WEST, locationCaptor.getValue().getDirection());
         assertEquals(prev, locationCaptor.getValue().getTarget());
     }
 
@@ -63,11 +64,11 @@ class LocationPointerToolTest {
         tool.addPointerToLocation(prev, current);
 
         Mockito.verify(prev, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("W", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.WEST, locationCaptor.getValue().getDirection());
         assertEquals(current, locationCaptor.getValue().getTarget());
 
         Mockito.verify(current, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("E", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.EAST, locationCaptor.getValue().getDirection());
         assertEquals(prev, locationCaptor.getValue().getTarget());
     }
 
@@ -84,11 +85,11 @@ class LocationPointerToolTest {
         tool.addPointerToLocation(prev, current);
 
         Mockito.verify(prev, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("N", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.NORTH, locationCaptor.getValue().getDirection());
         assertEquals(current, locationCaptor.getValue().getTarget());
 
         Mockito.verify(current, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("S", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.SOUTH, locationCaptor.getValue().getDirection());
         assertEquals(prev, locationCaptor.getValue().getTarget());
     }
 
@@ -105,11 +106,11 @@ class LocationPointerToolTest {
         tool.addPointerToLocation(prev, current);
 
         Mockito.verify(prev, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("S", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.SOUTH, locationCaptor.getValue().getDirection());
         assertEquals(current, locationCaptor.getValue().getTarget());
 
         Mockito.verify(current, Mockito.times(1)).addPointers(locationCaptor.capture());
-        assertEquals("N", locationCaptor.getValue().getDirection());
+        assertEquals(Directions.NORTH, locationCaptor.getValue().getDirection());
         assertEquals(prev, locationCaptor.getValue().getTarget());
     }
 }

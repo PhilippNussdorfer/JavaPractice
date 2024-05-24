@@ -1,6 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Equipped;
@@ -34,6 +35,8 @@ class PlayerInfoActionTest {
     Item secItem;
     @Mock
     OutputWrapper wrapper;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
@@ -44,7 +47,8 @@ class PlayerInfoActionTest {
     void execute() {
         Mockito.when(game.getPlayer()).thenReturn(player);
         Mockito.when(player.getName()).thenReturn("Hans");
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item, secItem));
         Mockito.when(item.getName()).thenReturn("Iron Helmet");
         Mockito.when(secItem.getName()).thenReturn("Rusty old Sword");

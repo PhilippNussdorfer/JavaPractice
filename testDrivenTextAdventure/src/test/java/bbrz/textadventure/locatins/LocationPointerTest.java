@@ -1,5 +1,6 @@
 package bbrz.textadventure.locatins;
 
+import bbrz.textadventure.locations.Directions;
 import bbrz.textadventure.locations.Location;
 import bbrz.textadventure.locations.LocationPointer;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +21,8 @@ class LocationPointerTest {
 
     @BeforeEach
     void setUp() {
-        pointer = new LocationPointer("s", location);
-        secPointer = new LocationPointer("W", location);
+        pointer = new LocationPointer(Directions.SOUTH, location);
+        secPointer = new LocationPointer(Directions.WEST, location);
     }
 
     @Test

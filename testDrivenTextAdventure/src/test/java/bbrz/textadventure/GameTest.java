@@ -1,12 +1,13 @@
 package bbrz.textadventure;
 
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locations.Location;
-import bbrz.textadventure.tools.Interpreter;
+import bbrz.textadventure.tools.CommandInterpreter;
 import bbrz.textadventure.tools.OutputWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,13 +40,15 @@ class GameTest {
     @Mock
     RoomNotFoundException exception;
     @Mock
-    Interpreter interpreter;
+    CommandInterpreter commandInterpreter;
     @Mock
     Backpack bp;
     @Mock
     List<List<Location>> map;
     @Mock
     List<Location> locations;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
@@ -54,8 +57,8 @@ class GameTest {
 
     @Test
     void moveToNextRoom() throws RoomNotFoundException {
-        Mockito.when(location.getRoom("s")).thenReturn(secLocation);
-        Mockito.when(secLocation.getRoom("n")).thenReturn(location);
+        Mockito.when(location.getLocation("s")).thenReturn(secLocation);
+        Mockito.when(secLocation.getLocation("n")).thenReturn(location);
 
         game.move("s");
         assertEquals(game.getCurrentLocation(), secLocation);
@@ -68,7 +71,7 @@ class GameTest {
     void moveNextRoomWithOtherConstructor() throws RoomNotFoundException {
         Mockito.when(map.get(Mockito.anyInt())).thenReturn(locations);
         Mockito.when(locations.get(Mockito.anyInt())).thenReturn(location);
-        Mockito.when(location.getRoom("s")).thenReturn(secLocation);
+        Mockito.when(location.getLocation("s")).thenReturn(secLocation);
 
         secGame = new Game(player, wrapper, map);
 
@@ -106,13 +109,13 @@ class GameTest {
 
     @Test
     void addInterpreter() {
-        game.addInterpreter(interpreter);
-        assertEquals(interpreter, game.getInterpreter());
+        game.addInterpreter(commandInterpreter);
+        assertEquals(commandInterpreter, game.getCommandInterpreter());
     }
 
     @Test
     void cantFindRoom() throws RoomNotFoundException {
-        Mockito.when(location.getRoom("w")).thenThrow(exception);
+        Mockito.when(location.getLocation("w")).thenThrow(exception);
         Mockito.when(exception.getMessage()).thenReturn("not found");
 
         game.move("w");
@@ -125,7 +128,7 @@ class GameTest {
         Mockito.when(item.getName()).thenReturn("name");
 
         game.printLocationItems();
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items you can see: name\n", TextColor.GREEN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items you can see:\nname\n", TextColor.GREEN);
     }
 
     @Test
@@ -135,12 +138,13 @@ class GameTest {
         Mockito.when(secItem.getName()).thenReturn("secName");
 
         game.printLocationItems();
-        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items you can see: name, secName\n", TextColor.GREEN);
+        Mockito.verify(wrapper, Mockito.times(1)).outPrintlnColored("\nThese are all items you can see:\nname, secName\n", TextColor.GREEN);
     }
 
     @Test
     void printPlayerBPWithSingleItem() {
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item));
         Mockito.when(item.getName()).thenReturn("name");
 
@@ -150,7 +154,8 @@ class GameTest {
 
     @Test
     void printPlayerBPWithMultipleItems() {
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(List.of(item, secItem));
         Mockito.when(item.getName()).thenReturn("name");
         Mockito.when(secItem.getName()).thenReturn("secName");

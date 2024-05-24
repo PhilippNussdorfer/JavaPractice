@@ -2,6 +2,7 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.customException.CommandNotFoundException;
+import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
@@ -38,6 +39,8 @@ class EquipActionTest {
     Location location;
     @Mock
     Backpack bp;
+    @Mock
+    EntityStats stats;
 
     @BeforeEach
     void setUp() {
@@ -52,9 +55,10 @@ class EquipActionTest {
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(location.getItems()).thenReturn(items);
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(item.getName()).thenReturn("name");
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(new ArrayList<>());
         Mockito.when(equipped.eqAddItems(item)).thenReturn(true);
 
@@ -71,9 +75,10 @@ class EquipActionTest {
         Mockito.when(game.getCurrentLocation()).thenReturn(location);
         Mockito.when(location.getItems()).thenReturn(items);
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(item.getName()).thenReturn("name");
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(new ArrayList<>());
         Mockito.when(equipped.eqAddItems(item)).thenReturn(false);
 
@@ -89,9 +94,10 @@ class EquipActionTest {
         items.add(secItem);
 
         Mockito.when(game.getPlayer()).thenReturn(player);
-        Mockito.when(player.getEquipped()).thenReturn(equipped);
+        Mockito.when(player.getStats()).thenReturn(stats);
+        Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(item.getName()).thenReturn("name");
-        Mockito.when(player.getBp()).thenReturn(bp);
+        Mockito.when(stats.getBp()).thenReturn(bp);
         Mockito.when(bp.getBackpack()).thenReturn(items);
         Mockito.when(secItem.getName()).thenReturn("no");
         Mockito.when(equipped.eqAddItems(secItem)).thenReturn(true);

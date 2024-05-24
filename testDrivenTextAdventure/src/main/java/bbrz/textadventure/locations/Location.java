@@ -3,9 +3,11 @@ package bbrz.textadventure.locations;
 import bbrz.textadventure.customException.RoomNotFoundException;
 import bbrz.textadventure.rules.MapRuleMark;
 import bbrz.textadventure.item.Item;
+import bbrz.textadventure.tools.StringFormatter;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Location {
@@ -21,6 +23,7 @@ public class Location {
     private final List<Item> items = new ArrayList<>();
     @Getter
     private Position pos = null;
+    private final StringFormatter formatter = new StringFormatter();
 
     public Location(String name, String description, MapRuleMark mark) {
         this.name = name;
@@ -36,7 +39,7 @@ public class Location {
         this.pos = pos;
     }
 
-    public Location getRoom(String direction) throws RoomNotFoundException {
+    public Location getLocation(String direction) throws RoomNotFoundException {
         for (LocationPointer pointer : pointers) {
             if (pointer.isDirection(direction)) {
                 return pointer.getTarget();
@@ -46,11 +49,11 @@ public class Location {
     }
 
     public void addPointers(LocationPointer ... pointers) {
-        this.pointers.addAll(List.of(pointers));
+        this.pointers.addAll(Arrays.asList(pointers));
     }
 
     public void addItems(Item ... items) {
-        this.items.addAll(List.of(items));
+        this.items.addAll(Arrays.asList(items));
     }
 
     public void removeItems(Item ... items) {
@@ -63,7 +66,7 @@ public class Location {
         List<String> result = new ArrayList<>();
 
         for (LocationPointer pointer : pointers) {
-            result.add(pointer.getDirection() + " => " + pointer.getTarget().getName());
+            result.add(formatter.getPrintableCollection(pointer.getDirection().getValues()) + " => " + pointer.getTarget().getName());
         }
 
         return result;
