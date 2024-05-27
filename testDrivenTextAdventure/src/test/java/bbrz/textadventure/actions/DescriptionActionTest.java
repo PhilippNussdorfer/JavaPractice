@@ -6,6 +6,7 @@ import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.item.ItemStats;
 import bbrz.textadventure.item.ItemType;
 import bbrz.textadventure.tools.OutputWrapper;
+import bbrz.textadventure.tools.StringFormatter;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.customException.CommandNotFoundException;
 import bbrz.textadventure.customException.NoItemFoundException;
@@ -46,6 +47,8 @@ class DescriptionActionTest {
     ItemStats itemStats;
     @Mock
     EntityStats stats;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void beforeEach() {
@@ -127,6 +130,10 @@ class DescriptionActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("desc, describe, d             ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Describe       ", "To describe an location, item or get the location name <Command> <Addition> <Item name>             ", "desc, describe, d             ", "location, locationName, itemDesc");
+
         assertEquals("Describe        => To describe an location, item or get the location name <Command> <Addition> <Item name>              | Commands => desc, describe, d              | Additions => location, locationName, itemDesc", action.helpMessage());
     }
 }

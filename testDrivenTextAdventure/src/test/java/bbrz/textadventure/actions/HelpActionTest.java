@@ -3,6 +3,7 @@ package bbrz.textadventure.actions;
 import bbrz.textadventure.Game;
 import bbrz.textadventure.tools.CommandInterpreter;
 import bbrz.textadventure.tools.OutputWrapper;
+import bbrz.textadventure.tools.StringFormatter;
 import bbrz.textadventure.tools.colors.TextColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,8 @@ class HelpActionTest {
     Action thirdAction;
     @Mock
     CommandInterpreter commandInterpreter;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -82,6 +85,10 @@ class HelpActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("h, help                       ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Help           ", "Shows the help for all possible Commands <Command>                                                  ", "h, help                       ");
+
         assertEquals("Help            => Shows the help for all possible Commands <Command>                                                   | Commands => h, help                       ", action.helpMessage());
     }
 }

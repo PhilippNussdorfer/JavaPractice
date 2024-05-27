@@ -7,6 +7,7 @@ import bbrz.textadventure.entity.EntityStats;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,8 @@ class DropEquipmentActionTest {
     Item secItem;
     @Mock
     EntityStats stats;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -74,6 +77,10 @@ class DropEquipmentActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("de, drop-eq                   ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Drop Equipment ", "drops the item in the backpack or to the floor when the backpack is full <Command> <Item Name>      ", "de, drop-eq                   ");
+
         assertEquals("Drop Equipment  => drops the item in the backpack or to the floor when the backpack is full <Command> <Item Name>       | Commands => de, drop-eq                   ", action.helpMessage());
     }
 }

@@ -6,6 +6,7 @@ import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +35,8 @@ class DropActionTest {
     Backpack bp;
     @Mock
     EntityStats stats;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -67,6 +70,10 @@ class DropActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("Commands => drop                          ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Drop           ", "To drop an item <Command> <Item name>                                                               ", "drop                          ");
+
         assertEquals("Drop            => To drop an item <Command> <Item name>                                                                | Commands => drop                          ", action.helpMessage());
     }
 }

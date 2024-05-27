@@ -1,6 +1,7 @@
 package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,8 @@ class MoveActionTest {
 
     @Mock
     Game game;
+    @Mock
+    StringFormatter formatter;
 
     MoveAction move;
 
@@ -49,6 +52,10 @@ class MoveActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("w, n, o, s                    ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Move           ", "To move to an other location <Command>                                                              ", "w, n, o, s                    ");
+
         assertEquals("Move            => To move to an other location <Command>                                                               | Commands => w, n, o, s                    ", move.helpMessage());
     }
 }

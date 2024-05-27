@@ -8,6 +8,7 @@ import bbrz.textadventure.item.Backpack;
 import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,6 +42,8 @@ class EquipActionTest {
     Backpack bp;
     @Mock
     EntityStats stats;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -121,6 +124,10 @@ class EquipActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("eq, equip                     ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Equip          ", "Equips an item if the slot for the item type is free <Command> <Item Name>                          ", "eq, equip                     ");
+
         assertEquals("Equip           => Equips an item if the slot for the item type is free <Command> <Item Name>                           | Commands => eq, equip                     ", action.helpMessage());
     }
 }

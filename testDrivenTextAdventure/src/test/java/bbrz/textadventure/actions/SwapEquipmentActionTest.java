@@ -10,6 +10,7 @@ import bbrz.textadventure.item.Equipped;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.item.ItemType;
 import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,6 +43,8 @@ class SwapEquipmentActionTest {
     Backpack backpack;
     @Mock
     EntityStats stats;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -118,6 +121,11 @@ class SwapEquipmentActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("swap, swap-eq, swap-equipment ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Swap Equipment ", "Swaps the equipped item with an item you want to equip make sure they are from te same type\n" +
+                "                   <Command> <Equipped Item Name> <Item Name of new Equipment>                                         ", "swap, swap-eq, swap-equipment ");
+
         assertEquals("Swap Equipment  => Swaps the equipped item with an item you want to equip make sure they are from te same type\n" +
                 "                   <Command> <Equipped Item Name> <Item Name of new Equipment>                                          | Commands => swap, swap-eq, swap-equipment ", action.helpMessage());
     }

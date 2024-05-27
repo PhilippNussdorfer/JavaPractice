@@ -2,6 +2,7 @@ package bbrz.textadventure.actions;
 
 import bbrz.textadventure.Game;
 import bbrz.textadventure.entity.EntityStats;
+import bbrz.textadventure.tools.StringFormatter;
 import bbrz.textadventure.tools.colors.TextColor;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Equipped;
@@ -37,6 +38,8 @@ class PlayerInfoActionTest {
     OutputWrapper wrapper;
     @Mock
     EntityStats stats;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -50,12 +53,12 @@ class PlayerInfoActionTest {
         Mockito.when(player.getStats()).thenReturn(stats);
         Mockito.when(stats.getEq()).thenReturn(equipped);
         Mockito.when(equipped.getEquippedList()).thenReturn(List.of(item, secItem));
-        Mockito.when(item.getName()).thenReturn("Iron Helmet");
-        Mockito.when(secItem.getName()).thenReturn("Rusty old Sword");
         Mockito.when(equipped.getEQUIPPED_SPACE()).thenReturn(8);
         Mockito.when(game.getWrapper()).thenReturn(wrapper);
         Mockito.when(player.getBoostedStats()).thenReturn(List.of(15, 20, 9));
         Mockito.when(player.getActualHp()).thenReturn(10);
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableStringFromItemList(List.of(item, secItem))).thenReturn("Iron Helmet, Rusty old Sword");
 
         action.execute("pi");
         Mockito.verify(wrapper, Mockito.times(2)).outPrintlnColored("=".repeat(210), TextColor.DARK_BROWN);
@@ -80,6 +83,10 @@ class PlayerInfoActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("info, pi                      ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Player info    ", "Shows information about the player and his equipment <Command>                                      ", "info, pi                      ");
+
         assertEquals("Player info     => Shows information about the player and his equipment <Command>                                       | Commands => info, pi                      ", action.helpMessage());
     }
 }

@@ -5,6 +5,7 @@ import bbrz.textadventure.customException.NoFreeSpaceException;
 import bbrz.textadventure.entity.Player;
 import bbrz.textadventure.item.Item;
 import bbrz.textadventure.locations.Location;
+import bbrz.textadventure.tools.StringFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +30,8 @@ class PickUpActionTest {
     Location location;
     @Mock
     Item item;
+    @Mock
+    StringFormatter formatter;
 
     @BeforeEach
     void setUp() {
@@ -60,6 +63,10 @@ class PickUpActionTest {
 
     @Test
     void helpMessage() {
+        Mockito.when(game.getFormatter()).thenReturn(formatter);
+        Mockito.when(formatter.getPrintableCollection(Mockito.any(String[].class))).thenReturn("pickup, p                     ");
+        Mockito.when(formatter.formatStringLength(Mockito.anyInt(), Mockito.anyString())).thenReturn("Pick up        ", "To pick up an item in an location <Command> <Item name>                                             ", "pickup, p                     ");
+
         assertEquals("Pick up         => To pick up an item in an location <Command> <Item name>                                              | Commands => pickup, p                     ", action.helpMessage());
     }
 }
