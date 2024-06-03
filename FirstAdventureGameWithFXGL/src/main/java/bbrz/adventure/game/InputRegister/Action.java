@@ -51,10 +51,6 @@ public class Action extends UserAction {
             animationIndicator = AnimationIndicator.NORMAL;
         }
 
-        if (MamblsAdventure.existsEntity(EntityType.ITEM_BAG)) {
-            FXGL.getGameWorld().getClosestEntity(getPlayer(), MamblsAdventure.isEntityType)
-            .ifPresent(entity -> entity.getComponent(ItemBagComponent.class).checkIfItemBagIsOpen());
-        }
         getAxis(getPlusOrMinusVelocity());
         getPlayer().getComponent(PlayerAnimationComponent.class).loopAnimation(direction, animationIndicator);
     }

@@ -48,8 +48,6 @@ public class ListenersForTheInventoryView {
         node.setOnMousePressed(e -> {
             xOffset.set(e.getSceneX() - view.getLayoutX());
             yOffset.set(e.getSceneY() - view.getLayoutY());
-
-            //view.toFront();
         });
 
         node.setOnMouseDragged(e -> {

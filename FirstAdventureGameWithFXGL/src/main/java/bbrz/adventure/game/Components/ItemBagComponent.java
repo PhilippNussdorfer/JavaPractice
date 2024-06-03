@@ -34,9 +34,10 @@ public class ItemBagComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         closeAndRemoveSelfIfEmpty();
+        hideItemBagUIIfPlayerMovesAway();
     }
 
-    public void deleteEntityIfItemListIsEmpty() {
+    private void deleteEntityIfItemListIsEmpty() {
         if (this.itemBagWindow.isEmpty())
             entity.removeFromWorld();
     }
@@ -47,11 +48,17 @@ public class ItemBagComponent extends Component {
 
     public void interact() {
         var i = getGameWorld().getClosestEntity(getPlayer(), MamblsAdventure.isEntityType);
-        Entity itembag = null;
+        Entity itemBag = null;
         if (i.isPresent()) {
-            itembag = i.get();
+            itemBag = i.get();
         }
-        if (itembag != null && getPlayer().isColliding(itembag)) {
+        if (itemBag != null && getPlayer().isColliding(itemBag)) {
+            isItemBagOpen = showInventory(isItemBagOpen, itemBagWindow);
+        }
+    }
+
+    private void hideItemBagUIIfPlayerMovesAway() {
+        if (getPlayer().distanceBBox(entity) > 20 && isItemBagOpen) {
             isItemBagOpen = showInventory(isItemBagOpen, itemBagWindow);
         }
     }
@@ -60,13 +67,6 @@ public class ItemBagComponent extends Component {
         if (isItemBagOpen && itemBagWindow.isEmpty()) {
             isItemBagOpen = showInventory(isItemBagOpen, itemBagWindow);
             deleteEntityIfItemListIsEmpty();
-        }
-    }
-
-    public void checkIfItemBagIsOpen() {
-        if (this.isItemBagOpen) {
-            FXGL.removeUINode(this.itemBagWindow.getInventoryNode());
-            this.isItemBagOpen = false;
         }
     }
 
