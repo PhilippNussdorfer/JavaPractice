@@ -69,7 +69,7 @@ public class EnemyComponent extends Component {
     }
 
     private void move() {
-        var moveTowards = getBehavior().follow(getPlayer(), getAnimationComponent(), entity, 2.5, FXGL.getGameWorld().getEntities());
+        var moveTowards = getBehavior().follow(getPlayer(), getAnimationComponent(), entity, 4.5, FXGL.getGameWorld().getEntities());
         getPhysicsComponent().setBodyLinearVelocity(moveTowards);
     }
 

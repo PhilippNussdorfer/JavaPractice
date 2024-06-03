@@ -7,16 +7,22 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BehaviorComponent extends Component {
+    @NonNull
     private final double sightRadius;
+    @NonNull
     private final double minFollowingRadius;
+    @NonNull
     private final double separationDistance;
+    private final Vec acceleration = new Vec();
 
     /**
      * minRadius needs to be lower than sightRadius for the following to work.
@@ -53,22 +59,6 @@ public class BehaviorComponent extends Component {
         }
 
         followDir.sub(currentDir);
-        followDir = checkMinMag(followDir);
-
-        return followDir;
-    }
-
-    @NotNull
-    private Vec checkMinMag(Vec followDir) {
-        int minMag = 150;
-
-        if (followDir.mag() < minMag) {
-            double mag = followDir.mag();
-            double x = followDir.getX(), y = followDir.getY();
-
-            followDir = new Vec((x/mag) * minMag, (y/mag) * minMag);
-            followDir.normalize();
-        }
 
         return followDir;
     }
@@ -107,7 +97,6 @@ public class BehaviorComponent extends Component {
 
     public Vec2 follow(Entity target, EnemyAnimationComponent animationComponent, Entity enemy, double speedMultiplier, List<Entity> allEntity_s) {
         List<Entity> entityList = getEntityThatIsToClose(separationDistance, enemy, target, allEntity_s);
-        var acceleration = new Vec();
 
         var followRule = follow(target, enemy, animationComponent);
         var separationRule = separateFromOtherEntity_s(enemy, entityList);
@@ -117,8 +106,8 @@ public class BehaviorComponent extends Component {
         acceleration.add(followRule);
         acceleration.add(separationRule);
 
-        acceleration.normalize();
         acceleration.multiply(speedMultiplier);
+        acceleration.normalize();
 
         return new Vec2(acceleration.getY(), acceleration.getX());
     }
