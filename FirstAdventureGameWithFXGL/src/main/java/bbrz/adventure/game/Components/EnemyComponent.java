@@ -24,8 +24,6 @@ public class EnemyComponent extends Component {
     private final Random rnd = new Random();
     @Getter
     private double hp;
-    @Getter
-    private final int speed = 140;
     private final double maxHp;
     private final int maxDmg;
     private final int minDmg;
@@ -71,7 +69,7 @@ public class EnemyComponent extends Component {
     }
 
     private void move() {
-        var moveTowards = getBehavior().follow(getPlayer(), getAnimationComponent(), entity, speed, FXGL.getGameWorld().getEntities());
+        var moveTowards = getBehavior().follow(getPlayer(), getAnimationComponent(), entity, 2.5, FXGL.getGameWorld().getEntities());
         getPhysicsComponent().setBodyLinearVelocity(moveTowards);
     }
 

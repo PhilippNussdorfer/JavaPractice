@@ -105,7 +105,7 @@ public class BehaviorComponent extends Component {
         return steer;
     }
 
-    public Vec2 follow(Entity target, EnemyAnimationComponent animationComponent, Entity enemy, int maxSpeed, List<Entity> allEntity_s) {
+    public Vec2 follow(Entity target, EnemyAnimationComponent animationComponent, Entity enemy, double speedMultiplier, List<Entity> allEntity_s) {
         List<Entity> entityList = getEntityThatIsToClose(separationDistance, enemy, target, allEntity_s);
         var acceleration = new Vec();
 
@@ -118,9 +118,7 @@ public class BehaviorComponent extends Component {
         acceleration.add(separationRule);
 
         acceleration.normalize();
-        acceleration.multiply(2);
-
-        acceleration.limit(maxSpeed);
+        acceleration.multiply(speedMultiplier);
 
         return new Vec2(acceleration.getY(), acceleration.getX());
     }
