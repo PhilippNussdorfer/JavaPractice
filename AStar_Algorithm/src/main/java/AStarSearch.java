@@ -1,5 +1,6 @@
 import java.util.*;
 
+// https://www.geeksforgeeks.org/a-search-algorithm/
 public class AStarSearch {
     private int[][] grid;
 
@@ -33,7 +34,7 @@ public class AStarSearch {
                 && (col < mapCol);
     }
 
-    private boolean isUnBlocked(int row, int col) {
+    private boolean isWalkable(int row, int col) {
         return grid[row][col] == 1;
     }
 
@@ -83,6 +84,29 @@ public class AStarSearch {
                 System.out.println("-> (" + arr[0] + ", " + arr[1] + ") " + grid[arr[0]][arr[1]]);
             }
         });
+
+        int mapRow = grid.length;
+        int mapCol = grid[0].length;
+
+        for (int i = 0; i < mapRow; i++) {
+            for (int j = 0; j < mapCol; j++) {
+                boolean stop = false;
+
+                for (int[] arr : pathList) {
+                    if (arr[0] == i && arr[1] == j) {
+                        System.out.print("* ");
+                        stop = true;
+                    }
+                }
+                if (!stop && grid[i][j] == 0) {
+                    System.out.print("  ");
+                } else if (!stop) {
+                    System.out.print("# ");
+                }
+            }
+            System.out.print("\n");
+        }
+
         System.out.println();
     }
 
@@ -97,8 +121,8 @@ public class AStarSearch {
             return;
         }
 
-        if (!isUnBlocked(src[0], src[1])
-            || !isUnBlocked(dest[0], dest[1])) {
+        if (!isWalkable(src[0], src[1])
+            || !isWalkable(dest[0], dest[1])) {
             System.out.println("Source or the destination is blocked");
             return;
         }
@@ -176,7 +200,7 @@ public class AStarSearch {
                 return true;
 
             } else if (    !closedList[i][j]
-                    && isUnBlocked(i, j)) {
+                    && isWalkable(i, j)) {
                 gNew = cellDetails[parent_i][parent_j].getG() + 1;
                 hNew = calculateHValue(i, j, dest);
                 fNew = gNew + hNew;
