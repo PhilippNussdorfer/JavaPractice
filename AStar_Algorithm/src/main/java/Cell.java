@@ -1,10 +1,9 @@
 import lombok.Getter;
 
 //https://www.geeksforgeeks.org/a-search-algorithm/
-@Getter
 public class Cell {
-    int parent_i, parent_j;
-    double f, g, h;
+    public int parent_i, parent_j;
+    public double f, g, h;
 
     public Cell() {
         this.parent_i = 0;
