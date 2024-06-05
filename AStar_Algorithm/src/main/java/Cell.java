@@ -1,9 +1,14 @@
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 //https://www.geeksforgeeks.org/a-search-algorithm/
+@Getter
+@Setter
+@AllArgsConstructor
 public class Cell {
-    public int parent_i, parent_j;
-    public double f, g, h;
+    private int parent_i, parent_j;
+    private double f, g, h;
 
     public Cell() {
         this.parent_i = 0;
