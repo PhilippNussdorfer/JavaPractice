@@ -6,22 +6,18 @@ import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class BehaviorComponent extends Component {
-    @NonNull
+
     private final double sightRadius;
-    @NonNull
     private final double minFollowingRadius;
-    @NonNull
     private final double separationDistance;
-    private final Vec acceleration = new Vec();
 
     /**
      * minRadius needs to be lower than sightRadius for the following to work.
@@ -83,7 +79,7 @@ public class BehaviorComponent extends Component {
             Vec obstaclePos = new Vec(obstacle.getX(), obstacle.getY());
 
             double distance = enemy.distance(obstacle);
-            if (distance < separationDistance) {
+            if (distance < separationDistance + 10) {
                 Vec diff = Vec.sub(enemyPos, obstaclePos);
                 diff.div(distance);
                 diff.normalize();
@@ -99,8 +95,9 @@ public class BehaviorComponent extends Component {
 
         var followRule = follow(target, enemy, animationComponent);
         var separationRule = separateFromOtherEntity_s(enemy, entityList);
+        var acceleration = new Vec();
 
-        separationRule.multiply(1.5);
+        separationRule.multiply(3.5);
 
         acceleration.add(followRule);
         acceleration.add(separationRule);
