@@ -1,4 +1,4 @@
-package person;
+package Bank.person;
 
 public class Admin extends Person {
     private Long employeeID;

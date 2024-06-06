@@ -1,8 +1,8 @@
-package accounts;
+package Bank.accounts;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import person.Customer;
+import Bank.person.Customer;
 
 import java.util.List;
 

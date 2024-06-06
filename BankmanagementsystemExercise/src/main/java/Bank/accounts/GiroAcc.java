@@ -1,13 +1,21 @@
-package accounts;
+package Bank.accounts;
 
-import person.Customer;
+import lombok.Getter;
+import lombok.Setter;
+import Bank.person.Customer;
 
 import java.util.List;
 import java.util.Objects;
 
-public class CreditAcc extends Account {
-    public CreditAcc(double balance, AccountTypes accountType) {
+@Getter
+public class GiroAcc extends Account {
+    @Setter
+    private double limit;
+
+    public GiroAcc(double balance, AccountTypes accountType, double limit) {
         super(balance, accountType);
+
+        this.limit = limit;
     }
 
     @Override
@@ -15,8 +23,12 @@ public class CreditAcc extends Account {
         if (amount <= 0)
             return false;
 
-        balance -= amount;
-        return true;
+        if (balance - amount < this.limit)
+            return false;
+        else {
+            balance -= amount;
+            return true;
+        }
     }
 
     @Override
@@ -29,9 +41,11 @@ public class CreditAcc extends Account {
                 Account customerAccount = customer.getAccount(accountType);
 
                 if (customerAccount != null) {
-                    balance -= amount;
-                    customerAccount.balance += amount;
-                    return true;
+                    if (balance - amount >= this.limit) {
+                        balance -= amount;
+                        customerAccount.balance += amount;
+                        return true;
+                    }
                 }
                 return false;
             }

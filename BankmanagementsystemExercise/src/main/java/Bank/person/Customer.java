@@ -1,5 +1,6 @@
-package person;
+package Bank.person;
 
+import Bank.accounts.*;
 import accounts.*;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package person;
+package Bank.person;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

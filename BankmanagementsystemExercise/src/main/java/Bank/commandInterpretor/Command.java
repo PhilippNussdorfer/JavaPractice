@@ -1,4 +1,4 @@
-package commandInterpretor;
+package Bank.commandInterpretor;
 
 public interface Command {
     boolean canHandle(String command);

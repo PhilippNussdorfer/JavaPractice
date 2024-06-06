@@ -1,5 +1,6 @@
-package commandInterpretor;
+package Bank.commandInterpretor;
 
+import Bank.Bundle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public abstract class CommandABS implements Command {
     private final String[] commands;
+    private final Bundle bundle;
 
     @Override
     public boolean canHandle(String command) {
