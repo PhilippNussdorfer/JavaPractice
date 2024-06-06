@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Getter
 public abstract class Person {
+    @Getter
     private String name;
+    @Getter
     private String birthDay;
+    @Getter
     private Long socialNumber;
     private String pin;
 

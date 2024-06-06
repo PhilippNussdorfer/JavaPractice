@@ -1,9 +1,14 @@
 package Bank.person;
 
-public class Admin extends Person {
-    private Long employeeID;
+import lombok.Getter;
 
-    public Admin(String name, String birthDay, Long socialNumber, String pin) {
+public class Admin extends Person {
+    @Getter
+    private final Long employeeID;
+
+    public Admin(String name, String birthDay, Long socialNumber, String pin, Long employeeID) {
         super(name, birthDay, socialNumber, pin);
+
+        this.employeeID = employeeID;
     }
 }
