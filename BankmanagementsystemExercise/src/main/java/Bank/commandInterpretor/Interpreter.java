@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Interpreter {
     @Getter
-    private List<Command> commands = new ArrayList<>();
+    private final List<Command> commands = new ArrayList<>();
 
     public void addCommand(Command ... commands) {
         this.commands.addAll(Arrays.asList(commands));
