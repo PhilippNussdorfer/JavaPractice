@@ -45,6 +45,8 @@ public class EnemyComponent extends Component {
         this.indicator = indicator;
         this.x = x;
         this.y = y;
+
+        var a = FXGL.getGameScene().getGameWorld();
     }
 
     private EnemyAnimationComponent getAnimationComponent() {

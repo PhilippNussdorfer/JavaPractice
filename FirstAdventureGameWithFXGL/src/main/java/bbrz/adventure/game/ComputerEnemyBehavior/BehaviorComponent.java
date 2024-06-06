@@ -2,6 +2,7 @@ package bbrz.adventure.game.ComputerEnemyBehavior;
 
 import bbrz.adventure.game.Components.EnemyAnimationComponent;
 import bbrz.adventure.game.EntityType;
+import bbrz.adventure.game.pathfinding.AStar;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
@@ -88,6 +89,12 @@ public class BehaviorComponent extends Component {
         }
 
         return steer;
+    }
+
+    public Vec2 aStarFollow(Entity target, EnemyAnimationComponent animationComponent, Entity followingEntity, double speed, List<List<Integer>> map) {
+        AStar aStar = new AStar(map);
+
+        return null;
     }
 
     public Vec2 follow(Entity target, EnemyAnimationComponent animationComponent, Entity enemy, double speedMultiplier, List<Entity> allEntity_s) {
