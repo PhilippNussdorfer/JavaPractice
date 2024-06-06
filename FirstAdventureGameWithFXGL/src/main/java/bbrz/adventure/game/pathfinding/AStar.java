@@ -65,7 +65,7 @@ public class AStar {
         return pathList;
     }
 
-    public List<int[]> aStarSearch(int[] src, int[] dest) {
+    public List<int[]> search(int[] src, int[] dest) {
         int row = this.map.size();
         int col = this.map.get(0).size();
 
