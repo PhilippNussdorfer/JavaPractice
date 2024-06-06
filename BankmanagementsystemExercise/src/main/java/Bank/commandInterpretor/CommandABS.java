@@ -4,11 +4,11 @@ import Bank.Bundle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public abstract class CommandABS implements Command {
+    @Getter
     private final String[] commands;
-    private final Bundle bundle;
+    protected final Bundle bundle;
 
     @Override
     public boolean canHandle(String command) {
