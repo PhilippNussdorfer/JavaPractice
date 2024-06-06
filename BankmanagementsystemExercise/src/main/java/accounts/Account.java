@@ -1,10 +1,16 @@
 package accounts;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import person.Customer;
+
+import java.util.List;
 
 @AllArgsConstructor
 public abstract class Account {
     protected double balance;
+    @Getter
+    protected AccountTypes accountType;
 
     public void deposit(double amount) {
         if (amount < 0) {
@@ -15,5 +21,5 @@ public abstract class Account {
     }
 
     public abstract boolean withdraw(double amount);
-    public abstract boolean transfer(double amount, Long customerID);
+    public abstract boolean transfer(double amount, Long customerID, List<Customer> customers, String accountType);
 }
