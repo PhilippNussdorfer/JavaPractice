@@ -1,6 +1,7 @@
 package accounts;
 
 import lombok.Getter;
+import lombok.Setter;
 import person.Customer;
 
 import java.util.List;
@@ -8,15 +9,13 @@ import java.util.Objects;
 
 @Getter
 public class GiroAcc extends Account {
-    private final double limit;
+    @Setter
+    private double limit;
 
     public GiroAcc(double balance, AccountTypes accountType, double limit) {
         super(balance, accountType);
 
-        if (limit < 0)
-            this.limit = limit;
-        else
-            this.limit = (limit * -1);
+        this.limit = limit;
     }
 
     @Override
