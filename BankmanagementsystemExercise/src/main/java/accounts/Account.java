@@ -14,6 +14,6 @@ public abstract class Account {
         balance += amount;
     }
 
-    public abstract double withdraw(double amount);
+    public abstract boolean withdraw(double amount);
     public abstract boolean transfer(double amount, Long customerID);
 }
