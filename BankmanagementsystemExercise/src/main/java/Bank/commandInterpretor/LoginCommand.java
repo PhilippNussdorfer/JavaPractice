@@ -17,7 +17,7 @@ public class LoginCommand extends CommandABS {
     public void execute(String[] params) {
         try {
             for (Person user : this.user.getUsers()) {
-                if (user.login(params[1])) {
+                if (user.login(params[2])) {
                     if (user instanceof Customer)
                         BankManagementSystem.updateBundle(BundleFactory.createCustomerBundle(new Session(user)));
                     if (user instanceof Admin)

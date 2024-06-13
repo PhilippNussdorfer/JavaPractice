@@ -8,9 +8,11 @@ public class HelpCommand extends CommandABS {
 
     @Override
     public void execute(String[] params) {
+        System.out.println("=".repeat(250));
         for (Command command : bundle.getInterpreter().getCommands()) {
-            command.help();
+            System.out.println(command.help());
         }
+        System.out.println("=".repeat(250));
     }
 
     @Override
