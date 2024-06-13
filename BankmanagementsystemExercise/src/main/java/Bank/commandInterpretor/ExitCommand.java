@@ -8,11 +8,13 @@ public class ExitCommand extends CommandABS {
 
     @Override
     public void execute(String[] params) {
-
+        bundle.isRunning = false;
+        System.out.println("Have a nice day!");
     }
 
     @Override
     public String help() {
-        return null;
+        return formatter.formatStringLength(75, "Exits the program") + formatter.formatStringLength(50, "<Command>") + " | Commands: "
+                + formatter.concatStringArray(getCommands());
     }
 }
