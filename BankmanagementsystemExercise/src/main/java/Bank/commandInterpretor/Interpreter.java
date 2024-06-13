@@ -1,6 +1,7 @@
 package Bank.commandInterpretor;
 
 import Bank.Bundle;
+import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.customExceptions.NoBundleException;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public class Interpreter {
                     command.execute(params);
                     return;
                 }
-            } catch (NoBundleException | NumberFormatException | InvalidUserException exception) {
+            } catch (NoBundleException | NumberFormatException | InvalidUserException | InvalidInputException exception) {
                 System.out.println(exception.getMessage());
             }
         }
@@ -37,7 +38,7 @@ public class Interpreter {
             if (command instanceof HelpCommand) {
                 try {
                     command.execute(null);
-                } catch (InvalidUserException e) {
+                } catch (InvalidUserException | InvalidInputException e) {
                     System.out.println(e.getMessage());
                 }
             }

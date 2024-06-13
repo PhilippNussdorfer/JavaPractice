@@ -1,5 +1,6 @@
 package Bank.commandInterpretor;
 
+import Bank.customExceptions.InvalidInputException;
 import Bank.person.Customer;
 
 public class AddCustomerCommand extends CommandAbstract {
@@ -9,8 +10,10 @@ public class AddCustomerCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException {
-        bundle.getSystem().getUser().addUser(new Customer(params[1], params[2], Long.parseLong(params[3]), Long.parseLong(params[4]), params[5]));
+    public void execute(String[] params) throws NumberFormatException, InvalidInputException {
+        var last = formatter.CheckIfElementExists(5, params);
+
+        bundle.getSystem().getUser().addUser(new Customer(params[1], params[2], Long.parseLong(params[3]), Long.parseLong(params[4]), last));
         System.out.println("Added new user: " + params[1]);
     }
 

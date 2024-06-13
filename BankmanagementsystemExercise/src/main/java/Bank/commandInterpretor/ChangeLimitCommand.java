@@ -2,6 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.accounts.AccountType;
 import Bank.accounts.GiroAccount;
+import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
 
@@ -12,9 +13,12 @@ public class ChangeLimitCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException, InvalidUserException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException, InvalidInputException {
+        var last = formatter.CheckIfElementExists(1, params);
+
         if (bundle.getSession().getUser() instanceof Customer) {
-            ((GiroAccount) ((Customer) bundle.getSession().getUser()).getAccount(AccountType.GIRO.getValue())).setLimit(Double.parseDouble(params[1]));
+            ((GiroAccount) ((Customer) bundle.getSession().getUser()).getAccount(AccountType.GIRO.getValue()))
+                    .setLimit(Double.parseDouble(last));
         } else {
             throw new InvalidUserException("Please make sure this user is an: " + Customer.class.getSimpleName());
         }
