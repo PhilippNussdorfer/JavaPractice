@@ -26,4 +26,11 @@ public class Interpreter {
 
         commands.get(0).execute(params);
     }
+
+    public void getHelpMessage() {
+        for (Command command : commands) {
+            if (command instanceof HelpCommand)
+                command.execute(null);
+        }
+    }
 }
