@@ -2,7 +2,7 @@ package Bank.accounts;
 
 import lombok.Getter;
 
-public enum AccountTypes {
+public enum AccountType {
     GIRO("giro"),
     CREDIT("credit"),
     SAVINGS("savings");
@@ -10,7 +10,7 @@ public enum AccountTypes {
     @Getter
     private final String value;
 
-    AccountTypes(String value) {
+    AccountType(String value) {
         this.value = value;
     }
 }

@@ -1,6 +1,6 @@
 package Bank.commandInterpretor;
 
-import Bank.accounts.AccountTypes;
+import Bank.accounts.AccountType;
 import Bank.person.Customer;
 
 public class DepositCommand extends CommandABS {
@@ -24,7 +24,7 @@ public class DepositCommand extends CommandABS {
 
     @Override
     public String help() {
-        String[] arr = {AccountTypes.GIRO.getValue(), AccountTypes.SAVINGS.getValue(), AccountTypes.CREDIT.getValue()};
+        String[] arr = {AccountType.GIRO.getValue(), AccountType.SAVINGS.getValue(), AccountType.CREDIT.getValue()};
 
         return formatter.formatStringLength(75, "Deposits an amount of money on a specific account. Account types are: " + formatter.concatStringArray(arr))
                 + formatter.formatStringLength(50, "<Command> <Account> <Amount>") + " | Commands: "

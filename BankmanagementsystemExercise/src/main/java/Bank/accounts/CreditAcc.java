@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CreditAcc extends Account {
-    public CreditAcc(double balance, AccountTypes accountType) {
+    public CreditAcc(double balance, AccountType accountType) {
         super(balance, accountType);
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class Account {
     protected double balance;
     @Getter
-    protected AccountTypes accountType;
+    protected AccountType accountType;
 
     public void deposit(double amount) {
         if (amount < 0) {

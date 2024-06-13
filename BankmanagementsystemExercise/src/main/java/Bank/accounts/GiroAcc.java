@@ -12,7 +12,7 @@ public class GiroAcc extends Account {
     @Setter
     private double limit;
 
-    public GiroAcc(double balance, AccountTypes accountType, double limit) {
+    public GiroAcc(double balance, AccountType accountType, double limit) {
         super(balance, accountType);
 
         this.limit = limit;
