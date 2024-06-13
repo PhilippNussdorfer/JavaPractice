@@ -19,6 +19,11 @@ public class Interpreter {
     }
 
     public void interpret(String input) {
+        if (input.equals("")) {
+            getHelpMessage();
+            return;
+        }
+
         var params = input.split(" ");
 
         for (Command command : commands) {
