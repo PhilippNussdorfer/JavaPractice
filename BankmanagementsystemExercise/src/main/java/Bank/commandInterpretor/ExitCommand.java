@@ -8,7 +8,7 @@ public class ExitCommand extends CommandAbstract {
 
     @Override
     public void execute(String[] params) {
-        bundle.isRunning = false;
+        bundle.setRunning(false);
         System.out.println("Have a nice day!");
     }
 

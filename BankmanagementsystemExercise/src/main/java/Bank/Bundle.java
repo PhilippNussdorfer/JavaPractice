@@ -3,14 +3,14 @@ package Bank;
 import Bank.commandInterpretor.Interpreter;
 import Bank.person.Session;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class Bundle {
-    public boolean isRunning = true;
+    @Setter
+    private boolean isRunning = true;
     private Interpreter interpreter = null;
-    @Getter
     private final Session session;
-    @Getter
     private final BankManagementSystem system;
 
     public Bundle(Session session, Bundle oldBundle) {

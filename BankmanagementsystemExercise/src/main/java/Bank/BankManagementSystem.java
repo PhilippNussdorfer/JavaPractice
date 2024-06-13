@@ -23,7 +23,7 @@ public class BankManagementSystem {
         system.bundle = BundleFactory.startingBundle(system);
         system.bundle.getInterpreter().getHelpMessage();
 
-        while(system.bundle.isRunning) {
+        while(system.bundle.isRunning()) {
             System.out.print("> ");
 
             var input = scanner.nextLine();
