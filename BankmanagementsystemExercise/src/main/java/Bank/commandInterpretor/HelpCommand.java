@@ -4,7 +4,7 @@ import Bank.Bundle;
 
 public class HelpCommand extends CommandABS {
 
-    public HelpCommand(String[] commands, Bundle bundle) {
+    public HelpCommand(Bundle bundle, String ... commands) {
         super(commands, bundle);
     }
 

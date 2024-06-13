@@ -4,7 +4,7 @@ import Bank.Bundle;
 
 public class WithdrawCommand extends CommandABS {
 
-    public WithdrawCommand(String[] commands, Bundle bundle) {
+    public WithdrawCommand(Bundle bundle, String ... commands) {
         super(commands, bundle);
     }
 

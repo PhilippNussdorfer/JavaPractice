@@ -2,9 +2,9 @@ package Bank.commandInterpretor;
 
 import Bank.Bundle;
 
-public class LogoutCommand extends CommandABS {
+public class ExitCommand extends CommandABS {
 
-    public LogoutCommand(Bundle bundle, String ... commands) {
+    public ExitCommand(String[] commands, Bundle bundle) {
         super(commands, bundle);
     }
 

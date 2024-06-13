@@ -1,37 +1,27 @@
 package Bank.commandInterpretor;
 
 import Bank.Bundle;
-import Bank.person.Admin;
-import Bank.person.Customer;
-
-import java.util.Objects;
+import Bank.person.*;
+import Bank.tools.BundleFactory;
 
 public class LoginCommand extends CommandABS {
+    private final User user;
 
-    public LoginCommand(String[] commands, Bundle bundle) {
+    public LoginCommand(Bundle bundle, User user, String ... commands) {
         super(commands, bundle);
+
+        this.user = user;
     }
 
     @Override
     public void execute(String[] params) {
         try {
-            for (Customer customer : bundle.getCustomers()) {
-                var id = Long.getLong(params[1]);
-
-                if (Objects.equals(id, customer.getCustomerID())) {
-                    if (customer.login(params[2])) {
-                        bundle.setUser(customer);
-                    }
-                }
-            }
-
-            for (Admin admin : bundle.getAdmins()) {
-                var id = Long.getLong(params[1]);
-
-                if (Objects.equals(id, admin.getEmployeeID())) {
-                    if (admin.login(params[2])) {
-                        bundle.setUser(admin);
-                    }
+            for (Person user : this.user.getUsers()) {
+                if (user.login(params[1])) {
+                    if (user instanceof Customer)
+                        bundle = BundleFactory.createCustomerBundle(new Session(user));
+                    if (user instanceof Admin)
+                        bundle = BundleFactory.createAdminBundle(new Session(user));
                 }
             }
 

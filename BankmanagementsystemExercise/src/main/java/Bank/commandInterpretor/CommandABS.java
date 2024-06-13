@@ -9,7 +9,7 @@ import lombok.Getter;
 public abstract class CommandABS implements Command {
     @Getter
     private final String[] commands;
-    protected final Bundle bundle;
+    protected Bundle bundle;
     protected final StringFormatter formatter = new StringFormatter();
 
     @Override

@@ -6,16 +6,14 @@ import Bank.person.Customer;
 
 public class AddCustomerCommand extends CommandABS {
 
-    public AddCustomerCommand(String[] commands, Bundle bundle) {
+    public AddCustomerCommand(Bundle bundle, String ... commands) {
         super(commands, bundle);
     }
 
     @Override
     public void execute(String[] params) {
         try {
-            if (bundle.getUser() instanceof Admin && params.length >= 6) {
-                bundle.getCustomers().add(new Customer(params[1], params[2], Long.getLong(params[3]), Long.getLong(params[4]), params[5]));
-            }
+
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }

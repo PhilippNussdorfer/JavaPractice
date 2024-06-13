@@ -4,7 +4,7 @@ import Bank.Bundle;
 
 public class ChangeLimitCommand extends CommandABS {
 
-    public ChangeLimitCommand(String[] commands, Bundle bundle) {
+    public ChangeLimitCommand(Bundle bundle, String ... commands) {
         super(commands, bundle);
     }
 

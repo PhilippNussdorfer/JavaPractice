@@ -4,7 +4,7 @@ import Bank.Bundle;
 
 public class TransferCommand extends CommandABS {
 
-    public TransferCommand(String[] commands, Bundle bundle) {
+    public TransferCommand(Bundle bundle, String ... commands) {
         super(commands, bundle);
     }
 
