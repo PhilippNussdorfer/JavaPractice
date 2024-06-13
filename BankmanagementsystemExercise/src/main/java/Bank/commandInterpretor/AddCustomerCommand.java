@@ -19,7 +19,7 @@ public class AddCustomerCommand extends CommandAbstract {
 
     @Override
     public String help() {
-        return formatter.formatStringLength(75, "Adds new customer " + formatter.formatStringLength(50, "<Command> <Name> <Birth Day> <Social Number> <ID> <pin>") + " | Commands: "
-                + formatter.concatStringArray(getCommands()));
+        return formatter.formatStringLength(75, "Adds new customer") + formatter.formatStringLength(50, "<Command> <Name> <Birth Day> <Social Number> <ID> <pin>") + " | Commands: "
+                + formatter.concatStringArray(getCommands());
     }
 }
