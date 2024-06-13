@@ -12,13 +12,13 @@ public class BundleFactory {
 
         var interpreter = new Interpreter();
         interpreter.addCommand(
-                new ChangeLimitCommand(bundle, "changeLimit", "chL"),
-                new LogoutCommand(bundle, "logout"),
-                new DepositCommand(bundle, "deposit", "depo"),
-                new TransferCommand(bundle, "transfer"),
-                new WithdrawCommand(bundle, "withdraw"),
-                new HelpCommand(bundle, "help"),
-                new ExitCommand(bundle, "exit")
+                new ChangeLimitCommand("changeLimit", "chL"),
+                new LogoutCommand("logout"),
+                new DepositCommand("deposit", "depo"),
+                new TransferCommand("transfer"),
+                new WithdrawCommand("withdraw"),
+                new HelpCommand("help"),
+                new ExitCommand("exit")
         );
 
         bundle.addInterpreter(interpreter);
@@ -31,10 +31,10 @@ public class BundleFactory {
 
         var interpreter = new Interpreter();
         interpreter.addCommand(
-                new LogoutCommand(bundle, "logout"),
-                new AddCustomerCommand(bundle, "add", "addCustomer"),
-                new HelpCommand(bundle, "help"),
-                new ExitCommand(bundle, "exit")
+                new LogoutCommand("logout"),
+                new AddCustomerCommand("add", "addCustomer"),
+                new HelpCommand("help"),
+                new ExitCommand("exit")
         );
 
         bundle.addInterpreter(interpreter);
@@ -47,12 +47,13 @@ public class BundleFactory {
 
         var interpreter = new Interpreter();
         interpreter.addCommand(
-                new LoginCommand(bundle, user, "login"),
-                new HelpCommand(bundle, "help"),
-                new ExitCommand(bundle, "exit")
+                new LoginCommand(user, "login"),
+                new HelpCommand("help"),
+                new ExitCommand("exit")
         );
 
         bundle.addInterpreter(interpreter);
+        bundle.getInterpreter().addBundle(bundle);
 
         return bundle;
     }

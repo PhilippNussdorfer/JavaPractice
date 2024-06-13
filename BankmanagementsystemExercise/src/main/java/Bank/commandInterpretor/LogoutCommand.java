@@ -1,16 +1,17 @@
 package Bank.commandInterpretor;
 
-import Bank.Bundle;
+import Bank.BankManagementSystem;
+import Bank.tools.BundleFactory;
 
 public class LogoutCommand extends CommandABS {
 
-    public LogoutCommand(Bundle bundle, String ... commands) {
-        super(commands, bundle);
+    public LogoutCommand(String ... commands) {
+        super(commands);
     }
 
     @Override
     public void execute(String[] params) {
-
+        BankManagementSystem.updateBundle(BundleFactory.startingBundle(BankManagementSystem.getUser()));
     }
 
     @Override

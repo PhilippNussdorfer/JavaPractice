@@ -1,11 +1,9 @@
 package Bank.commandInterpretor;
 
-import Bank.Bundle;
-
 public class DepositCommand extends CommandABS {
 
-    public DepositCommand(Bundle bundle, String ... commands) {
-        super(commands, bundle);
+    public DepositCommand(String ... commands) {
+        super(commands);
     }
 
     @Override

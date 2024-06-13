@@ -1,11 +1,9 @@
 package Bank.commandInterpretor;
 
-import Bank.Bundle;
-
 public class ChangeLimitCommand extends CommandABS {
 
-    public ChangeLimitCommand(Bundle bundle, String ... commands) {
-        super(commands, bundle);
+    public ChangeLimitCommand(String ... commands) {
+        super(commands);
     }
 
     @Override

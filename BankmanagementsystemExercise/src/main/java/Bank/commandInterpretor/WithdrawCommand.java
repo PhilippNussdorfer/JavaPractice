@@ -1,11 +1,9 @@
 package Bank.commandInterpretor;
 
-import Bank.Bundle;
-
 public class WithdrawCommand extends CommandABS {
 
-    public WithdrawCommand(Bundle bundle, String ... commands) {
-        super(commands, bundle);
+    public WithdrawCommand(String ... commands) {
+        super(commands);
     }
 
     @Override

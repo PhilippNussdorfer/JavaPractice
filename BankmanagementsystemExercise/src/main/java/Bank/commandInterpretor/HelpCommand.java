@@ -1,11 +1,9 @@
 package Bank.commandInterpretor;
 
-import Bank.Bundle;
-
 public class HelpCommand extends CommandABS {
 
-    public HelpCommand(Bundle bundle, String ... commands) {
-        super(commands, bundle);
+    public HelpCommand(String ... commands) {
+        super(commands);
     }
 
     @Override

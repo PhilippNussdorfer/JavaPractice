@@ -1,11 +1,9 @@
 package Bank.commandInterpretor;
 
-import Bank.Bundle;
-
 public class ExitCommand extends CommandABS {
 
-    public ExitCommand(Bundle bundle, String ... commands) {
-        super(commands, bundle);
+    public ExitCommand(String ... commands) {
+        super(commands);
     }
 
     @Override
