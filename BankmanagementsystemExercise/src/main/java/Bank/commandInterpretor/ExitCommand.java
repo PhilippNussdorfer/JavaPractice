@@ -4,7 +4,7 @@ import Bank.Bundle;
 
 public class ExitCommand extends CommandABS {
 
-    public ExitCommand(String[] commands, Bundle bundle) {
+    public ExitCommand(Bundle bundle, String ... commands) {
         super(commands, bundle);
     }
 
