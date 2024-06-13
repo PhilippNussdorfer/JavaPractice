@@ -1,6 +1,7 @@
 package Bank.commandInterpretor;
 
 import Bank.Bundle;
+import Bank.customExceptions.NoBundleException;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,9 +20,13 @@ public class Interpreter {
         var params = input.split(" ");
 
         for (Command command : commands) {
-            if (command.canHandle(params[0])) {
-                command.execute(params);
-                return;
+            try {
+                if (command.canHandle(params[0])) {
+                    command.execute(params);
+                    return;
+                }
+            } catch (NoBundleException exception) {
+                System.out.println(exception.getMessage());
             }
         }
 
