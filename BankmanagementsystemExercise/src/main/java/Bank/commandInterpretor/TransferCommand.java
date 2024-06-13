@@ -18,7 +18,7 @@ public class TransferCommand extends CommandAbstract {
         try {
             List<Customer> customers = new ArrayList<>();
 
-            for (Person person : BankManagementSystem.getUser().getUsers()) {
+            for (Person person : bundle.getSystem().getUser().getUsers()) {
                 if (person instanceof Customer)
                     customers.add((Customer) person);
             }
