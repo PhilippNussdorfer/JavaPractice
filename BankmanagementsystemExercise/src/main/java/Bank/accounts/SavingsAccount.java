@@ -1,34 +1,22 @@
 package Bank.accounts;
 
-import lombok.Getter;
-import lombok.Setter;
 import Bank.person.Customer;
 
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-public class GiroAcc extends Account {
-    @Setter
-    private double limit;
-
-    public GiroAcc(double balance, AccountType accountType, double limit) {
+public class SavingsAccount extends Account {
+    public SavingsAccount(double balance, AccountType accountType) {
         super(balance, accountType);
-
-        this.limit = limit;
     }
 
     @Override
     public boolean withdraw(double amount) {
-        if (amount <= 0)
+        if (amount <= 0 || balance - amount < 0)
             return false;
 
-        if (balance - amount < this.limit)
-            return false;
-        else {
-            balance -= amount;
-            return true;
-        }
+        balance -= amount;
+        return true;
     }
 
     @Override
@@ -41,7 +29,7 @@ public class GiroAcc extends Account {
                 Account customerAccount = customer.getAccount(accountType);
 
                 if (customerAccount != null) {
-                    if (balance - amount >= this.limit) {
+                    if (balance - amount >= 0) {
                         balance -= amount;
                         customerAccount.balance += amount;
                         return true;
