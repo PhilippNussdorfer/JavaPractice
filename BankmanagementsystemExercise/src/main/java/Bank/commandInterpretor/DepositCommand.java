@@ -1,5 +1,8 @@
 package Bank.commandInterpretor;
 
+import Bank.accounts.AccountTypes;
+import Bank.person.Customer;
+
 public class DepositCommand extends CommandABS {
 
     public DepositCommand(String ... commands) {
@@ -8,11 +11,23 @@ public class DepositCommand extends CommandABS {
 
     @Override
     public void execute(String[] params) {
-
+        if (bundle.getSession().getUser() instanceof Customer) {
+            try {
+                ((Customer) bundle.getSession().getUser()).getAccount(params[1]).deposit(Double.parseDouble(params[2]));
+            } catch (NumberFormatException exception) {
+                System.out.println("Please enter an number and not some dumb shit!");
+            }
+        } else {
+            System.out.println("Please make sure this user is an " + Customer.class.getSimpleName());
+        }
     }
 
     @Override
     public String help() {
-        return null;
+        String[] arr = {AccountTypes.GIRO.getValue(), AccountTypes.SAVINGS.getValue(), AccountTypes.CREDIT.getValue()};
+
+        return formatter.formatStringLength(75, "Deposits an amount of money on a specific account. Account types are: " + formatter.concatStringArray(arr))
+                + formatter.formatStringLength(50, "<Command> <Account> <Amount>") + " | Commands: "
+                + formatter.concatStringArray(getCommands());
     }
 }
