@@ -22,6 +22,7 @@ public class BundleFactory {
         );
 
         bundle.addInterpreter(interpreter);
+        bundle.getInterpreter().addBundle(bundle);
 
         return bundle;
     }
@@ -38,6 +39,7 @@ public class BundleFactory {
         );
 
         bundle.addInterpreter(interpreter);
+        bundle.getInterpreter().addBundle(bundle);
 
         return bundle;
     }
