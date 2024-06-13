@@ -16,16 +16,19 @@ public class BankManagementSystem {
 
     public static void main(String[] args) {
         BankManagementSystem system = new BankManagementSystem();
+        system.loadUsers(system);
+
         Scanner scanner = new Scanner(System.in);
-
-
-        bundle = BundleFactory.startingBundle(new User(system.users));
+        bundle = BundleFactory.startingBundle(system.user);
         bundle.getInterpreter().getHelpMessage();
 
         while(bundle.isRunning) {
             System.out.print("> ");
+
             var input = scanner.nextLine();
             bundle.getInterpreter().interpret(input);
+
+            System.out.println();
         }
     }
 
@@ -35,5 +38,7 @@ public class BankManagementSystem {
 
     private void loadUsers(BankManagementSystem system) {
         system.users.add(new Admin("Hans", "2/4/1985", 123999687849L, "1122", 43L));
+
+        system.user = new User(users);
     }
 }

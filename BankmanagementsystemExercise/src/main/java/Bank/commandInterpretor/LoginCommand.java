@@ -1,5 +1,6 @@
 package Bank.commandInterpretor;
 
+import Bank.BankManagementSystem;
 import Bank.Bundle;
 import Bank.person.*;
 import Bank.tools.BundleFactory;
@@ -19,9 +20,9 @@ public class LoginCommand extends CommandABS {
             for (Person user : this.user.getUsers()) {
                 if (user.login(params[1])) {
                     if (user instanceof Customer)
-                        bundle = BundleFactory.createCustomerBundle(new Session(user));
+                        BankManagementSystem.updateBundle(BundleFactory.createCustomerBundle(new Session(user)));
                     if (user instanceof Admin)
-                        bundle = BundleFactory.createAdminBundle(new Session(user));
+                        BankManagementSystem.updateBundle(BundleFactory.createAdminBundle(new Session(user)));
                 }
             }
 
