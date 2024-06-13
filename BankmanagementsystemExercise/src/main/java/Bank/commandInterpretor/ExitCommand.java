@@ -1,6 +1,6 @@
 package Bank.commandInterpretor;
 
-public class ExitCommand extends CommandABS {
+public class ExitCommand extends CommandAbstract {
 
     public ExitCommand(String ... commands) {
         super(commands);

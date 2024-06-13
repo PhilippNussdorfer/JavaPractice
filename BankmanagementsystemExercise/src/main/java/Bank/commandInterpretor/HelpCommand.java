@@ -1,6 +1,6 @@
 package Bank.commandInterpretor;
 
-public class HelpCommand extends CommandABS {
+public class HelpCommand extends CommandAbstract {
 
     public HelpCommand(String ... commands) {
         super(commands);

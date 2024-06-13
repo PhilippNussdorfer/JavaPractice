@@ -1,10 +1,8 @@
 package Bank.commandInterpretor;
 
-import Bank.BankManagementSystem;
-import Bank.Bundle;
 import Bank.person.Customer;
 
-public class AddCustomerCommand extends CommandABS {
+public class AddCustomerCommand extends CommandAbstract {
 
     public AddCustomerCommand(String ... commands) {
         super(commands);

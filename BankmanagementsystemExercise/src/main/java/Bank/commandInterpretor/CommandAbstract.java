@@ -5,13 +5,13 @@ import Bank.customExceptions.NoBundleException;
 import Bank.tools.StringFormatter;
 import lombok.Getter;
 
-public abstract class CommandABS implements Command {
+public abstract class CommandAbstract implements Command {
     @Getter
     private final String[] commands;
     protected Bundle bundle;
     protected final StringFormatter formatter = new StringFormatter();
 
-    public CommandABS(String[] commands) {
+    public CommandAbstract(String[] commands) {
         this.commands = commands;
     }
 

@@ -1,10 +1,9 @@
 package Bank.commandInterpretor;
 
-import Bank.BankManagementSystem;
 import Bank.person.*;
 import Bank.tools.BundleFactory;
 
-public class LoginCommand extends CommandABS {
+public class LoginCommand extends CommandAbstract {
 
     public LoginCommand(String ... commands) {
         super(commands);

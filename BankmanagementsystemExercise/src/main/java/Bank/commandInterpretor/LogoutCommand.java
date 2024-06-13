@@ -1,9 +1,8 @@
 package Bank.commandInterpretor;
 
-import Bank.BankManagementSystem;
 import Bank.tools.BundleFactory;
 
-public class LogoutCommand extends CommandABS {
+public class LogoutCommand extends CommandAbstract {
 
     public LogoutCommand(String ... commands) {
         super(commands);

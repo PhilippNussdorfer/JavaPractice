@@ -3,7 +3,7 @@ package Bank.commandInterpretor;
 import Bank.accounts.AccountType;
 import Bank.person.Customer;
 
-public class DepositCommand extends CommandABS {
+public class DepositCommand extends CommandAbstract {
 
     public DepositCommand(String ... commands) {
         super(commands);

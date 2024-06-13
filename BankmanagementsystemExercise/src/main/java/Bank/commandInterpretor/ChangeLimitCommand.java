@@ -4,7 +4,7 @@ import Bank.accounts.AccountType;
 import Bank.accounts.GiroAccount;
 import Bank.person.Customer;
 
-public class ChangeLimitCommand extends CommandABS {
+public class ChangeLimitCommand extends CommandAbstract {
 
     public ChangeLimitCommand(String ... commands) {
         super(commands);

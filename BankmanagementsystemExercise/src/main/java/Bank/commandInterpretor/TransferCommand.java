@@ -7,7 +7,7 @@ import Bank.person.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransferCommand extends CommandABS {
+public class TransferCommand extends CommandAbstract {
 
     public TransferCommand(String ... commands) {
         super(commands);

@@ -2,7 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.person.Customer;
 
-public class WithdrawCommand extends CommandABS {
+public class WithdrawCommand extends CommandAbstract {
 
     public WithdrawCommand(String ... commands) {
         super(commands);
