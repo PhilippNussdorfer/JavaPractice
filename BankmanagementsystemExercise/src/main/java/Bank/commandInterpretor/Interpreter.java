@@ -1,5 +1,6 @@
 package Bank.commandInterpretor;
 
+import Bank.Bundle;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -31,6 +32,12 @@ public class Interpreter {
         for (Command command : commands) {
             if (command instanceof HelpCommand)
                 command.execute(null);
+        }
+    }
+
+    public void addBundle(Bundle bundle) {
+        for (Command command : commands) {
+            command.addBundle(bundle);
         }
     }
 }
