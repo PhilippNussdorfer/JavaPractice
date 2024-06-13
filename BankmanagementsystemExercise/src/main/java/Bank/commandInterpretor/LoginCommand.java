@@ -18,10 +18,15 @@ public class LoginCommand extends CommandABS {
         try {
             for (Person user : this.user.getUsers()) {
                 if (user.login(params[2])) {
+                    System.out.println("\nYou have been logged in.");
+
                     if (user instanceof Customer)
                         BankManagementSystem.updateBundle(BundleFactory.createCustomerBundle(new Session(user)));
                     if (user instanceof Admin)
                         BankManagementSystem.updateBundle(BundleFactory.createAdminBundle(new Session(user)));
+
+                } else {
+                    System.out.println("login failed Please make sure the inputs for the ID and pin are correct.");
                 }
             }
 
