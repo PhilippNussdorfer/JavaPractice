@@ -10,9 +10,17 @@ public class Bundle {
     private Interpreter interpreter = null;
     @Getter
     private final Session session;
+    @Getter
+    private final BankManagementSystem system;
 
-    public Bundle(Session session) {
+    public Bundle(Session session, Bundle oldBundle) {
         this.session = session;
+        this.system = oldBundle.getSystem();
+    }
+
+    public Bundle(Session session, BankManagementSystem system) {
+        this.session = session;
+        this.system = system;
     }
 
     public void addInterpreter(Interpreter interpreter) {

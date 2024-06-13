@@ -11,7 +11,7 @@ public class LogoutCommand extends CommandABS {
 
     @Override
     public void execute(String[] params) {
-        BankManagementSystem.updateBundle(BundleFactory.startingBundle());
+        bundle.getSystem().updateBundle(BundleFactory.logoutBundle(bundle));
     }
 
     @Override

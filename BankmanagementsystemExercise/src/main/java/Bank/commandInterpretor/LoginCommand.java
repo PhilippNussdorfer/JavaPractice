@@ -13,14 +13,14 @@ public class LoginCommand extends CommandABS {
     @Override
     public void execute(String[] params) {
         try {
-            for (Person user : BankManagementSystem.getUser().getUsers()) {
+            for (Person user : bundle.getSystem().getUser().getUsers()) {
                 if (user.login(params[2])) {
                     System.out.println("\nYou have been logged in.");
 
                     if (user instanceof Customer)
-                        BankManagementSystem.updateBundle(BundleFactory.createCustomerBundle(new Session(user)));
+                        bundle.getSystem().updateBundle(BundleFactory.createCustomerBundle(new Session(user), bundle));
                     if (user instanceof Admin)
-                        BankManagementSystem.updateBundle(BundleFactory.createAdminBundle(new Session(user)));
+                        bundle.getSystem().updateBundle(BundleFactory.createAdminBundle(new Session(user), bundle));
 
                 } else {
                     System.out.println("login failed Please make sure the inputs for the ID and pin are correct.");

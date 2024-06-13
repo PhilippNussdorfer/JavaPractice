@@ -11,33 +11,34 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BankManagementSystem {
-    private static final List<Person> users = new ArrayList<>();
     @Getter
-    private static User user;
-    private static Bundle bundle;
+    private User user;
+    private Bundle bundle;
 
     public static void main(String[] args) {
-        loadUsers();
+        BankManagementSystem system = new BankManagementSystem();
+        system.loadUsers();
 
         Scanner scanner = new Scanner(System.in);
-        bundle = BundleFactory.startingBundle();
-        bundle.getInterpreter().getHelpMessage();
+        system.bundle = BundleFactory.startingBundle(system);
+        system.bundle.getInterpreter().getHelpMessage();
 
-        while(bundle.isRunning) {
+        while(system.bundle.isRunning) {
             System.out.print("> ");
 
             var input = scanner.nextLine();
-            bundle.getInterpreter().interpret(input);
+            system.bundle.getInterpreter().interpret(input);
 
             System.out.println();
         }
     }
 
-    public static void updateBundle(Bundle updatedBundle) {
+    public void updateBundle(Bundle updatedBundle) {
         bundle = updatedBundle;
     }
 
-    private static void loadUsers() {
+    private void loadUsers() {
+        List<Person> users = new ArrayList<>();
         users.add(new Admin("Hans", "2/4/1985", 123999687849L, "1122", 43L));
 
         user = new User(users);
