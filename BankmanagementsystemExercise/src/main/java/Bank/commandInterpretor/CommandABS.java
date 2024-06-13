@@ -2,15 +2,17 @@ package Bank.commandInterpretor;
 
 import Bank.Bundle;
 import Bank.tools.StringFormatter;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 public abstract class CommandABS implements Command {
     @Getter
     private final String[] commands;
     protected Bundle bundle;
     protected final StringFormatter formatter = new StringFormatter();
+
+    public CommandABS(String[] commands) {
+        this.commands = commands;
+    }
 
     @Override
     public boolean canHandle(String command) {
@@ -20,5 +22,10 @@ public abstract class CommandABS implements Command {
         }
 
         return false;
+    }
+
+    @Override
+    public void addBundle(Bundle bundle) {
+        this.bundle = bundle;
     }
 }
