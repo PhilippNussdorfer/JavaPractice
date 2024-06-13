@@ -20,7 +20,7 @@ public class BankManagementSystem {
         loadUsers();
 
         Scanner scanner = new Scanner(System.in);
-        bundle = BundleFactory.startingBundle(user);
+        bundle = BundleFactory.startingBundle();
         bundle.getInterpreter().getHelpMessage();
 
         while(bundle.isRunning) {

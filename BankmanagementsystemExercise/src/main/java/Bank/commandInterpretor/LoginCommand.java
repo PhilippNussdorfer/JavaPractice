@@ -5,18 +5,15 @@ import Bank.person.*;
 import Bank.tools.BundleFactory;
 
 public class LoginCommand extends CommandABS {
-    private final User user;
 
-    public LoginCommand(User user, String ... commands) {
+    public LoginCommand(String ... commands) {
         super(commands);
-
-        this.user = user;
     }
 
     @Override
     public void execute(String[] params) {
         try {
-            for (Person user : this.user.getUsers()) {
+            for (Person user : BankManagementSystem.getUser().getUsers()) {
                 if (user.login(params[2])) {
                     System.out.println("\nYou have been logged in.");
 

@@ -44,12 +44,12 @@ public class BundleFactory {
         return bundle;
     }
 
-    public static Bundle startingBundle(User user) {
+    public static Bundle startingBundle() {
         var bundle = new Bundle(null);
 
         var interpreter = new Interpreter();
         interpreter.addCommand(
-                new LoginCommand(user, "login"),
+                new LoginCommand("login"),
                 new HelpCommand("help"),
                 new ExitCommand("exit")
         );
