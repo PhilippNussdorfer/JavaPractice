@@ -1,5 +1,8 @@
 package Bank.commandInterpretor;
 
+import Bank.BankManagementSystem;
+import Bank.person.Customer;
+
 public class AddCustomerCommand extends CommandABS {
 
     public AddCustomerCommand(String ... commands) {
@@ -9,9 +12,10 @@ public class AddCustomerCommand extends CommandABS {
     @Override
     public void execute(String[] params) {
         try {
-
+            BankManagementSystem.getUser().addUser(new Customer(params[1], params[2], Long.getLong(params[3]), Long.getLong(params[4]), params[5]));
+            System.out.println("Added new user: " + params[1]);
         } catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "\n Please make sure that the social number and the ID are numbers.");
         }
     }
 
