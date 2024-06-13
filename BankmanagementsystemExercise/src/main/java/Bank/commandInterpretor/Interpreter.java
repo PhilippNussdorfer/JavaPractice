@@ -19,7 +19,7 @@ public class Interpreter {
     }
 
     public void interpret(String input) {
-        if (input.equals("")) {
+        if (input.trim().isEmpty()) {
             getHelpMessage();
             return;
         }
