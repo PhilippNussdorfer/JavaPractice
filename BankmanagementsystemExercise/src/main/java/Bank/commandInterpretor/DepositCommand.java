@@ -10,13 +10,9 @@ public class DepositCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) {
+    public void execute(String[] params) throws NumberFormatException {
         if (bundle.getSession().getUser() instanceof Customer) {
-            try {
-                ((Customer) bundle.getSession().getUser()).getAccount(params[1]).deposit(Double.parseDouble(params[2]));
-            } catch (NumberFormatException exception) {
-                System.out.println("Please enter an number and not some dumb shit!");
-            }
+            ((Customer) bundle.getSession().getUser()).getAccount(params[1]).deposit(Double.parseDouble(params[2]));
         } else {
             System.out.println("Please make sure this user is an " + Customer.class.getSimpleName());
         }

@@ -25,7 +25,7 @@ public class Interpreter {
                     command.execute(params);
                     return;
                 }
-            } catch (NoBundleException exception) {
+            } catch (NoBundleException | NumberFormatException exception) {
                 System.out.println(exception.getMessage());
             }
         }

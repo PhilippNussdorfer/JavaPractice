@@ -14,23 +14,18 @@ public class TransferCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) {
-        try {
-            List<Customer> customers = new ArrayList<>();
+    public void execute(String[] params) throws NumberFormatException {
+        List<Customer> customers = new ArrayList<>();
 
-            for (Person person : bundle.getSystem().getUser().getUsers()) {
-                if (person instanceof Customer)
-                    customers.add((Customer) person);
-            }
+        for (Person person : bundle.getSystem().getUser().getUsers()) {
+            if (person instanceof Customer)
+                customers.add((Customer) person);
+        }
 
-            if (bundle.getSession().getUser() instanceof Customer) {
-                ((Customer) bundle.getSession().getUser()).getAccount(params[2]).transfer(Double.parseDouble(params[1]), Long.getLong(params[3]), customers, params[4]);
-            } else {
-                System.out.println("Please make sure this user is an: " + Customer.class.getSimpleName());
-            }
-
-        } catch (NumberFormatException exception) {
-            System.out.println();
+        if (bundle.getSession().getUser() instanceof Customer) {
+            ((Customer) bundle.getSession().getUser()).getAccount(params[2]).transfer(Double.parseDouble(params[1]), Long.parseLong(params[3]), customers, params[4]);
+        } else {
+            System.out.println("Please make sure this user is an: " + Customer.class.getSimpleName());
         }
     }
 

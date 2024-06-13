@@ -11,15 +11,11 @@ public class ChangeLimitCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) {
-        try {
-            if (bundle.getSession().getUser() instanceof Customer) {
-                ((GiroAccount) ((Customer) bundle.getSession().getUser()).getAccount(AccountType.GIRO.getValue())).setLimit(Double.parseDouble(params[1]));
-            } else {
-                System.out.println("Please make sure this user is an: " + Customer.class.getSimpleName());
-            }
-        } catch (NumberFormatException exception) {
-            System.out.println(exception.getMessage() + "\nPlease enter an number for the limit.");
+    public void execute(String[] params) throws NumberFormatException {
+        if (bundle.getSession().getUser() instanceof Customer) {
+            ((GiroAccount) ((Customer) bundle.getSession().getUser()).getAccount(AccountType.GIRO.getValue())).setLimit(Double.parseDouble(params[1]));
+        } else {
+            System.out.println("Please make sure this user is an: " + Customer.class.getSimpleName());
         }
     }
 
