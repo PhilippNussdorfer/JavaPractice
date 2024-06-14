@@ -1,11 +1,13 @@
 package at.bbrz.spring_exercise;
 
+import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Log
 public class ExerciseController {
 
     @GetMapping(path = "/hello")
@@ -15,7 +17,10 @@ public class ExerciseController {
 
     @GetMapping(path = "/customer")
     public Customer customer() {
-        return new Customer("Helga", "Beham", "1222456", 65);
+        Customer customer = new Customer("Helga", "Beham", "1222456", 65);
+
+        log.info("Created customer: " + customer);
+        return customer;
     }
 
     @GetMapping(path = "/customer/{firstname}/{lastname}/{customerNumber}/{age}")
