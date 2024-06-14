@@ -1,3 +1,5 @@
 spring:
   application:
     name: spring_exercise
+server:
+  port: 80
