@@ -1,6 +1,7 @@
 package Bank.commandInterpretor;
 
 import Bank.accounts.AccountType;
+import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
 
 public class DepositCommand extends CommandAbstract {
@@ -10,11 +11,11 @@ public class DepositCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException {
         if (bundle.getSession().getUser() instanceof Customer) {
             ((Customer) bundle.getSession().getUser()).getAccount(params[1]).deposit(Double.parseDouble(params[2]));
         } else {
-            System.out.println("Please make sure this user is an " + Customer.class.getSimpleName());
+            throw new InvalidUserException("Please make sure this user is an " + Customer.class.getSimpleName());
         }
     }
 
