@@ -27,7 +27,7 @@ public class DepositCommand extends CommandAbstract {
         String[] arr = {AccountType.GIRO.getValue(), AccountType.SAVINGS.getValue(), AccountType.CREDIT.getValue()};
 
         return formatter.formatStringLength(75, "Deposits an amount of money on a specific account. Account types are: " + formatter.concatStringArray(arr))
-                + formatter.formatStringLength(50, "<Command> <Account> <Amount>") + " | Commands: "
+                + formatter.formatStringLength(50, " <Command> <Account> <Amount>") + " | Commands: "
                 + formatter.concatStringArray(getCommands());
     }
 }
