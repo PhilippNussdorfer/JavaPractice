@@ -3,8 +3,11 @@ package Bank.commandInterpretor;
 import Bank.BankManagementSystem;
 import Bank.Bundle;
 import Bank.customExceptions.InvalidInputException;
+import Bank.customExceptions.InvalidUserException;
 import Bank.customExceptions.NoBundleException;
+import Bank.person.Admin;
 import Bank.person.Customer;
+import Bank.person.Session;
 import Bank.person.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +27,12 @@ class AddCustomerCommandTest {
     BankManagementSystem system;
     @Mock
     User user;
+    @Mock
+    Admin admin;
+    @Mock
+    Customer customer;
+    @Mock
+    Session session;
 
     @Test
     void canHandle() throws NoBundleException {
@@ -35,11 +44,13 @@ class AddCustomerCommandTest {
     }
 
     @Test
-    void AddCommand() throws InvalidInputException {
+    void AddCommand() throws InvalidInputException, InvalidUserException {
         addCustomerCommand.addBundle(bundle);
 
         Mockito.when(bundle.getSystem()).thenReturn(system);
         Mockito.when(system.getUser()).thenReturn(user);
+        Mockito.when(bundle.getSession()).thenReturn(session);
+        Mockito.when(session.getUser()).thenReturn(admin);
 
         addCustomerCommand.execute(new String[] {"", "Hans", "2-3-1999", "1234", "5665", "112A"});
         Mockito.verify(user, Mockito.times(1)).addUser(Mockito.any(Customer.class));
@@ -51,10 +62,16 @@ class AddCustomerCommandTest {
 
         Mockito.when(bundle.getSystem()).thenReturn(system);
         Mockito.when(system.getUser()).thenReturn(user);
+        Mockito.when(bundle.getSession()).thenReturn(session);
+        Mockito.when(session.getUser()).thenReturn(admin);
 
         assertThrows(NumberFormatException.class, ()-> addCustomerCommand.execute(new String[] {"", "Hans", "2-3-1999", "1234", "56z65", "1122"}));
         assertThrows(NumberFormatException.class, ()-> addCustomerCommand.execute(new String[] {"", "Hans", "2-3-1999", "AbCde", "5665", "1122"}));
         assertThrows(InvalidInputException.class, ()-> addCustomerCommand.execute(new String[] {}));
+
+        Mockito.when(session.getUser()).thenReturn(customer);
+
+        assertThrows(InvalidUserException.class, ()-> addCustomerCommand.execute(new String[] {"", "Hans", "2-3-1999", "1234", "5665", "112A"}));
     }
 
     @Test
