@@ -17,6 +17,7 @@ public class ExerciseController {
 
     @GetMapping(path = "/customer")
     public Customer customer() {
+
         Customer customer = new Customer("Helga", "Beham", "1222456", 65);
 
         log.info("Created customer: " + customer);
