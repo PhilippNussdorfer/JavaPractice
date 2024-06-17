@@ -38,7 +38,7 @@ class ChangeLimitCommandTest {
         assertThrows(NoBundleException.class, ()-> changeLimitCommand.canHandle(""));
 
         changeLimitCommand.setBundle(bundle);
-        assertTrue(changeLimitCommand.canHandle("change"));
+        assertTrue(changeLimitCommand.canHandle("Change"));
         assertFalse(changeLimitCommand.canHandle("addCustomer"));
     }
 

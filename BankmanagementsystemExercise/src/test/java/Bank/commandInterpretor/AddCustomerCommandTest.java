@@ -39,7 +39,7 @@ class AddCustomerCommandTest {
         assertThrows(NoBundleException.class, ()-> addCustomerCommand.canHandle("add"));
 
         addCustomerCommand.setBundle(bundle);
-        assertTrue(addCustomerCommand.canHandle("add"));
+        assertTrue(addCustomerCommand.canHandle("Add"));
         assertFalse(addCustomerCommand.canHandle("addCustomer"));
     }
 
