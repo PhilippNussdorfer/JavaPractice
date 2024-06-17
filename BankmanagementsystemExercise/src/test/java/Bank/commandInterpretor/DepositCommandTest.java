@@ -35,7 +35,7 @@ class DepositCommandTest {
 
     @BeforeEach
     void setUp() {
-        depositCommand.addBundle(bundle);
+        depositCommand.setBundle(bundle);
     }
 
     @Test

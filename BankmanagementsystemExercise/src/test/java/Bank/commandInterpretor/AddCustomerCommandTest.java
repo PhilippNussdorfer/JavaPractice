@@ -38,14 +38,14 @@ class AddCustomerCommandTest {
     void canHandle() throws NoBundleException {
         assertThrows(NoBundleException.class, ()-> addCustomerCommand.canHandle("add"));
 
-        addCustomerCommand.addBundle(bundle);
+        addCustomerCommand.setBundle(bundle);
         assertTrue(addCustomerCommand.canHandle("add"));
         assertFalse(addCustomerCommand.canHandle("addCustomer"));
     }
 
     @Test
     void AddCommand() throws InvalidInputException, InvalidUserException {
-        addCustomerCommand.addBundle(bundle);
+        addCustomerCommand.setBundle(bundle);
 
         Mockito.when(bundle.getSystem()).thenReturn(system);
         Mockito.when(system.getUser()).thenReturn(user);
@@ -58,7 +58,7 @@ class AddCustomerCommandTest {
 
     @Test
     void ExceptionOnAddCommand() {
-        addCustomerCommand.addBundle(bundle);
+        addCustomerCommand.setBundle(bundle);
 
         Mockito.when(bundle.getSystem()).thenReturn(system);
         Mockito.when(system.getUser()).thenReturn(user);

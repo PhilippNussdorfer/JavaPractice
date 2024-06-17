@@ -9,5 +9,5 @@ public interface Command {
     boolean canHandle(String command) throws NoBundleException;
     void execute(String[] params) throws InvalidUserException, InvalidInputException;
     String help();
-    void addBundle(Bundle bundle);
+    void setBundle(Bundle bundle);
 }

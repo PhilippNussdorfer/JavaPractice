@@ -29,7 +29,7 @@ public abstract class CommandAbstract implements Command {
     }
 
     @Override
-    public void addBundle(Bundle bundle) {
+    public void setBundle(Bundle bundle) {
         this.bundle = bundle;
     }
 }

@@ -37,7 +37,7 @@ class ChangeLimitCommandTest {
     void canHandle() throws NoBundleException {
         assertThrows(NoBundleException.class, ()-> changeLimitCommand.canHandle(""));
 
-        changeLimitCommand.addBundle(bundle);
+        changeLimitCommand.setBundle(bundle);
         assertTrue(changeLimitCommand.canHandle("change"));
         assertFalse(changeLimitCommand.canHandle("addCustomer"));
     }
@@ -48,7 +48,7 @@ class ChangeLimitCommandTest {
         Mockito.when(session.getUser()).thenReturn(customer);
         Mockito.when(customer.getAccount(Mockito.anyString())).thenReturn(giro);
 
-        changeLimitCommand.addBundle(bundle);
+        changeLimitCommand.setBundle(bundle);
         changeLimitCommand.execute(new String[] {"", "135.87"});
         Mockito.verify(giro, Mockito.times(1)).setLimit(135.87);
     }
@@ -58,7 +58,7 @@ class ChangeLimitCommandTest {
         Mockito.when(bundle.getSession()).thenReturn(session);
         Mockito.when(session.getUser()).thenReturn(admin);
 
-        changeLimitCommand.addBundle(bundle);
+        changeLimitCommand.setBundle(bundle);
         assertThrows(InvalidUserException.class, ()-> changeLimitCommand.execute(new String[] {"", "2"}));
         assertThrows(InvalidInputException.class, ()-> changeLimitCommand.execute(new String[] {}));
 
