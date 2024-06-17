@@ -1,6 +1,7 @@
 package Bank.commandInterpretor;
 
 import Bank.accounts.AccountType;
+import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
 
@@ -11,9 +12,11 @@ public class DepositCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException, InvalidUserException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException, InvalidInputException {
+        var last = formatter.CheckIfElementExists(2, params);
+
         if (bundle.getSession().getUser() instanceof Customer) {
-            ((Customer) bundle.getSession().getUser()).getAccount(params[1]).deposit(Double.parseDouble(params[2]));
+            ((Customer) bundle.getSession().getUser()).getAccount(params[1]).deposit(Double.parseDouble(last));
         } else {
             throw new InvalidUserException("Please make sure this user is an " + Customer.class.getSimpleName());
         }
