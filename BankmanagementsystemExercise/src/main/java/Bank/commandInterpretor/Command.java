@@ -1,14 +1,11 @@
 package Bank.commandInterpretor;
 
 import Bank.Bundle;
-import Bank.customExceptions.InvalidInputException;
-import Bank.customExceptions.InvalidUserException;
-import Bank.customExceptions.LoginFailedException;
-import Bank.customExceptions.NoBundleException;
+import Bank.customExceptions.*;
 
 public interface Command {
     boolean canHandle(String command) throws NoBundleException;
-    void execute(String[] params) throws InvalidUserException, InvalidInputException, LoginFailedException;
+    void execute(String[] params) throws InvalidUserException, InvalidInputException, LoginFailedException, TransferFailedException;
     String help();
     void setBundle(Bundle bundle);
 }

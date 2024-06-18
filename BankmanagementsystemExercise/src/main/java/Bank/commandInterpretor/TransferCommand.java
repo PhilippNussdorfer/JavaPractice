@@ -1,6 +1,7 @@
 package Bank.commandInterpretor;
 
-import Bank.BankManagementSystem;
+import Bank.customExceptions.InvalidUserException;
+import Bank.customExceptions.TransferFailedException;
 import Bank.person.Customer;
 import Bank.person.Person;
 
@@ -14,7 +15,7 @@ public class TransferCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException, TransferFailedException {
         List<Customer> customers = new ArrayList<>();
 
         for (Person person : bundle.getSystem().getUser().getUsers()) {
@@ -23,9 +24,10 @@ public class TransferCommand extends CommandAbstract {
         }
 
         if (bundle.getSession().getUser() instanceof Customer) {
-            ((Customer) bundle.getSession().getUser()).getAccount(params[2]).transfer(Double.parseDouble(params[1]), Long.parseLong(params[3]), customers, params[4]);
+            if (!((Customer) bundle.getSession().getUser()).getAccount(params[2]).transfer(Double.parseDouble(params[1]), Long.parseLong(params[3]), customers, params[4]))
+                    throw new TransferFailedException("Could not find any user with this ID or the transfer amount exceeds the limit");
         } else {
-            System.out.println("Please make sure this user is an: " + Customer.class.getSimpleName());
+            throw new InvalidUserException("Please make sure this user is an: " + Customer.class.getSimpleName());
         }
     }
 
