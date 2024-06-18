@@ -1,10 +1,7 @@
 package Bank.commandInterpretor;
 
 import Bank.Bundle;
-import Bank.customExceptions.InvalidInputException;
-import Bank.customExceptions.InvalidUserException;
-import Bank.customExceptions.LoginFailedException;
-import Bank.customExceptions.NoBundleException;
+import Bank.customExceptions.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -33,7 +30,8 @@ public class Interpreter {
                     command.execute(params);
                     return;
                 }
-            } catch (NoBundleException | NumberFormatException | InvalidUserException | InvalidInputException | LoginFailedException exception) {
+            } catch (NoBundleException | NumberFormatException | InvalidUserException | InvalidInputException |
+                     LoginFailedException | TransferFailedException exception) {
                 System.out.println(exception.getMessage());
             }
         }
@@ -44,7 +42,7 @@ public class Interpreter {
             if (command instanceof HelpCommand) {
                 try {
                     command.execute(null);
-                } catch (InvalidUserException | InvalidInputException | LoginFailedException e) {
+                } catch (InvalidUserException | TransferFailedException | InvalidInputException | LoginFailedException e) {
                     System.out.println(e.getMessage());
                 }
             }
