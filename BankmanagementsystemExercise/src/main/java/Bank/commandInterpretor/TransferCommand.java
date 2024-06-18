@@ -27,7 +27,7 @@ public class TransferCommand extends CommandAbstract {
 
         if (bundle.getSession().getUser() instanceof Customer) {
             if (!((Customer) bundle.getSession().getUser()).getAccount(params[2]).transfer(Double.parseDouble(params[1]), Long.parseLong(params[3]), customers, last))
-                    throw new TransferFailedException("Could not find any user with this ID or the transfer amount exceeds the limit");
+                throw new TransferFailedException("Could not find any user with this ID or the transfer amount exceeds the limit");
             else
                 System.out.println("Transferred the money.");
         } else {
