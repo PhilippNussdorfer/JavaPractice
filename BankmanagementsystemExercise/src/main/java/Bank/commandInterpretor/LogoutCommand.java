@@ -15,6 +15,7 @@ public class LogoutCommand extends CommandAbstract {
 
     @Override
     public String help() {
-        return null;
+        return  formatter.formatStringLength(75, "Loges the user out") + formatter.formatStringLength(50, "<Command>") + " | Commands: "
+                + formatter.concatStringArray(getCommands());
     }
 }
