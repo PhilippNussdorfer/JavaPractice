@@ -88,5 +88,8 @@ class LoginCommandTest {
     void exceptions() {
         assertThrows(InvalidInputException.class, ()-> loginCommand.execute(new String[] {"", "12"}));
         assertThrows(InvalidInputException.class, ()-> loginCommand.execute(new String[] {}));
+
+        loginCommand.setBundle(null);
+        assertThrows(NoBundleException.class, ()-> loginCommand.canHandle(""));
     }
 }
