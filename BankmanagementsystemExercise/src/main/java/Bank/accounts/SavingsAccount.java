@@ -31,7 +31,7 @@ public class SavingsAccount extends Account {
                 if (customerAccount != null) {
                     if (balance - amount >= 0) {
                         balance -= amount;
-                        customerAccount.balance += amount;
+                        customerAccount.deposit(amount);
                         return true;
                     }
                 }

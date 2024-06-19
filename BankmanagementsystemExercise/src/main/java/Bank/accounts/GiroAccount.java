@@ -43,7 +43,7 @@ public class GiroAccount extends Account {
                 if (customerAccount != null) {
                     if (balance - amount >= this.limit) {
                         balance -= amount;
-                        customerAccount.balance += amount;
+                        customerAccount.deposit(amount);
                         return true;
                     }
                 }

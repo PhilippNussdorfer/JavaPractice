@@ -30,7 +30,7 @@ public class CreditAccount extends Account {
 
                 if (customerAccount != null) {
                     balance -= amount;
-                    customerAccount.balance += amount;
+                    customerAccount.deposit(amount);
                     return true;
                 }
                 return false;
