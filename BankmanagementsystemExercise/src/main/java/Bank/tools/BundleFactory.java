@@ -24,7 +24,7 @@ public class BundleFactory {
                 new ExitCommand("exit")
         );
 
-        bundle.addInterpreter(interpreter);
+        bundle.setInterpreter(interpreter);
         bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
@@ -41,7 +41,7 @@ public class BundleFactory {
                 new ExitCommand("exit")
         );
 
-        bundle.addInterpreter(interpreter);
+        bundle.setInterpreter(interpreter);
         bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
@@ -57,7 +57,7 @@ public class BundleFactory {
                 new ExitCommand("exit")
         );
 
-        bundle.addInterpreter(interpreter);
+        bundle.setInterpreter(interpreter);
         bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
@@ -73,7 +73,7 @@ public class BundleFactory {
                 new ExitCommand("exit")
         );
 
-        bundle.addInterpreter(interpreter);
+        bundle.setInterpreter(interpreter);
         bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;

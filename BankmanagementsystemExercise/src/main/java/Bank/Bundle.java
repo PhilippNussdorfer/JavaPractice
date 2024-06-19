@@ -23,7 +23,7 @@ public class Bundle {
         this.system = system;
     }
 
-    public void addInterpreter(Interpreter interpreter) {
+    public void setInterpreter(Interpreter interpreter) {
         this.interpreter = interpreter;
     }
 }
