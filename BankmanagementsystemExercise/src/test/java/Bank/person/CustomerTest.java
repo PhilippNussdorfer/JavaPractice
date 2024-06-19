@@ -35,8 +35,17 @@ class CustomerTest {
     }
 
     @Test
+    void login() {
+        assertTrue(customer.login("1122"));
+        assertFalse(customer.login("2211"));
+    }
+
+    @Test
     void getter() {
         assertEquals(12L, customer.getCustomerID());
+        assertEquals("hans", customer.getName());
+        assertEquals("2.2.24", customer.getBirthDay());
+        assertEquals(12L, customer.getSocialNumber());
     }
 
     @Test
