@@ -19,6 +19,7 @@ public class BundleFactory {
                 new DepositCommand("deposit", "depo"),
                 new TransferCommand("transfer"),
                 new WithdrawCommand("withdraw"),
+                new AddAccountCommand("add"),
                 new HelpCommand("help"),
                 new ExitCommand("exit")
         );
