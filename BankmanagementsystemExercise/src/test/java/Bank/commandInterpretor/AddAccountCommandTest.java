@@ -27,8 +27,6 @@ class AddAccountCommandTest {
     Admin admin;
     @Mock
     Customer customer;
-    @Mock
-    Account account;
 
     @BeforeEach
     void setUp() {
@@ -59,6 +57,9 @@ class AddAccountCommandTest {
 
         Mockito.doThrow(AccountTypeNotExisting.class).when(customer).addAccount("garo");
         assertThrows(AccountTypeNotExisting.class, ()-> addAccountCommand.execute(new String[] {"add", "garo"}));
+
+        Mockito.when(session.getUser()).thenReturn(admin);
+        assertThrows(InvalidUserException.class, ()-> addAccountCommand.execute(new String[] {"add", "giro"}));
 
         addAccountCommand.setBundle(null);
         assertThrows(NoBundleException.class, ()-> addAccountCommand.canHandle("add"));
