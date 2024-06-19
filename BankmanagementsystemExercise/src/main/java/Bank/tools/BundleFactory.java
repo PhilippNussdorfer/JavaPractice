@@ -7,10 +7,12 @@ import Bank.person.Session;
 
 public class BundleFactory {
 
+    private static final StringFormatter formatter = new StringFormatter();
+
     public static Bundle createCustomerBundle(Session session, Bundle oldBundle) {
         var bundle = new Bundle(session, oldBundle);
 
-        var interpreter = new Interpreter();
+        var interpreter = new Interpreter(formatter);
         interpreter.addCommand(
                 new ChangeLimitCommand("changeLimit", "chL"),
                 new LogoutCommand("logout"),
@@ -30,7 +32,7 @@ public class BundleFactory {
     public static Bundle createAdminBundle(Session session, Bundle oldBundle) {
         var bundle = new Bundle(session, oldBundle);
 
-        var interpreter = new Interpreter();
+        var interpreter = new Interpreter(formatter);
         interpreter.addCommand(
                 new LogoutCommand("logout"),
                 new AddCustomerCommand("add", "addCustomer"),
@@ -47,7 +49,7 @@ public class BundleFactory {
     public static Bundle logoutBundle(Bundle oldBundle) {
         var bundle = new Bundle(null, oldBundle);
 
-        var interpreter = new Interpreter();
+        var interpreter = new Interpreter(formatter);
         interpreter.addCommand(
                 new LoginCommand("login"),
                 new HelpCommand("help"),
@@ -63,7 +65,7 @@ public class BundleFactory {
     public static Bundle startingBundle(BankManagementSystem system) {
         var bundle = new Bundle(null, system);
 
-        var interpreter = new Interpreter();
+        var interpreter = new Interpreter(formatter);
         interpreter.addCommand(
                 new LoginCommand("login"),
                 new HelpCommand("help"),

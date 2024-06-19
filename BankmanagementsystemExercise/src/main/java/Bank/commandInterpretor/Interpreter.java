@@ -2,6 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.Bundle;
 import Bank.customExceptions.*;
+import Bank.tools.StringFormatter;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -11,6 +12,11 @@ import java.util.List;
 public class Interpreter {
     @Getter
     private final List<Command> commands = new ArrayList<>();
+    private final StringFormatter formatter;
+
+    public Interpreter (StringFormatter formatter) {
+        this.formatter = formatter;
+    }
 
     public void addCommand(Command ... commands) {
         this.commands.addAll(Arrays.asList(commands));
@@ -32,7 +38,7 @@ public class Interpreter {
                 }
             } catch (NoBundleException | NumberFormatException | InvalidUserException | InvalidInputException |
                      LoginFailedException | TransferFailedException exception) {
-                System.out.println(exception.getMessage());
+                formatter.outputWrapper(exception.getMessage());
             }
         }
     }
@@ -40,11 +46,7 @@ public class Interpreter {
     public void getHelpMessage() {
         for (Command command : commands) {
             if (command instanceof HelpCommand) {
-                try {
-                    command.execute(null);
-                } catch (InvalidUserException | TransferFailedException | InvalidInputException | LoginFailedException e) {
-                    System.out.println(e.getMessage());
-                }
+                ((HelpCommand)command).execute(null);
             }
         }
     }

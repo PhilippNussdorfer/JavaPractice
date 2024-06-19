@@ -22,4 +22,8 @@ public class StringFormatter {
 
         return last;
     }
+
+    public void outputWrapper(String msg) {
+        System.out.println(msg);
+    }
 }
