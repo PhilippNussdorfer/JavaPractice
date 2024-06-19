@@ -1,7 +1,6 @@
 package Bank.commandInterpretor;
 
 import Bank.Bundle;
-import Bank.accounts.Account;
 import Bank.customExceptions.*;
 import Bank.person.Admin;
 import Bank.person.Customer;
