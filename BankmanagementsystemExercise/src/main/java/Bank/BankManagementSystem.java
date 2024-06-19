@@ -22,12 +22,12 @@ public class BankManagementSystem {
     public BankManagementSystem(Scanner scanner, StringFormatter formatter) {
         this.scanner = scanner;
         this.formatter = formatter;
+        this.bundle = BundleFactory.startingBundle(this);
     }
 
     public void lunch() {
         this.loadUsers();
 
-        this.bundle = BundleFactory.startingBundle(this);
         this.bundle.getInterpreter().getHelpMessage();
 
         while(this.bundle.isRunning()) {
