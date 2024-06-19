@@ -4,10 +4,7 @@ import Bank.BankManagementSystem;
 import Bank.Bundle;
 import Bank.accounts.Account;
 import Bank.accounts.AccountType;
-import Bank.customExceptions.InvalidInputException;
-import Bank.customExceptions.InvalidUserException;
-import Bank.customExceptions.NoBundleException;
-import Bank.customExceptions.TransferFailedException;
+import Bank.customExceptions.*;
 import Bank.person.Admin;
 import Bank.person.Customer;
 import Bank.person.Session;
@@ -57,7 +54,7 @@ class TransferCommandTest {
     }
 
     @Test
-    void execute() throws InvalidInputException, InvalidUserException, TransferFailedException {
+    void execute() throws InvalidInputException, InvalidUserException, TransferFailedException, AccountTypeNotExisting {
         Mockito.when(bundle.getSession()).thenReturn(session);
         Mockito.when(bundle.getSystem()).thenReturn(system);
         Mockito.when(system.getUser()).thenReturn(user);
@@ -71,7 +68,7 @@ class TransferCommandTest {
     }
 
     @Test
-    void exception() {
+    void exception() throws AccountTypeNotExisting {
         Mockito.when(bundle.getSession()).thenReturn(session);
         Mockito.when(bundle.getSystem()).thenReturn(system);
         Mockito.when(system.getUser()).thenReturn(user);

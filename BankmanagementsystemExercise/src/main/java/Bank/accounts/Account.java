@@ -1,5 +1,6 @@
 package Bank.accounts;
 
+import Bank.customExceptions.AccountTypeNotExisting;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import Bank.person.Customer;
@@ -21,5 +22,5 @@ public abstract class Account {
     }
 
     public abstract boolean withdraw(double amount);
-    public abstract boolean transfer(double amount, Long customerID, List<Customer> customers, String accountType);
+    public abstract boolean transfer(double amount, Long customerID, List<Customer> customers, String accountType) throws AccountTypeNotExisting;
 }

@@ -44,11 +44,11 @@ public class Customer extends Person {
             throw new AccountTypeNotExisting("Account type not found " + accountType);
     }
 
-    public Account getAccount(String accountType) {
+    public Account getAccount(String accountType) throws AccountTypeNotExisting {
         for (Account account : accounts) {
             if (account.getAccountType().getValue().equalsIgnoreCase(accountType))
                 return account;
         }
-        return null;
+        throw new AccountTypeNotExisting("Could not find any account with this: " + accountType);
     }
 }

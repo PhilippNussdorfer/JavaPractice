@@ -1,5 +1,6 @@
 package Bank.commandInterpretor;
 
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.customExceptions.TransferFailedException;
@@ -16,7 +17,7 @@ public class TransferCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException, InvalidUserException, TransferFailedException, InvalidInputException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException, TransferFailedException, InvalidInputException, AccountTypeNotExisting {
         List<Customer> customers = new ArrayList<>();
         var last = formatter.CheckIfElementExists(4, params);
 

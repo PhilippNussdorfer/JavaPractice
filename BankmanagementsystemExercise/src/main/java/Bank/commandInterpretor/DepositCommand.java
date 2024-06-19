@@ -1,6 +1,7 @@
 package Bank.commandInterpretor;
 
 import Bank.accounts.AccountType;
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
@@ -12,7 +13,7 @@ public class DepositCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException, InvalidUserException, InvalidInputException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException, InvalidInputException, AccountTypeNotExisting {
         var last = formatter.CheckIfElementExists(2, params);
 
         if (bundle.getSession().getUser() instanceof Customer) {

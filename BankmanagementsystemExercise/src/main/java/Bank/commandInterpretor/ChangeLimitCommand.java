@@ -2,6 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.accounts.AccountType;
 import Bank.accounts.GiroAccount;
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
@@ -13,7 +14,7 @@ public class ChangeLimitCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException, InvalidUserException, InvalidInputException {
+    public void execute(String[] params) throws NumberFormatException, InvalidUserException, InvalidInputException, AccountTypeNotExisting {
         var last = formatter.CheckIfElementExists(1, params);
 
         if (bundle.getSession().getUser() instanceof Customer) {

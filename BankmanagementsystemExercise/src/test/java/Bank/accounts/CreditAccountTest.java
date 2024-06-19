@@ -1,5 +1,6 @@
 package Bank.accounts;
 
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.person.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +57,7 @@ class CreditAccountTest {
     }
 
     @Test
-    void transfer() {
+    void transfer() throws AccountTypeNotExisting {
         assertFalse(creditAccount.transfer(0, 1L, List.of(customer, customer_2), "credit"));
         assertFalse(creditAccount.transfer(-100, 1L, List.of(customer, customer_2), "credit"));
 

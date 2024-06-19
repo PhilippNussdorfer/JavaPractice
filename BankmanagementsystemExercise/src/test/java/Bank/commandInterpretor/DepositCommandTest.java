@@ -2,6 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.Bundle;
 import Bank.accounts.Account;
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.customExceptions.NoBundleException;
@@ -45,7 +46,7 @@ class DepositCommandTest {
     }
 
     @Test
-    void execute() throws InvalidUserException, InvalidInputException {
+    void execute() throws InvalidUserException, InvalidInputException, AccountTypeNotExisting {
         Mockito.when(bundle.getSession()).thenReturn(session);
         Mockito.when(session.getUser()).thenReturn(customer);
         Mockito.when(customer.getAccount(Mockito.anyString())).thenReturn(account);

@@ -2,6 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.Bundle;
 import Bank.accounts.GiroAccount;
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.customExceptions.NoBundleException;
@@ -43,7 +44,7 @@ class ChangeLimitCommandTest {
     }
 
     @Test
-    void changeLimitCommand() throws InvalidUserException, InvalidInputException {
+    void changeLimitCommand() throws InvalidUserException, InvalidInputException, AccountTypeNotExisting {
         Mockito.when(bundle.getSession()).thenReturn(session);
         Mockito.when(session.getUser()).thenReturn(customer);
         Mockito.when(customer.getAccount(Mockito.anyString())).thenReturn(giro);

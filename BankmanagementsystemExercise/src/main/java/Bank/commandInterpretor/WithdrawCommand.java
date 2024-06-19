@@ -1,5 +1,6 @@
 package Bank.commandInterpretor;
 
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
@@ -11,7 +12,7 @@ public class WithdrawCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException, InvalidInputException, InvalidUserException {
+    public void execute(String[] params) throws NumberFormatException, InvalidInputException, InvalidUserException, AccountTypeNotExisting {
         var last = formatter.CheckIfElementExists(2, params);
 
         if (bundle.getSession().getUser() instanceof Customer) {

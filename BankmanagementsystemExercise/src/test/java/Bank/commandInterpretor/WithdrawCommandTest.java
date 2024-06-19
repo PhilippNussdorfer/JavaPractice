@@ -2,6 +2,7 @@ package Bank.commandInterpretor;
 
 import Bank.Bundle;
 import Bank.accounts.Account;
+import Bank.customExceptions.AccountTypeNotExisting;
 import Bank.customExceptions.InvalidInputException;
 import Bank.customExceptions.InvalidUserException;
 import Bank.customExceptions.NoBundleException;
@@ -45,7 +46,7 @@ class WithdrawCommandTest {
     }
 
     @Test
-    void execute() throws InvalidInputException, InvalidUserException {
+    void execute() throws InvalidInputException, InvalidUserException, AccountTypeNotExisting {
         Mockito.when(bundle.getSession()).thenReturn(session);
         Mockito.when(session.getUser()).thenReturn(customer);
         Mockito.when(customer.getAccount("giro")).thenReturn(account);

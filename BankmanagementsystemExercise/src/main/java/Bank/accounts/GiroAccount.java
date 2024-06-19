@@ -1,5 +1,6 @@
 package Bank.accounts;
 
+import Bank.customExceptions.AccountTypeNotExisting;
 import lombok.Getter;
 import Bank.person.Customer;
 
@@ -40,7 +41,7 @@ public class GiroAccount extends Account {
     }
 
     @Override
-    public boolean transfer(double amount, Long customerID, List<Customer> customers, String accountType) {
+    public boolean transfer(double amount, Long customerID, List<Customer> customers, String accountType) throws AccountTypeNotExisting {
         if (amount <= 0)
             return false;
 
