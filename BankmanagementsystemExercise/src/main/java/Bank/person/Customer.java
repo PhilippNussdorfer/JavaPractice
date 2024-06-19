@@ -1,6 +1,7 @@
 package Bank.person;
 
 import Bank.accounts.*;
+import Bank.customExceptions.AccountTypeNotExisting;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Customer extends Person {
         this.customerID = customerID;
     }
 
-    public void addAccount(String accountType) {
+    public void addAccount(String accountType) throws AccountTypeNotExisting {
         if (accountType.equalsIgnoreCase(AccountType.GIRO.getValue())) {
             accounts.add(new GiroAccount(50, AccountType.GIRO, 150));
             return;
@@ -29,13 +30,10 @@ public class Customer extends Person {
             return;
         }
 
-        if (accountType.equalsIgnoreCase(AccountType.CREDIT.getValue())) {
+        if (accountType.equalsIgnoreCase(AccountType.CREDIT.getValue()))
             accounts.add(new CreditAccount(35, AccountType.CREDIT));
-            return;
-        }
-
         else
-            throw new
+            throw new AccountTypeNotExisting("Account type not found " + accountType);
     }
 
     public Account getAccount(String accountType) {
