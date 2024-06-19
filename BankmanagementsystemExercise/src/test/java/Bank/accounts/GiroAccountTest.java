@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GiroAccountTest {
 
     GiroAccount giroAccount;
+    GiroAccount giroAccount_2;
 
     @Mock
     AccountType giro;
@@ -29,6 +30,7 @@ class GiroAccountTest {
     @BeforeEach
     void setUp() {
         giroAccount = new GiroAccount(1250.0, giro, 250.0);
+        giroAccount_2 = new GiroAccount(0.0, giro, -250.0);
     }
 
     @Test
@@ -71,6 +73,8 @@ class GiroAccountTest {
 
         giroAccount.setLimit(-250.0);
         assertEquals(-250.0, giroAccount.getLimit());
+
+        assertEquals(-250.0, giroAccount_2.getLimit());
     }
 
     @Test
