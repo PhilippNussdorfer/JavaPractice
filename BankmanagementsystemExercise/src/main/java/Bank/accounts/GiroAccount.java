@@ -1,7 +1,6 @@
 package Bank.accounts;
 
 import lombok.Getter;
-import lombok.Setter;
 import Bank.person.Customer;
 
 import java.util.List;
@@ -9,13 +8,22 @@ import java.util.Objects;
 
 @Getter
 public class GiroAccount extends Account {
-    @Setter
     private double limit;
 
     public GiroAccount(double balance, AccountType accountType, double limit) {
         super(balance, accountType);
 
-        this.limit = limit;
+        if (limit > 0)
+            this.limit = -limit;
+        else
+            this.limit = limit;
+    }
+
+    public void setLimit(Double limit) {
+        if (limit > 0)
+            this.limit = -limit;
+        else
+            this.limit = limit;
     }
 
     @Override
