@@ -14,20 +14,24 @@ public class BankManagementSystem {
     @Getter
     private User user;
     private Bundle bundle;
+    @Getter
+    private final Scanner scanner;
 
-    public static void main(String[] args) {
-        BankManagementSystem system = new BankManagementSystem();
-        system.loadUsers();
+    public BankManagementSystem(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
-        Scanner scanner = new Scanner(System.in);
-        system.bundle = BundleFactory.startingBundle(system);
-        system.bundle.getInterpreter().getHelpMessage();
+    public void lunch() {
+        this.loadUsers();
 
-        while(system.bundle.isRunning()) {
+        this.bundle = BundleFactory.startingBundle(this);
+        this.bundle.getInterpreter().getHelpMessage();
+
+        while(this.bundle.isRunning()) {
             System.out.print("> ");
 
-            var input = scanner.nextLine();
-            system.bundle.getInterpreter().interpret(input);
+            var input = this.getScanner().nextLine();
+            this.bundle.getInterpreter().interpret(input);
 
             System.out.println();
         }
