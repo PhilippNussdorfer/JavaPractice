@@ -19,14 +19,23 @@ public class Customer extends Person {
     }
 
     public void addAccount(String accountType) {
-        if (accountType.equalsIgnoreCase(AccountType.GIRO.getValue()))
+        if (accountType.equalsIgnoreCase(AccountType.GIRO.getValue())) {
             accounts.add(new GiroAccount(50, AccountType.GIRO, 150));
+            return;
+        }
 
-        if (accountType.equalsIgnoreCase(AccountType.SAVINGS.getValue()))
+        if (accountType.equalsIgnoreCase(AccountType.SAVINGS.getValue())) {
             accounts.add(new SavingsAccount(75, AccountType.SAVINGS));
+            return;
+        }
 
-        if (accountType.equalsIgnoreCase(AccountType.CREDIT.getValue()))
+        if (accountType.equalsIgnoreCase(AccountType.CREDIT.getValue())) {
             accounts.add(new CreditAccount(35, AccountType.CREDIT));
+            return;
+        }
+
+        else
+            throw new
     }
 
     public Account getAccount(String accountType) {
