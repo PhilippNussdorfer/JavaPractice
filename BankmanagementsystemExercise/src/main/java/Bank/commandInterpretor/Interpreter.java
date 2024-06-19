@@ -49,7 +49,7 @@ public class Interpreter {
         }
     }
 
-    public void addBundle(Bundle bundle) {
+    public void setBundleForCommands(Bundle bundle) {
         for (Command command : commands) {
             command.setBundle(bundle);
         }

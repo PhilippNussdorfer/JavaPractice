@@ -22,7 +22,7 @@ public class BundleFactory {
         );
 
         bundle.addInterpreter(interpreter);
-        bundle.getInterpreter().addBundle(bundle);
+        bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
     }
@@ -39,7 +39,7 @@ public class BundleFactory {
         );
 
         bundle.addInterpreter(interpreter);
-        bundle.getInterpreter().addBundle(bundle);
+        bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
     }
@@ -55,7 +55,7 @@ public class BundleFactory {
         );
 
         bundle.addInterpreter(interpreter);
-        bundle.getInterpreter().addBundle(bundle);
+        bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
     }
@@ -71,7 +71,7 @@ public class BundleFactory {
         );
 
         bundle.addInterpreter(interpreter);
-        bundle.getInterpreter().addBundle(bundle);
+        bundle.getInterpreter().setBundleForCommands(bundle);
 
         return bundle;
     }
