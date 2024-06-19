@@ -1,5 +1,7 @@
 package Bank.commandInterpretor;
 
+import Bank.customExceptions.InvalidInputException;
+import Bank.customExceptions.InvalidUserException;
 import Bank.person.Customer;
 
 public class WithdrawCommand extends CommandAbstract {
@@ -9,11 +11,14 @@ public class WithdrawCommand extends CommandAbstract {
     }
 
     @Override
-    public void execute(String[] params) throws NumberFormatException {
+    public void execute(String[] params) throws NumberFormatException, InvalidInputException, InvalidUserException {
+        var last = formatter.CheckIfElementExists(2, params);
+
         if (bundle.getSession().getUser() instanceof Customer) {
-            ((Customer) bundle.getSession().getUser()).getAccount(params[1]).withdraw(Double.parseDouble(params[2]));
+            ((Customer) bundle.getSession().getUser()).getAccount(params[1]).withdraw(Double.parseDouble(last));
+            System.out.println("You have withdrawn " + last + " €");
         } else {
-            System.out.println("Please make sure this user is an: " + Customer.class.getSimpleName());
+            throw new InvalidUserException("Please make sure this user is an: " + Customer.class.getSimpleName());
         }
     }
 
