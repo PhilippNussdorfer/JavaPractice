@@ -37,7 +37,7 @@ public class Interpreter {
                     return;
                 }
             } catch (NoBundleException | NumberFormatException | InvalidUserException | InvalidInputException |
-                     LoginFailedException | TransferFailedException exception) {
+                     LoginFailedException | AccountTypeAlreadyExists | AccountTypeNotExisting | TransferFailedException exception) {
                 formatter.outputWrapper(exception.getMessage());
             }
         }

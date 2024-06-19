@@ -1,6 +1,7 @@
 package Bank.person;
 
 import Bank.accounts.*;
+import Bank.customExceptions.AccountTypeAlreadyExists;
 import Bank.customExceptions.AccountTypeNotExisting;
 import lombok.Getter;
 
@@ -19,7 +20,14 @@ public class Customer extends Person {
         this.customerID = customerID;
     }
 
-    public void addAccount(String accountType) throws AccountTypeNotExisting {
+    public void addAccount(String accountType) throws AccountTypeNotExisting, AccountTypeAlreadyExists {
+        if (!accounts.isEmpty()) {
+            for (Account account : accounts) {
+                if (account.getAccountType().getValue().equalsIgnoreCase(accountType))
+                    throw new AccountTypeAlreadyExists("This account already exists: " + accountType);
+            }
+        }
+
         if (accountType.equalsIgnoreCase(AccountType.GIRO.getValue())) {
             accounts.add(new GiroAccount(50, AccountType.GIRO, 150));
             return;

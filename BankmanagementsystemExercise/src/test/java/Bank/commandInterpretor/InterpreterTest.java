@@ -26,23 +26,26 @@ class InterpreterTest {
     CommandAbstract loginCommand;
     @Mock
     CommandAbstract transferCommand;
+    @Mock
+    CommandAbstract addAccountCommand;
 
     @BeforeEach
     void setUp() {
         interpreter = new Interpreter(formatter);
-        interpreter.addCommand(addCustomerCommand, helpCommand, loginCommand, transferCommand);
+        interpreter.addCommand(addCustomerCommand, helpCommand, loginCommand, transferCommand, addAccountCommand);
     }
 
     @Test
     void addCommand() {
-        assertEquals(4, interpreter.getCommands().size());
+        assertEquals(5, interpreter.getCommands().size());
         assertTrue(interpreter.getCommands().contains(helpCommand));
         assertTrue(interpreter.getCommands().contains(addCustomerCommand));
         assertTrue(interpreter.getCommands().contains(loginCommand));
+        assertTrue(interpreter.getCommands().contains(addAccountCommand));
     }
 
     @Test
-    void interpret() throws NoBundleException, InvalidInputException, LoginFailedException, InvalidUserException, TransferFailedException {
+    void interpret() throws NoBundleException, InvalidInputException, LoginFailedException, InvalidUserException, TransferFailedException, AccountTypeNotExisting, AccountTypeAlreadyExists {
         interpreter.interpret("");
         Mockito.verify(helpCommand, Mockito.times(1)).execute(null);
 
@@ -58,7 +61,7 @@ class InterpreterTest {
     }
 
     @Test
-    void exceptionsOnInterpret() throws InvalidInputException, InvalidUserException, NoBundleException, LoginFailedException, TransferFailedException {
+    void exceptionsOnInterpret() throws InvalidInputException, InvalidUserException, NoBundleException, LoginFailedException, TransferFailedException, AccountTypeNotExisting, AccountTypeAlreadyExists {
         Mockito.when(addCustomerCommand.canHandle("add")).thenReturn(true);
         Mockito.doThrow(new InvalidUserException("Invalid User")).when(addCustomerCommand).execute(Mockito.any(String[].class));
         interpreter.interpret("add f, g, h, i");
@@ -90,5 +93,15 @@ class InterpreterTest {
         Mockito.doThrow(new TransferFailedException("Transfer Failed")).when(transferCommand).execute(Mockito.any(String[].class));
         interpreter.interpret("transfer f, g, h, i");
         Mockito.verify(formatter, Mockito.times(1)).outputWrapper("Transfer Failed");
+
+        Mockito.when(addAccountCommand.canHandle("addAcc")).thenReturn(true);
+        Mockito.doThrow(new AccountTypeNotExisting("Account does not exist")).when(addAccountCommand).execute(Mockito.any(String[].class));
+        interpreter.interpret("addAcc f, g, h, i");
+        Mockito.verify(formatter, Mockito.times(1)).outputWrapper("Account does not exist");
+
+        Mockito.when(addAccountCommand.canHandle("addAcc")).thenReturn(true);
+        Mockito.doThrow(new AccountTypeAlreadyExists("Account exists already")).when(addAccountCommand).execute(Mockito.any(String[].class));
+        interpreter.interpret("addAcc f, g, h, i");
+        Mockito.verify(formatter, Mockito.times(1)).outputWrapper("Account exists already");
     }
 }
