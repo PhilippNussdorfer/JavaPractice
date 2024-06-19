@@ -8,11 +8,11 @@ public class HelpCommand extends CommandAbstract {
 
     @Override
     public void execute(String[] params) {
-        System.out.println("=".repeat(250));
+        formatter.outputWrapper("=".repeat(250));
         for (Command command : bundle.getInterpreter().getCommands()) {
-            System.out.println(command.help());
+            formatter.outputWrapper(command.help());
         }
-        System.out.println("=".repeat(250));
+        formatter.outputWrapper("=".repeat(250));
     }
 
     @Override
