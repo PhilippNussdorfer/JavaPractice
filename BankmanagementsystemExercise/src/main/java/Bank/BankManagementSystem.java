@@ -4,21 +4,24 @@ import Bank.person.Admin;
 import Bank.person.Person;
 import Bank.person.User;
 import Bank.tools.BundleFactory;
+import Bank.tools.StringFormatter;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Getter
 public class BankManagementSystem {
-    @Getter
+
     private User user;
     private Bundle bundle;
-    @Getter
     private final Scanner scanner;
+    private final StringFormatter formatter;
 
-    public BankManagementSystem(Scanner scanner) {
+    public BankManagementSystem(Scanner scanner, StringFormatter formatter) {
         this.scanner = scanner;
+        this.formatter = formatter;
     }
 
     public void lunch() {
@@ -28,12 +31,12 @@ public class BankManagementSystem {
         this.bundle.getInterpreter().getHelpMessage();
 
         while(this.bundle.isRunning()) {
-            System.out.print("> ");
+            this.formatter.outputWrapper("Input:");
 
             var input = this.getScanner().nextLine();
             this.bundle.getInterpreter().interpret(input);
 
-            System.out.println();
+            this.formatter.outputWrapper("");
         }
     }
 
