@@ -1,4 +1,4 @@
-package at.bbrz.spring_exercise;
+package at.bbrz.spring_exercise.exercises;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

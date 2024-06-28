@@ -1,5 +1,6 @@
-package at.bbrz.spring_exercise;
+package at.bbrz.spring_exercise.exercises;
 
+import at.bbrz.spring_exercise.exercises.Customer;
 import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
