@@ -2,7 +2,6 @@ package at.bookmark.bookmark_javafx;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
@@ -18,7 +16,6 @@ import java.util.*;
 
 public class Bookmark_App extends Application {
 
-    private final String config = "config.prop";
     private final WriterReader writerReader = new WriterReader();
     private final BookmarkHandler handler = new BookmarkHandler();
     private final GridPane gridSearch = new GridPane();
@@ -31,9 +28,7 @@ public class Bookmark_App extends Application {
     double width = 1280;
     double height = 640;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
-    private int screenIndex = 0;
-    private boolean isFullscreen = false;
-    private final int adjustScreen = 5;
+    private final WindowCalc windowCalc = new WindowCalc();
 
     private final List<Node> startNodes = new ArrayList<>();
     private final List<Node> editNodes = new ArrayList<>();
@@ -46,7 +41,7 @@ public class Bookmark_App extends Application {
 
     @Override
     public void start(Stage stage) {
-        loadAndSetupWindowPosition(stage);
+        loadAndSetupForWindow(stage);
 
         gridMain.setHgap(10);
         gridMain.setVgap(10);
@@ -79,7 +74,16 @@ public class Bookmark_App extends Application {
 
         setStage(stage, lbl_search, btn_add, txt_search);
         setGrid(gridMain, handler.getBookmarks());
-        saveOnCloseAction(stage);
+        windowCalc.saveOnCloseAction(stage, writerReader);
+    }
+
+    private void loadAndSetupForWindow(Stage stage) {
+        windowCalc.loadAndSetupWindowPosition(stage, writerReader);
+
+        x = windowCalc.getX();
+        y = windowCalc.getY();
+        width = windowCalc.getWidth();
+        height = windowCalc.getHeight();
     }
 
     private void setStage(Stage stage, Label lbl_search, Button btn_add, TextField txt_search) {
@@ -90,7 +94,7 @@ public class Bookmark_App extends Application {
         MenuBar menu = createAndFillMenuBar(32, stage);
         VBox vbox = new VBox(menu, scrollPane);
 
-        Scene scene = new Scene(vbox, width - adjustScreen, height);
+        Scene scene = new Scene(vbox, width - windowCalc.getAdjustScreen(), height);
         scene.setFill(Color.LIGHTGRAY);
 
         stage.setTitle("Bookmark");
@@ -113,166 +117,6 @@ public class Bookmark_App extends Application {
         ScrollPane scrollPane = new ScrollPane(grid);
         scrollPane.setFitToHeight(true);
         return scrollPane;
-    }
-
-    private void saveOnCloseAction(Stage stage) {
-        stage.setOnCloseRequest(event -> {
-            var screen = getCurrentScreenFromStage(stage);
-
-            double width = screen.getBounds().getWidth();
-            double height = screen.getBounds().getHeight();
-
-            height = getHeight(stage, height);
-            height = getCheckedHeight(screen, height);
-            width = getWidth(stage, width);
-
-            writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
-                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), appFont.getSize(), config);
-        });
-    }
-
-    private double getCheckedHeight(Screen screen, double height) {
-        int taskbarHeight = 60;
-
-        if (height > screen.getBounds().getHeight() - taskbarHeight)
-            height = screen.getBounds().getHeight() - taskbarHeight;
-        return height;
-    }
-
-    private double getWidth(Stage stage, double width) {
-        if (stage.getWidth() <= width) {
-            width = stage.getWidth();
-
-            if (width - this.width <= 40 && width - this.width >= 0) {
-                width = this.width;
-            }
-        }
-        return width;
-    }
-
-    private double getHeight(Stage stage, double height) {
-        if (stage.getHeight() <= height) {
-            height = stage.getHeight();
-
-            if (height - this.height <= 40 && height - this.height >= 0) {
-                height = this.height;
-            }
-        }
-        return height;
-    }
-
-    private void loadAndSetupWindowPosition(Stage stage) {
-        loadConfigProperties();
-
-        if (!isFullscreen) {
-            adjustWindowOnMonitor(getScreen());
-        } else {
-            stage.setFullScreen(true);
-        }
-        setStagePosition(stage, x - adjustScreen, y);
-    }
-
-    private Screen getScreen() {
-        Screen screen;
-
-        if (screenIndex >= 0 && Screen.getScreens().size() > 1 && screenIndex < Screen.getScreens().size()) {
-            screen = Screen.getScreens().get(screenIndex);
-        } else {
-            screen = Screen.getPrimary();
-        }
-
-        return screen;
-    }
-
-    private Screen getCurrentScreenFromStage(Stage stage) {
-        int screenIndex = getScreenIndex(stage.getX(), stage.getY(), (int) stage.getWidth(), (int) stage.getHeight());
-        return Screen.getScreens().get(screenIndex);
-    }
-
-    private void adjustWindowOnMonitor(Screen screen) {
-        Rectangle2D screenBounds;
-        screenBounds = screen.getVisualBounds();
-
-        if (width > screenBounds.getWidth())
-            width = screenBounds.getWidth();
-        if (height > screenBounds.getHeight())
-            height = screenBounds.getHeight();
-
-        adjustXPos(screenBounds);
-        adjustYPos(screenBounds);
-    }
-
-    private void adjustYPos(Rectangle2D screenBounds) {
-        if (y != 0) {
-            if (y < screenBounds.getMinY()) {
-                y = screenBounds.getMinY();
-            }
-            if (y + height > screenBounds.getMaxY()) {
-                y = screenBounds.getMaxY() - height;
-            }
-        }
-    }
-
-    private void adjustXPos(Rectangle2D screenBounds) {
-        if (x != 0) {
-            if (x < screenBounds.getMinX()) {
-                x = screenBounds.getMinX();
-            }
-            if (x + width > screenBounds.getMaxX()) {
-                x = screenBounds.getMaxX() - width;
-            }
-        }
-    }
-
-    private void loadConfigProperties() {
-        Properties prop = writerReader.loadConfig(config);
-        if (prop != null) {
-            try {
-                x = Double.parseDouble(prop.getProperty("x"));
-                y = Double.parseDouble(prop.getProperty("y"));
-                width = Integer.parseInt(prop.getProperty("width"));
-                height = Integer.parseInt(prop.getProperty("height"));
-                screenIndex = Integer.parseInt(prop.getProperty("screenIndex"));
-                isFullscreen = Boolean.parseBoolean(prop.getProperty("isFullscreen"));
-                appFont = new Font(Double.parseDouble(prop.getProperty("fontSize")));
-
-            } catch (NumberFormatException e) {
-                System.out.println("One or multiple numbers for the monitor position are missing");
-            }
-        }
-    }
-
-    private int getScreenIndex(double x, double y, int width, int height) {
-        int maxIntersection = -18, screenIndex = 0;
-        var list = Screen.getScreensForRectangle(x, y, width, height);
-
-        if (list.size() == 1) {
-            for (Screen screen : Screen.getScreens()) {
-                if (screen == list.get(0)) {
-                    return screenIndex;
-                } else {
-                    screenIndex ++;
-                }
-            }
-        }
-
-        Rectangle2D windowBounds = new Rectangle2D(x, y, width, height);
-        screenIndex = 0;
-
-        for (Screen screen : Screen.getScreens()) {
-            Rectangle2D screenBounds = screen.getBounds();
-
-            double widthInter = screenBounds.getWidth() - windowBounds.getWidth();
-            double heightInter = screenBounds.getHeight() - windowBounds.getHeight();
-
-            if (widthInter > maxIntersection && heightInter > maxIntersection) {
-                return screenIndex;
-            } else {
-                screenIndex ++;
-            }
-        }
-
-        return screenIndex;
     }
 
     private MenuBar createAndFillMenuBar(int fontsize, Stage stage) {
@@ -312,7 +156,7 @@ public class Bookmark_App extends Application {
         editNodes.clear();
 
         Stage editStage = new Stage();
-        setStagePosition(editStage, x + 200, y + 200);
+        windowCalc.setStagePosition(editStage, x + 200, y + 200);
         Bookmark bookmark = handler.getBookmarks().get(id);
 
         TextField txt_edit_title = new TextField(bookmark.getTitle());
@@ -397,7 +241,7 @@ public class Bookmark_App extends Application {
         addNodes.clear();
 
         Stage addStage = new Stage();
-        setStagePosition(addStage, x + 200, y + 200);
+        windowCalc.setStagePosition(addStage, x + 200, y + 200);
 
         TextField txt_add_title = new TextField();
         TextField txt_add_page = new TextField();
@@ -442,11 +286,6 @@ public class Bookmark_App extends Application {
         addStage.show();
 
         updateFont(addNodes);
-    }
-
-    private void setStagePosition(Stage stage, double windowXPos, double windowYPos) {
-        stage.setX(windowXPos);
-        stage.setY(windowYPos);
     }
 
     private List<Bookmark> searchForBookmark(String input) {
