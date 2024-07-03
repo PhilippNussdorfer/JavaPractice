@@ -50,10 +50,11 @@ public class Bookmark_App extends Application {
 
         gridMain.setHgap(10);
         gridMain.setVgap(10);
-        gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+        gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
 
         gridSearch.setHgap(10);
         gridSearch.setVgap(10);
+        gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
 
         Label lbl_search = new Label("Search:");
         Button btn_add = new Button("Add Bookmark");
@@ -78,7 +79,7 @@ public class Bookmark_App extends Application {
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
-        grid.setVgap(10);
+        grid.setVgap(50);
 
         grid.add(lbl_search, 0, 0);
         grid.add(txt_search, 1, 0);
@@ -454,6 +455,7 @@ public class Bookmark_App extends Application {
 
     private void setGrid(GridPane grid, List<Bookmark> bookmarks) {
         grid.getChildren().clear();
+        int count = 0;
 
         for (Bookmark bookmark : bookmarks) {
 
@@ -472,12 +474,14 @@ public class Bookmark_App extends Application {
             btn_view_edit.setOnAction(e -> editWindow(id));
             btn_view_remove.setOnAction(e -> deleteNotify(id, bookmark.getTitle()));
 
-            grid.add(lbl_view_num, 0, bookmark.getNumeration());
-            grid.add(lbl_view_title, 1, bookmark.getNumeration());
-            grid.add(lbl_view_page, 2, bookmark.getNumeration());
-            grid.add(btn_view_edit, 3, bookmark.getNumeration());
-            grid.add(btn_view_remove, 4, bookmark.getNumeration());
-            grid.add(btn_view_link, 5, bookmark.getNumeration());
+            grid.add(lbl_view_num, 0, count);
+            grid.add(lbl_view_title, 1, count);
+            grid.add(lbl_view_page, 2, count);
+            grid.add(btn_view_edit, 3, count);
+            grid.add(btn_view_remove, 4, count);
+            grid.add(btn_view_link, 5, count);
+
+            count ++;
         }
 
         updateFont(viewNodes);
