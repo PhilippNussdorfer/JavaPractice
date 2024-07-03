@@ -77,20 +77,15 @@ public class Bookmark_App extends Application {
 
         btn_add.setOnAction(e -> addWindow());
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(50);
+        setStage(stage, lbl_search, btn_add, txt_search);
+        setGrid(gridMain, handler.getBookmarks());
+        saveOnCloseAction(stage);
+    }
 
-        grid.add(lbl_search, 0, 0);
-        grid.add(txt_search, 1, 0);
-        grid.add(btn_add, 2, 0);
-        grid.add(gridSearch, 1, 1);
-        grid.add(gridMain, 1, 2);
-
+    private void setStage(Stage stage, Label lbl_search, Button btn_add, TextField txt_search) {
         startNodes.addAll(List.of(txt_search, btn_add, lbl_search));
 
-        ScrollPane scrollPane = new ScrollPane(grid);
-        scrollPane.setFitToHeight(true);
+        ScrollPane scrollPane = getScrollPane(lbl_search, btn_add, txt_search);
 
         MenuBar menu = createAndFillMenuBar(32, stage);
         VBox vbox = new VBox(menu, scrollPane);
@@ -102,9 +97,22 @@ public class Bookmark_App extends Application {
         stage.setScene(scene);
         stage.getIcons().add(icon);
         stage.show();
+    }
 
-        setGrid(gridMain, handler.getBookmarks());
-        saveOnCloseAction(stage);
+    private ScrollPane getScrollPane(Label lbl_search, Button btn_add, TextField txt_search) {
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(50);
+
+        grid.add(lbl_search, 0, 0);
+        grid.add(txt_search, 1, 0);
+        grid.add(btn_add, 2, 0);
+        grid.add(gridSearch, 1, 1);
+        grid.add(gridMain, 1, 2);
+
+        ScrollPane scrollPane = new ScrollPane(grid);
+        scrollPane.setFitToHeight(true);
+        return scrollPane;
     }
 
     private void saveOnCloseAction(Stage stage) {
