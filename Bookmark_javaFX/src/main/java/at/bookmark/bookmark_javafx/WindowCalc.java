@@ -1,7 +1,8 @@
 package at.bookmark.bookmark_javafx;
 
+import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
+import at.bookmark.bookmark_javafx.GUITools.FontUpdater;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,7 +17,6 @@ public class WindowCalc {
     private double y;
     private boolean isFullscreen;
     private int screenIndex;
-    private Font appFont;
     private final int adjustScreen = 5;
 
     private double getCheckedHeight(Screen screen, double height) {
@@ -49,8 +49,8 @@ public class WindowCalc {
         return height;
     }
 
-    public void loadAndSetupWindowPosition(Stage stage, WriterReader writerReader) {
-        loadConfigProperties(writerReader);
+    public void loadAndSetupWindowPosition(Stage stage, DependencyBundle dB) {
+        loadConfigProperties(dB.writerReader, dB.fontUpdater);
 
         if (!isFullscreen) {
             adjustWindowOnMonitor(getScreen());
@@ -60,7 +60,7 @@ public class WindowCalc {
         setStagePosition(stage, x - adjustScreen, y);
     }
 
-    public void setStagePosition(Stage stage, double windowXPos, double windowYPos) {
+    public static void setStagePosition(Stage stage, double windowXPos, double windowYPos) {
         stage.setX(windowXPos);
         stage.setY(windowYPos);
     }
@@ -117,7 +117,7 @@ public class WindowCalc {
         }
     }
 
-    private void loadConfigProperties(WriterReader writerReader) {
+    private void loadConfigProperties(WriterReader writerReader, FontUpdater fontUpdater) {
         Properties prop = writerReader.loadConfig(config);
         if (prop != null) {
             try {
@@ -127,7 +127,7 @@ public class WindowCalc {
                 height = Integer.parseInt(prop.getProperty("height"));
                 screenIndex = Integer.parseInt(prop.getProperty("screenIndex"));
                 isFullscreen = Boolean.parseBoolean(prop.getProperty("isFullscreen"));
-                appFont = new Font(Double.parseDouble(prop.getProperty("fontSize")));
+                fontUpdater.setAppFont(Double.parseDouble(prop.getProperty("fontSize")));
 
             } catch (NumberFormatException e) {
                 System.out.println("One or multiple numbers for the monitor position are missing");
@@ -168,7 +168,7 @@ public class WindowCalc {
         return screenIndex;
     }
 
-    public void saveOnCloseAction(Stage stage, WriterReader writerReader) {
+    public void saveOnCloseAction(Stage stage, DependencyBundle dB) {
         stage.setOnCloseRequest(event -> {
             var screen = getCurrentScreenFromStage(stage);
 
@@ -179,21 +179,13 @@ public class WindowCalc {
             height = getCheckedHeight(screen, height);
             width = getWidth(stage, width);
 
-            writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
-                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), appFont.getSize(), config);
+            dB.writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
+                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.fontUpdater.getAppFont().getSize(), config);
         });
     }
 
     public double getAdjustScreen() {
         return this.adjustScreen;
-    }
-
-    public double getX() {
-        return this.x;
-    }
-
-    public double getY() {
-        return this.y;
     }
 
     public double getWidth() {
