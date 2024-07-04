@@ -29,7 +29,7 @@ public class WriterReader {
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
                 for (Bookmark bookmark : bookmarkList) {
-                    bufferedWriter.write(bookmark.getNumeration() + "|" + bookmark.getTitle() + "|" + bookmark.getPage() + "|" + bookmark.getLink() + "\n");
+                    bufferedWriter.write(bookmark.getNum() + "|" + bookmark.getTitle() + "|" + bookmark.getPage() + "|" + bookmark.getLink() + "\n");
                 }
 
                 bufferedWriter.close();
@@ -54,9 +54,9 @@ public class WriterReader {
                 while((currentLine = bufferedReader.readLine()) != null) {
                     String[] bookmarkArr = currentLine.split("\\|");
                     if (isParseAble(bookmarkArr[0]) && Integer.parseInt(bookmarkArr[0]) == count) {
-                        bookmarks.add(new Bookmark(Integer.parseInt(bookmarkArr[0]), bookmarkArr[1], bookmarkArr[2], bookmarkArr[3]));
+                        bookmarks.add(new Bookmark(bookmarkArr[1], bookmarkArr[2], bookmarkArr[3], Integer.parseInt(bookmarkArr[0])));
                     } else {
-                        bookmarks.add(new Bookmark(count, bookmarkArr[1], bookmarkArr[2], bookmarkArr[3]));
+                        bookmarks.add(new Bookmark(bookmarkArr[1], bookmarkArr[2], bookmarkArr[3], count));
                     }
                     count ++;
                 }

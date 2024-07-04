@@ -5,14 +5,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
+import lombok.Getter;
 
 import java.util.List;
 
 public class FontUpdater {
 
     private Font appFont = new Font(16);
-    public final int popupWidth = 480;
-    public final int popupHeight = 240;
+    @Getter
+    private final int popupWidth = 480;
+    @Getter
+    private final int popupHeight = 240;
 
     public void setAppFont(double size) {
         if (size < 8)

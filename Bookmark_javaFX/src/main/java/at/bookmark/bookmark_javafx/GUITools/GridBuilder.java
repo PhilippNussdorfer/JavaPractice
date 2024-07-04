@@ -22,7 +22,7 @@ public class GridBuilder {
 
         for (Bookmark bookmark : bookmarks) {
 
-            Label lbl_view_num = new Label((bookmark.getNumeration() + 1) + "");
+            Label lbl_view_num = new Label((bookmark.getNum() + 1) + "");
             Label lbl_view_page = new Label(bookmark.getTitle());
             Label lbl_view_title = new Label(bookmark.getPage());
 
@@ -32,7 +32,7 @@ public class GridBuilder {
 
             dB.viewNodes.addAll(List.of(lbl_view_page, lbl_view_title, lbl_view_num, btn_view_remove, btn_view_edit, btn_view_link));
 
-            int id = bookmark.getNumeration();
+            int id = bookmark.getNum();
             btn_view_link.setOnAction(e -> services.showDocument(bookmark.getLink()));
             btn_view_edit.setOnAction(e -> edit.editWindow(id, notification, this, grid, dB));
             btn_view_remove.setOnAction(e -> notification.deleteNotify(id, bookmark.getTitle(), grid, this, dB));

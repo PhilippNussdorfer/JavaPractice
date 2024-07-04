@@ -46,8 +46,8 @@ public class BookmarkHandler {
 
     public boolean addNewBookmark(String title, String page, String link) {
         if (isLink(link)) {
-            int num = bookmarks.get(bookmarks.size() - 1).getNumeration();
-            bookmarks.add(new Bookmark(num + 1, title, page, link));
+            int num = bookmarks.get(bookmarks.size() - 1).getNum();
+            bookmarks.add(new Bookmark(title, page, link, num + 1));
             return true;
         }
         return false;
@@ -62,7 +62,7 @@ public class BookmarkHandler {
         int count = 0;
 
         for (Bookmark bookmark : bookmarks) {
-            bookmark.setNumeration(count);
+            bookmark.setNum(count);
             collapsedBookmark.add(bookmark);
             count++;
         }

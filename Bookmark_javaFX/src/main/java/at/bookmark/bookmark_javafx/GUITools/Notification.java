@@ -6,12 +6,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.Optional;
 
 public class Notification {
-    public final Image icon;
+    @Getter
+    private final Image icon;
     private double x;
     private double y;
 

@@ -57,8 +57,8 @@ public class AddWindowBuilder {
         dB.addNodes.addAll(List.of(btn_add, lbl_add_page, lbl_add_link, lbl_add_title, txt_add_title, txt_add_page, txt_add_link));
 
         addStage.setTitle("Add Bookmark");
-        addStage.setScene(new Scene(pane, dB.fontUpdater.popupWidth, dB.fontUpdater.popupHeight));
-        addStage.getIcons().add(notification.icon);
+        addStage.setScene(new Scene(pane, dB.fontUpdater.getPopupWidth(), dB.fontUpdater.getPopupHeight()));
+        addStage.getIcons().add(notification.getIcon());
         addStage.show();
 
         dB.fontUpdater.updateFont(dB.addNodes);

@@ -58,8 +58,8 @@ public class EditWindowBuilder {
         dB.editNodes.addAll(List.of(btn_edit, lbl_edit_page, lbl_edit_link, lbl_edit_title, txt_edit_page, txt_edit_link, txt_edit_title));
 
         editStage.setTitle("Add Bookmark");
-        editStage.setScene(new Scene(pane, dB.fontUpdater.popupWidth, dB.fontUpdater.popupHeight));
-        editStage.getIcons().add(notification.icon);
+        editStage.setScene(new Scene(pane, dB.fontUpdater.getPopupWidth(), dB.fontUpdater.getPopupHeight()));
+        editStage.getIcons().add(notification.getIcon());
         editStage.show();
 
         dB.fontUpdater.updateFont(dB.editNodes);

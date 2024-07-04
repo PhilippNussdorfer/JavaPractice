@@ -6,18 +6,22 @@ import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.util.Properties;
 
 public class WindowCalc {
 
     private final String config = "config.prop";
+    @Getter
     private double width;
+    @Getter
     private double height;
     private double x;
     private double y;
     private boolean isFullscreen;
     private int screenIndex;
+    @Getter
     private final int adjustScreen = 5;
 
     private double getCheckedHeight(Screen screen, double height) {
@@ -183,17 +187,5 @@ public class WindowCalc {
             dB.writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
                     getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.fontUpdater.getAppFont().getSize(), config);
         });
-    }
-
-    public double getAdjustScreen() {
-        return this.adjustScreen;
-    }
-
-    public double getWidth() {
-        return this.width;
-    }
-
-    public double getHeight() {
-        return this.height;
     }
 }

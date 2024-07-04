@@ -18,8 +18,8 @@ public class Bookmark_App extends Application {
     private final DependencyBundle dependencyBundle = new DependencyBundle();
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
-    double width = 1280;
-    double height = 640;
+    private double width = 1280;
+    private double height = 640;
     private final Image icon = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/logo/Bookmark.png")));
     private final Notification notification = new Notification(icon);
     private final GridBuilder gridBuilder = new GridBuilder(getHostServices());
