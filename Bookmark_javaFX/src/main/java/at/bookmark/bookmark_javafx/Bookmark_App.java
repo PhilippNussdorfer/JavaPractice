@@ -1,6 +1,7 @@
 package at.bookmark.bookmark_javafx;
 
 import at.bookmark.bookmark_javafx.GUITools.*;
+import at.bookmark.bookmark_javafx.bookmark.Bookmark;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

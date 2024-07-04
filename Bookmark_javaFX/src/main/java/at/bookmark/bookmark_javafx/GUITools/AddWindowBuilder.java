@@ -1,6 +1,6 @@
 package at.bookmark.bookmark_javafx.GUITools;
 
-import at.bookmark.bookmark_javafx.WindowCalc;
+import window.WindowCalc;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

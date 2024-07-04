@@ -1,4 +1,4 @@
-package at.bookmark.bookmark_javafx;
+package at.bookmark.bookmark_javafx.bookmark;
 
 public class Bookmark {
     private String title;

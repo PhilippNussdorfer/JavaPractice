@@ -1,7 +1,7 @@
 package at.bookmark.bookmark_javafx.GUITools;
 
-import at.bookmark.bookmark_javafx.Bookmark;
-import at.bookmark.bookmark_javafx.WindowCalc;
+import at.bookmark.bookmark_javafx.bookmark.Bookmark;
+import window.WindowCalc;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

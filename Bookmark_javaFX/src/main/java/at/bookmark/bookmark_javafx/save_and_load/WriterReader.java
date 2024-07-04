@@ -1,4 +1,6 @@
-package at.bookmark.bookmark_javafx;
+package at.bookmark.bookmark_javafx.save_and_load;
+
+import at.bookmark.bookmark_javafx.bookmark.Bookmark;
 
 import java.io.*;
 import java.nio.file.FileSystems;

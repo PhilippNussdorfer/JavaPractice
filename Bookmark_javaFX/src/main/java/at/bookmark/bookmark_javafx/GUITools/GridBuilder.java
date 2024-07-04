@@ -1,6 +1,6 @@
 package at.bookmark.bookmark_javafx.GUITools;
 
-import at.bookmark.bookmark_javafx.Bookmark;
+import at.bookmark.bookmark_javafx.bookmark.Bookmark;
 import javafx.application.HostServices;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

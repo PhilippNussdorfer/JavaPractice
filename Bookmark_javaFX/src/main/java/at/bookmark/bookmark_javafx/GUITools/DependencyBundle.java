@@ -1,8 +1,8 @@
 package at.bookmark.bookmark_javafx.GUITools;
 
-import at.bookmark.bookmark_javafx.BookmarkHandler;
-import at.bookmark.bookmark_javafx.WindowCalc;
-import at.bookmark.bookmark_javafx.WriterReader;
+import at.bookmark.bookmark_javafx.bookmark.BookmarkHandler;
+import window.WindowCalc;
+import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.scene.Node;
 
 import java.util.ArrayList;

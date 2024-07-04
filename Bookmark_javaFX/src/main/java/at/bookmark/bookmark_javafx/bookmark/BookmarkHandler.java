@@ -1,4 +1,6 @@
-package at.bookmark.bookmark_javafx;
+package at.bookmark.bookmark_javafx.bookmark;
+
+import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;

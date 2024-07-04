@@ -1,7 +1,8 @@
-package at.bookmark.bookmark_javafx;
+package window;
 
 import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
 import at.bookmark.bookmark_javafx.GUITools.FontUpdater;
+import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
