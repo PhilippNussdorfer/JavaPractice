@@ -14,14 +14,13 @@ public class TokenGenerator {
     @NonNull
     private final Player player;
     private final double timestamp;
-    private final Long minDate = Instant.parse("1999-12-31T23:59:59Z").toEpochMilli();
     private final UUIDProvider uuid;
     private final HashProvider hash;
 
     public TokenGenerator(Player player, double timestamp, UUIDProvider uuid, HashProvider hash) {
         if (player == null)
             throw new IllegalArgumentException("Player is null!");
-        if (timestamp <= minDate)
+        if (timestamp <= Instant.parse("1999-12-31T23:59:59Z").toEpochMilli())
             throw new IllegalArgumentException("Timestamp must be after 1999-12-31 23:59:59!");
         if (uuid == null)
             throw new IllegalArgumentException("UUIDWrapper is null!");
