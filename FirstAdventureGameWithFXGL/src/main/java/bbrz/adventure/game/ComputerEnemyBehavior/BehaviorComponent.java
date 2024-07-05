@@ -4,6 +4,7 @@ import bbrz.adventure.game.Components.EnemyAnimationComponent;
 import bbrz.adventure.game.EntityType;
 import bbrz.adventure.game.pathfinding.AStar;
 import com.almasb.fxgl.core.math.Vec2;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
