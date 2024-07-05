@@ -20,7 +20,7 @@ class TokenGeneratorIntegrationsTest {
                 new Player(1L, "Bob", "HelloWorld"),
                 System.currentTimeMillis(),
                 new TokenGenerator.UUIDWrapper(),
-                new TokenGenerator.HashMapper());
+                new TokenGenerator.HashWrapper());
     }
 
     @Test
@@ -52,7 +52,7 @@ class TokenGeneratorIntegrationsTest {
                 new Player(2L, "Harry", "Osswald"),
                 System.currentTimeMillis(),
                 new TokenGenerator.UUIDWrapper(),
-                new TokenGenerator.HashMapper());
+                new TokenGenerator.HashWrapper());
 
         var token1 = tokenGenerator.generate();
         var token2 = generator.generate();
@@ -66,7 +66,7 @@ class TokenGeneratorIntegrationsTest {
                 new Player(2L, null, "Osswald"),
                 System.currentTimeMillis(),
                 new TokenGenerator.UUIDWrapper(),
-                new TokenGenerator.HashMapper());
+                new TokenGenerator.HashWrapper());
 
         assertNotNull(generator.generate());
     }

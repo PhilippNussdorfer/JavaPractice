@@ -29,18 +29,12 @@ class TokenGeneratorTest {
     @Mock
     TokenGenerator.UUIDWrapper wrapper;
     @Mock
-    TokenGenerator.HashMapper hash;
+    TokenGenerator.HashWrapper hash;
 
     @BeforeEach
     void setUp() {
         generator = new TokenGenerator(player, timestamp, wrapper, hash);
     }
-
-    /*@Test
-    void generate() {
-        Mockito.when(player.getName()).thenReturn("Bob");
-        Mockito.when(player.getId()).thenReturn(1L);
-    }*/
 
     @Test
     void TokenNotNull() throws NoSuchAlgorithmException {
@@ -100,7 +94,7 @@ class TokenGeneratorTest {
     }
 
     @Test
-    void throwsExceptionWhenHashMapperIsNull() {
+    void throwsExceptionWhenHashWrapperIsNull() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
                 new TokenGenerator(player, timestamp, wrapper, null)
         );
