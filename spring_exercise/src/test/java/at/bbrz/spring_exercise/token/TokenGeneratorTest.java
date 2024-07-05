@@ -27,9 +27,9 @@ class TokenGeneratorTest {
     @Mock
     Player player;
     @Mock
-    TokenGenerator.UUIDWrapper wrapper;
+    UUIDProvider wrapper;
     @Mock
-    TokenGenerator.HashWrapper hash;
+    HashProvider hash;
 
     @BeforeEach
     void setUp() {
