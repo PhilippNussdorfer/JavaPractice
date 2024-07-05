@@ -15,10 +15,10 @@ public class TokenGenerator {
     private final Player player;
     private final double timestamp;
     private final Long minDate = Instant.parse("1999-12-31T23:59:59Z").toEpochMilli();
-    private final UUIDWrapper uuid;
-    private final HashWrapper hash;
+    private final UUIDProvider uuid;
+    private final HashProvider hash;
 
-    public TokenGenerator(Player player, double timestamp, UUIDWrapper uuid, HashWrapper hash) {
+    public TokenGenerator(Player player, double timestamp, UUIDProvider uuid, HashProvider hash) {
         if (player == null)
             throw new IllegalArgumentException("Player is null!");
         if (timestamp <= minDate)
@@ -39,13 +39,14 @@ public class TokenGenerator {
                 + hash.hashFromString(player.getName() + timestamp + player.getId());
     }
 
-    public static class UUIDWrapper {
+    public static class UUIDWrapper implements UUIDProvider {
         public String generateRandomUUID() {
             return UUID.randomUUID().toString();
         }
     }
 
-    public static class HashWrapper {
+    public static class HashWrapper implements HashProvider {
+        @Override
         public String hashFromString(String str) throws NoSuchAlgorithmException {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
