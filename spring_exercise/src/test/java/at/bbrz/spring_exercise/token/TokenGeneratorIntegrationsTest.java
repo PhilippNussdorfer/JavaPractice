@@ -36,6 +36,7 @@ class TokenGeneratorIntegrationsTest {
 
         assertTrue(token.chars().anyMatch(Character::isAlphabetic));
         assertTrue(token.chars().anyMatch(Character::isDigit));
+        assertTrue(token.chars().allMatch(Character::isLetterOrDigit));
     }
 
     @Test
@@ -47,14 +48,12 @@ class TokenGeneratorIntegrationsTest {
     }
 
     @Test
-    void hashValuesAreDifferentForNewTokenGenerator() throws NoSuchAlgorithmException {
-        var generator = new TokenGenerator(
-                new Player(2L, "Harry", "Osswald"),
-                System.currentTimeMillis(),
-                new TokenGenerator.UUIDWrapper(),
-                new TokenGenerator.HashWrapper());
+    void hashValuesAreDifferentForNewTokenGenerator() throws NoSuchAlgorithmException, InterruptedException {
+        var generator = generateToken();
+        var token1 = generator.generate();
 
-        var token1 = tokenGenerator.generate();
+        Thread.sleep(1);
+        generator = generateToken();
         var token2 = generator.generate();
 
         assertNotEquals(token1.substring(32), token2.substring(32));
@@ -69,5 +68,13 @@ class TokenGeneratorIntegrationsTest {
                 new TokenGenerator.HashWrapper());
 
         assertNotNull(generator.generate());
+    }
+
+    private TokenGenerator generateToken() {
+        return new TokenGenerator(
+                new Player(2L, "Harry", "Osswald"),
+                System.currentTimeMillis(),
+                new TokenGenerator.UUIDWrapper(),
+                new TokenGenerator.HashWrapper());
     }
 }

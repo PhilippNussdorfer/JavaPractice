@@ -59,6 +59,7 @@ class TokenGeneratorTest {
 
         assertTrue(token.chars().anyMatch(Character::isAlphabetic));
         assertTrue(token.chars().anyMatch(Character::isDigit));
+        assertTrue(token.chars().allMatch(Character::isLetterOrDigit));
     }
 
     @Test
