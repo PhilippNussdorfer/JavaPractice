@@ -1,5 +1,7 @@
 package at.bbrz.spring_exercise;
 
+import at.bbrz.spring_exercise.controller.model.LoginChecker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -32,11 +34,14 @@ public class SpringExerciseApplication {
 
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers(antMatcher("/h2-console/**")).permitAll()
-						.requestMatchers(antMatcher("/player/**")).permitAll())
+						.requestMatchers(antMatcher("/player/**")).permitAll()
+						.requestMatchers(antMatcher("/login/**")).permitAll())
 
 				.csrf(csrf -> csrf
 						.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"))
-						.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/player/**")));
+						.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"))
+						.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/player/**"))
+						.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/login/**")));
 
 		return httpSecurity.build();
 	}
