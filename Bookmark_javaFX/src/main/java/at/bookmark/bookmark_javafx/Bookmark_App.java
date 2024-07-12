@@ -1,7 +1,6 @@
 package at.bookmark.bookmark_javafx;
 
 import at.bookmark.bookmark_javafx.GUITools.*;
-import at.bookmark.bookmark_javafx.bookmark.Bookmark;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -44,26 +43,12 @@ public class Bookmark_App extends Application {
         Label lbl_search = new Label("Search:");
         Button btn_add = new Button("Add Bookmark");
 
-        TextField txt_search = new TextField();
-        txt_search.setPrefWidth(860);
-        txt_search.textProperty().addListener((observer, oldValue, newValue) -> {
+        TextField txt_search = dependencyBundle.search.searchLogic(gridSearch, gridMain, dependencyBundle, notification, gridBuilder);
 
-            if (newValue.equals("")) {
-                gridSearch.getChildren().clear();
-            } else {
-                var results = searchForBookmark(newValue);
-
-                dependencyBundle.viewNodes.clear();
-
-                gridBuilder.setGrid(gridSearch, results, notification, dependencyBundle);
-                gridBuilder.setGrid(gridMain, dependencyBundle.handler.getBookmarks(), notification, dependencyBundle);
-            }
-        });
-
-        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, gridMain, dependencyBundle));
+        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, gridMain, gridSearch, dependencyBundle));
         setStage(stage, lbl_search, btn_add, txt_search);
 
-        gridBuilder.setGrid(gridMain, dependencyBundle.handler.getBookmarks(), notification, dependencyBundle);
+        gridBuilder.setGrid(gridMain, gridSearch, dependencyBundle.handler.getBookmarks(), notification, dependencyBundle);
         dependencyBundle.windowCalc.saveOnCloseAction(stage, dependencyBundle);
     }
 
@@ -138,17 +123,5 @@ public class Bookmark_App extends Application {
 
         fullscreenItem.setOnAction(t -> stage.setFullScreen(true));
         return fullscreen;
-    }
-
-    private List<Bookmark> searchForBookmark(String input) {
-        List<Bookmark> results = new ArrayList<>();
-
-        for (Bookmark bookmark : dependencyBundle.handler.getBookmarks()) {
-            if (bookmark.getTitle().toLowerCase().contains(input.toLowerCase())) {
-                results.add(bookmark);
-            }
-        }
-
-        return results;
     }
 }

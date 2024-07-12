@@ -1,6 +1,7 @@
 package at.bookmark.bookmark_javafx.GUITools;
 
 import at.bookmark.bookmark_javafx.bookmark.BookmarkHandler;
+import at.bookmark.bookmark_javafx.tools.Search;
 import window.WindowCalc;
 import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.scene.Node;
@@ -17,4 +18,5 @@ public class DependencyBundle {
     public final FontUpdater fontUpdater = new FontUpdater();
     public final WriterReader writerReader = new WriterReader();
     public final BookmarkHandler handler = new BookmarkHandler();
+    public final Search search = new Search();
 }

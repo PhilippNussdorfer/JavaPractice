@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EditWindowBuilder {
 
-    public void editWindow(int id, Notification notification, GridBuilder gridBuilder, GridPane grid, DependencyBundle dB) {
+    public void editWindow(int id, Notification notification, GridBuilder gridBuilder, GridPane gridMain, GridPane gridSearch, DependencyBundle dB) {
         dB.editNodes.clear();
 
         Stage editStage = new Stage();
@@ -37,8 +37,8 @@ public class EditWindowBuilder {
                 notification.notify("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
 
                 dB.viewNodes.clear();
-
-                gridBuilder.setGrid(grid, dB.handler.getBookmarks(), notification, dB);
+                gridBuilder.setGrid(gridMain, gridSearch, dB.handler.getBookmarks(), notification, dB);
+                dB.search.updateSearch(gridMain, gridSearch, gridBuilder, notification, dB);
                 dB.handler.saveInFile();
                 editStage.close();
             } else {

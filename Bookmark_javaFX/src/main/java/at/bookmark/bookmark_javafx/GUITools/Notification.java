@@ -48,7 +48,7 @@ public class Notification {
         stage.show();
     }
 
-    public void deleteNotify(int id, String title, GridPane grid, GridBuilder gridBuilder, DependencyBundle dB) {
+    public void deleteNotify(int id, String title, GridPane grid, GridPane gridSearch, GridBuilder gridBuilder, DependencyBundle dB) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         setAlertPosition(alert);
         alert.setContentText("Are you sure want to delete: " + title);
@@ -63,7 +63,7 @@ public class Notification {
 
             dB.viewNodes.clear();
 
-            gridBuilder.setGrid(grid, dB.handler.getBookmarks(), this, dB);
+            gridBuilder.setGrid(grid, gridSearch, dB.handler.getBookmarks(), this, dB);
         }
     }
 }

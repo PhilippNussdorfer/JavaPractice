@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("UnitTest")
+@Tag("Token")
 class TokenGeneratorTest {
     public static final String UUID = "dba6977b-f9f2-4234-ab9f-7f3f0129b122";
     public static final String TEST_UUID = "dba6977bf9f24234ab9f7f3f0129b122";
