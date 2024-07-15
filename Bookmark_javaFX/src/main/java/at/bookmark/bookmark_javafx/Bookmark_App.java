@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import java.util.*;
 
 public class Bookmark_App extends Application {
-    private final DependencyBundle dependencyBundle = new DependencyBundle();
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
     private double width = 1280;
@@ -23,6 +22,7 @@ public class Bookmark_App extends Application {
     private final Notification notification = new Notification(icon);
     private final GridBuilder gridBuilder = new GridBuilder(getHostServices());
     private final AddWindowBuilder addWindowBuilder = new AddWindowBuilder();
+    private final DependencyBundle dependencyBundle = new DependencyBundle();
 
     public void launch_app() {
         launch();
@@ -35,20 +35,23 @@ public class Bookmark_App extends Application {
         gridMain.setHgap(10);
         gridMain.setVgap(10);
         gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
+        dependencyBundle.gridMain = gridMain;
 
         gridSearch.setHgap(10);
         gridSearch.setVgap(10);
         gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
+        dependencyBundle.gridSearch = gridSearch;
 
         Label lbl_search = new Label("Search:");
         Button btn_add = new Button("Add Bookmark");
 
-        TextField txt_search = dependencyBundle.search.searchLogic(gridSearch, gridMain, dependencyBundle, notification, gridBuilder);
+        TextField txt_search = dependencyBundle.search.searchLogic(dependencyBundle, notification, gridBuilder);
+        dependencyBundle.searchField = txt_search;
 
-        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, gridMain, gridSearch, dependencyBundle));
+        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, dependencyBundle));
         setStage(stage, lbl_search, btn_add, txt_search);
 
-        gridBuilder.setGrid(gridMain, gridSearch, dependencyBundle.handler.getBookmarks(), notification, dependencyBundle);
+        gridBuilder.setGrid(gridMain, dependencyBundle.handler.getBookmarks(), notification, dependencyBundle);
         dependencyBundle.windowCalc.saveOnCloseAction(stage, dependencyBundle);
     }
 
@@ -104,7 +107,10 @@ public class Bookmark_App extends Application {
 
             size.setOnAction(t -> {
                 dependencyBundle.fontUpdater.setAppFont(tmp);
-                dependencyBundle.fontUpdater.updateFont(dependencyBundle.viewNodes, dependencyBundle.editNodes, dependencyBundle.addNodes, dependencyBundle.startNodes);
+                dependencyBundle.fontUpdater.updateFont(
+                        dependencyBundle.viewNodes, dependencyBundle.editNodes,
+                        dependencyBundle.addNodes, dependencyBundle.startNodes
+                );
             });
 
             fontSize.getItems().add(size);

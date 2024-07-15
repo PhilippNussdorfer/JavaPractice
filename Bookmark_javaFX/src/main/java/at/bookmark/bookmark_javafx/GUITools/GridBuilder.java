@@ -16,7 +16,7 @@ public class GridBuilder {
         this.services = services;
     }
 
-    public void setGrid(GridPane grid, GridPane gridSearch, List<Bookmark> bookmarks, Notification notification, DependencyBundle dB) {
+    public void setGrid(GridPane grid, List<Bookmark> bookmarks, Notification notification, DependencyBundle dB) {
         grid.getChildren().clear();
         int count = 0;
 
@@ -34,8 +34,8 @@ public class GridBuilder {
 
             int id = bookmark.getNum();
             btn_view_link.setOnAction(e -> services.showDocument(bookmark.getLink()));
-            btn_view_edit.setOnAction(e -> edit.editWindow(id, notification, this, grid, gridSearch, dB));
-            btn_view_remove.setOnAction(e -> notification.deleteNotify(id, bookmark.getTitle(), grid,gridSearch, this, dB));
+            btn_view_edit.setOnAction(e -> edit.editWindow(id, notification, this, dB));
+            btn_view_remove.setOnAction(e -> notification.deleteNotify(id, bookmark.getTitle(), this, dB));
 
             grid.add(lbl_view_num, 0, count);
             grid.add(lbl_view_title, 1, count);

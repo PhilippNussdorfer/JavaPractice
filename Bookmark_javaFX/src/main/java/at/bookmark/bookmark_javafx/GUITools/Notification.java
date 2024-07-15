@@ -3,7 +3,6 @@ package at.bookmark.bookmark_javafx.GUITools;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.Getter;
@@ -48,7 +47,7 @@ public class Notification {
         stage.show();
     }
 
-    public void deleteNotify(int id, String title, GridPane grid, GridPane gridSearch, GridBuilder gridBuilder, DependencyBundle dB) {
+    public void deleteNotify(int id, String title, GridBuilder gridBuilder, DependencyBundle dB) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         setAlertPosition(alert);
         alert.setContentText("Are you sure want to delete: " + title);
@@ -63,7 +62,8 @@ public class Notification {
 
             dB.viewNodes.clear();
 
-            gridBuilder.setGrid(grid, gridSearch, dB.handler.getBookmarks(), this, dB);
+            gridBuilder.setGrid(dB.gridMain, dB.handler.getBookmarks(), this, dB);
+            dB.search.updateSearch(dB.gridSearch, gridBuilder, this, dB);
         }
     }
 }

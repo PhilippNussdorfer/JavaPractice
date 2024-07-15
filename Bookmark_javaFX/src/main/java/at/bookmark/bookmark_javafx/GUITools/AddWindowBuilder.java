@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AddWindowBuilder {
 
-    public void addWindow(Notification notification, GridBuilder gridBuilder, GridPane grid, GridPane gridSearch, DependencyBundle dB) {
+    public void addWindow(Notification notification, GridBuilder gridBuilder, DependencyBundle dB) {
         dB.addNodes.clear();
 
         Stage addStage = new Stage();
@@ -36,7 +36,8 @@ public class AddWindowBuilder {
 
                 dB.viewNodes.clear();
 
-                gridBuilder.setGrid(grid, gridSearch, dB.handler.getBookmarks(), notification, dB);
+                gridBuilder.setGrid(dB.gridMain, dB.handler.getBookmarks(), notification, dB);
+                dB.search.updateSearch(dB.gridSearch, gridBuilder, notification, dB);
 
                 dB.handler.saveInFile();
                 addStage.close();
