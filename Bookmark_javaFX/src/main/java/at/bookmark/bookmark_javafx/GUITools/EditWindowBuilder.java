@@ -32,18 +32,7 @@ public class EditWindowBuilder {
         Button btn_edit = new Button("Save Changes");
 
         btn_edit.setOnAction(e -> {
-            var res = dB.getHandler().editBookmark(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
-            if (res) {
-                notification.notify("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
-
-                dB.getViewNodes().clear();
-                gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
-                dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, notification, dB);
-                dB.getHandler().saveInFile();
-                editStage.close();
-            } else {
-                notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_edit_link.getText() + " '!", Alert.AlertType.ERROR);
-            }
+            buttonLogic(id, notification, gridBuilder, dB, editStage, txt_edit_title, txt_edit_page, txt_edit_link);
         });
 
         GridPane pane = new GridPane();
@@ -63,5 +52,20 @@ public class EditWindowBuilder {
         editStage.show();
 
         dB.getFontUpdater().updateFont(dB.getEditNodes());
+    }
+
+    private void buttonLogic(int id, Notification notification, GridBuilder gridBuilder, DependencyBundle dB, Stage editStage, TextField txt_edit_title, TextField txt_edit_page, TextField txt_edit_link) {
+        var res = dB.getHandler().editBookmark(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
+        if (res) {
+            notification.notify("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
+
+            dB.getViewNodes().clear();
+            gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
+            dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, notification, dB);
+            dB.getHandler().saveInFile();
+            editStage.close();
+        } else {
+            notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_edit_link.getText() + " '!", Alert.AlertType.ERROR);
+        }
     }
 }

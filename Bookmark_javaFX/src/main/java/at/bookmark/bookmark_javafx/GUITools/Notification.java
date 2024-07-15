@@ -59,7 +59,6 @@ public class Notification {
             dB.getHandler().saveInFile();
 
             notify("Deleted " + title, Alert.AlertType.INFORMATION);
-
             dB.getViewNodes().clear();
 
             gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), this, dB);

@@ -32,7 +32,7 @@ public class Search {
         return txt_search;
     }
 
-    public List<Bookmark> searchForBookmark(String input, DependencyBundle dB) {
+    private List<Bookmark> searchForBookmark(String input, DependencyBundle dB) {
         List<Bookmark> results = new ArrayList<>();
 
         for (Bookmark bookmark : dB.getHandler().getBookmarks()) {

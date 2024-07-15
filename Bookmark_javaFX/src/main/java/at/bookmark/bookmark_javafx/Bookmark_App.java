@@ -35,19 +35,10 @@ public class Bookmark_App extends Application {
 
         Label lbl_search = new Label("Search:");
         Button btn_add = new Button("Add Bookmark");
-
         TextField txt_search = null;
 
         try {
-            gridMain.setHgap(10);
-            gridMain.setVgap(10);
-            gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
-            dependencyBundle.setGridMain(gridMain);
-
-            gridSearch.setHgap(10);
-            gridSearch.setVgap(10);
-            gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
-            dependencyBundle.setGridSearch(gridSearch);
+            gridSetup();
 
             txt_search = dependencyBundle.getSearch().searchLogic(dependencyBundle, notification, gridBuilder);
             dependencyBundle.setSearchField(txt_search);
@@ -64,6 +55,18 @@ public class Bookmark_App extends Application {
 
         gridBuilder.setGrid(gridMain, dependencyBundle.getHandler().getBookmarks(), notification, dependencyBundle);
         dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
+    }
+
+    private void gridSetup() throws IsAlreadySetException {
+        gridMain.setHgap(10);
+        gridMain.setVgap(10);
+        gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
+        dependencyBundle.setGridMain(gridMain);
+
+        gridSearch.setHgap(10);
+        gridSearch.setVgap(10);
+        gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
+        dependencyBundle.setGridSearch(gridSearch);
     }
 
     private void loadAndSetupForWindow(Stage stage) {
