@@ -54,16 +54,16 @@ public class Notification {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            dB.handler.getBookmarks().remove(id);
-            dB.handler.collapseBookmarks();
-            dB.handler.saveInFile();
+            dB.getHandler().getBookmarks().remove(id);
+            dB.getHandler().collapseBookmarks();
+            dB.getHandler().saveInFile();
 
             notify("Deleted " + title, Alert.AlertType.INFORMATION);
 
-            dB.viewNodes.clear();
+            dB.getViewNodes().clear();
 
-            gridBuilder.setGrid(dB.gridMain, dB.handler.getBookmarks(), this, dB);
-            dB.search.updateSearch(dB.gridSearch, gridBuilder, this, dB);
+            gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), this, dB);
+            dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, this, dB);
         }
     }
 }

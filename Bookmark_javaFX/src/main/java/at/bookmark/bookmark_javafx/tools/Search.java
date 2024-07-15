@@ -18,14 +18,14 @@ public class Search {
         txt_search.textProperty().addListener((observer, oldValue, newValue) -> {
 
             if (newValue.equals("")) {
-                dB.gridSearch.getChildren().clear();
+                dB.getGridSearch().getChildren().clear();
             } else {
-                var results = dB.search.searchForBookmark(newValue, dB);
+                var results = dB.getSearch().searchForBookmark(newValue, dB);
 
-                dB.viewNodes.clear();
+                dB.getViewNodes().clear();
 
-                gridBuilder.setGrid(dB.gridSearch, results, notification, dB);
-                gridBuilder.setGrid(dB.gridMain, dB.handler.getBookmarks(), notification, dB);
+                gridBuilder.setGrid(dB.getGridSearch(), results, notification, dB);
+                gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
             }
         });
 
@@ -35,7 +35,7 @@ public class Search {
     public List<Bookmark> searchForBookmark(String input, DependencyBundle dB) {
         List<Bookmark> results = new ArrayList<>();
 
-        for (Bookmark bookmark : dB.handler.getBookmarks()) {
+        for (Bookmark bookmark : dB.getHandler().getBookmarks()) {
             if (bookmark.getTitle().toLowerCase().contains(input.toLowerCase())) {
                 results.add(bookmark);
             }
@@ -45,6 +45,6 @@ public class Search {
     }
 
     public void updateSearch(GridPane grid, GridBuilder gridBuilder, Notification notification, DependencyBundle dB) {
-        gridBuilder.setGrid(grid, searchForBookmark(dB.searchField.getText(), dB), notification, dB);
+        gridBuilder.setGrid(grid, searchForBookmark(dB.getSearchField().getText(), dB), notification, dB);
     }
 }

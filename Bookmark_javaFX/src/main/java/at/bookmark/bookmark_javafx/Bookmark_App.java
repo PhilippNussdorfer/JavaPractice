@@ -1,5 +1,6 @@
 package at.bookmark.bookmark_javafx;
 
+import at.bookmark.bookmark_javafx.Exceptions.IsAlreadySetException;
 import at.bookmark.bookmark_javafx.GUITools.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -32,45 +33,55 @@ public class Bookmark_App extends Application {
     public void start(Stage stage) {
         loadAndSetupForWindow(stage);
 
-        gridMain.setHgap(10);
-        gridMain.setVgap(10);
-        gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
-        dependencyBundle.gridMain = gridMain;
-
-        gridSearch.setHgap(10);
-        gridSearch.setVgap(10);
-        gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
-        dependencyBundle.gridSearch = gridSearch;
-
         Label lbl_search = new Label("Search:");
         Button btn_add = new Button("Add Bookmark");
 
-        TextField txt_search = dependencyBundle.search.searchLogic(dependencyBundle, notification, gridBuilder);
-        dependencyBundle.searchField = txt_search;
+        TextField txt_search = null;
+
+        try {
+            gridMain.setHgap(10);
+            gridMain.setVgap(10);
+            gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
+            dependencyBundle.setGridMain(gridMain);
+
+            gridSearch.setHgap(10);
+            gridSearch.setVgap(10);
+            gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
+            dependencyBundle.setGridSearch(gridSearch);
+
+            txt_search = dependencyBundle.getSearch().searchLogic(dependencyBundle, notification, gridBuilder);
+            dependencyBundle.setSearchField(txt_search);
+
+        } catch (IsAlreadySetException exception) {
+            notification.notify(exception.getMessage(), Alert.AlertType.ERROR);
+        }
+
+        if (txt_search == null)
+            notification.notify("txt_search element is null!", Alert.AlertType.ERROR);
 
         btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, dependencyBundle));
         setStage(stage, lbl_search, btn_add, txt_search);
 
-        gridBuilder.setGrid(gridMain, dependencyBundle.handler.getBookmarks(), notification, dependencyBundle);
-        dependencyBundle.windowCalc.saveOnCloseAction(stage, dependencyBundle);
+        gridBuilder.setGrid(gridMain, dependencyBundle.getHandler().getBookmarks(), notification, dependencyBundle);
+        dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
     }
 
     private void loadAndSetupForWindow(Stage stage) {
-        dependencyBundle.windowCalc.loadAndSetupWindowPosition(stage, dependencyBundle);
+        dependencyBundle.getWindowCalc().loadAndSetupWindowPosition(stage, dependencyBundle);
 
-        width = dependencyBundle.windowCalc.getWidth();
-        height = dependencyBundle.windowCalc.getHeight();
+        width = dependencyBundle.getWindowCalc().getWidth();
+        height = dependencyBundle.getWindowCalc().getHeight();
     }
 
     private void setStage(Stage stage, Label lbl_search, Button btn_add, TextField txt_search) {
-        dependencyBundle.startNodes.addAll(List.of(txt_search, btn_add, lbl_search));
+        dependencyBundle.getStartNodes().addAll(List.of(txt_search, btn_add, lbl_search));
 
         ScrollPane scrollPane = getScrollPane(lbl_search, btn_add, txt_search);
 
         MenuBar menu = createAndFillMenuBar(32, stage);
         VBox vbox = new VBox(menu, scrollPane);
 
-        Scene scene = new Scene(vbox, width - dependencyBundle.windowCalc.getAdjustScreen(), height);
+        Scene scene = new Scene(vbox, width - dependencyBundle.getWindowCalc().getAdjustScreen(), height);
         scene.setFill(Color.LIGHTGRAY);
 
         stage.setTitle("Bookmark");
@@ -106,10 +117,10 @@ public class Bookmark_App extends Application {
             int tmp = i;
 
             size.setOnAction(t -> {
-                dependencyBundle.fontUpdater.setAppFont(tmp);
-                dependencyBundle.fontUpdater.updateFont(
-                        dependencyBundle.viewNodes, dependencyBundle.editNodes,
-                        dependencyBundle.addNodes, dependencyBundle.startNodes
+                dependencyBundle.getFontUpdater().setAppFont(tmp);
+                dependencyBundle.getFontUpdater().updateFont(
+                        dependencyBundle.getViewNodes(), dependencyBundle.getEditNodes(),
+                        dependencyBundle.getEditNodes(), dependencyBundle.getAddNodes()
                 );
             });
 

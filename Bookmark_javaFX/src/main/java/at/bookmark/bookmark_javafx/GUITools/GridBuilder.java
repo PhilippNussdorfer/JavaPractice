@@ -30,7 +30,7 @@ public class GridBuilder {
             Button btn_view_edit = new Button("Edit");
             Button btn_view_link = new Button("Book Link");
 
-            dB.viewNodes.addAll(List.of(lbl_view_page, lbl_view_title, lbl_view_num, btn_view_remove, btn_view_edit, btn_view_link));
+            dB.getViewNodes().addAll(List.of(lbl_view_page, lbl_view_title, lbl_view_num, btn_view_remove, btn_view_edit, btn_view_link));
 
             int id = bookmark.getNum();
             btn_view_link.setOnAction(e -> services.showDocument(bookmark.getLink()));
@@ -47,6 +47,6 @@ public class GridBuilder {
             count ++;
         }
 
-        dB.fontUpdater.updateFont(dB.viewNodes);
+        dB.getFontUpdater().updateFont(dB.getViewNodes());
     }
 }

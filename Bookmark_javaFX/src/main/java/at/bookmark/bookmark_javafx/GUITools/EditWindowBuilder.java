@@ -15,11 +15,11 @@ import java.util.List;
 public class EditWindowBuilder {
 
     public void editWindow(int id, Notification notification, GridBuilder gridBuilder, DependencyBundle dB) {
-        dB.editNodes.clear();
+        dB.getEditNodes().clear();
 
         Stage editStage = new Stage();
         WindowCalc.setStagePosition(editStage, notification.getX() + 200, notification.getY() + 200);
-        Bookmark bookmark = dB.handler.getBookmarks().get(id);
+        Bookmark bookmark = dB.getHandler().getBookmarks().get(id);
 
         TextField txt_edit_title = new TextField(bookmark.getTitle());
         TextField txt_edit_page = new TextField(bookmark.getPage());
@@ -32,14 +32,14 @@ public class EditWindowBuilder {
         Button btn_edit = new Button("Save Changes");
 
         btn_edit.setOnAction(e -> {
-            var res = dB.handler.editBookmark(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
+            var res = dB.getHandler().editBookmark(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
             if (res) {
                 notification.notify("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
 
-                dB.viewNodes.clear();
-                gridBuilder.setGrid(dB.gridMain, dB.handler.getBookmarks(), notification, dB);
-                dB.search.updateSearch(dB.gridSearch, gridBuilder, notification, dB);
-                dB.handler.saveInFile();
+                dB.getViewNodes().clear();
+                gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
+                dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, notification, dB);
+                dB.getHandler().saveInFile();
                 editStage.close();
             } else {
                 notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_edit_link.getText() + " '!", Alert.AlertType.ERROR);
@@ -55,13 +55,13 @@ public class EditWindowBuilder {
         pane.add(txt_edit_link, 1, 2);
         pane.add(btn_edit, 0, 3);
 
-        dB.editNodes.addAll(List.of(btn_edit, lbl_edit_page, lbl_edit_link, lbl_edit_title, txt_edit_page, txt_edit_link, txt_edit_title));
+        dB.getEditNodes().addAll(List.of(btn_edit, lbl_edit_page, lbl_edit_link, lbl_edit_title, txt_edit_page, txt_edit_link, txt_edit_title));
 
         editStage.setTitle("Add Bookmark");
-        editStage.setScene(new Scene(pane, dB.fontUpdater.getPopupWidth(), dB.fontUpdater.getPopupHeight()));
+        editStage.setScene(new Scene(pane, dB.getFontUpdater().getPopupWidth(), dB.getFontUpdater().getPopupHeight()));
         editStage.getIcons().add(notification.getIcon());
         editStage.show();
 
-        dB.fontUpdater.updateFont(dB.editNodes);
+        dB.getFontUpdater().updateFont(dB.getEditNodes());
     }
 }

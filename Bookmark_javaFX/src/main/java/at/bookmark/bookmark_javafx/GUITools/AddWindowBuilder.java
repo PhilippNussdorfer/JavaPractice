@@ -14,7 +14,7 @@ import java.util.List;
 public class AddWindowBuilder {
 
     public void addWindow(Notification notification, GridBuilder gridBuilder, DependencyBundle dB) {
-        dB.addNodes.clear();
+        dB.getAddNodes().clear();
 
         Stage addStage = new Stage();
         WindowCalc.setStagePosition(addStage, notification.getX() + 200, notification.getY() + 200);
@@ -30,16 +30,16 @@ public class AddWindowBuilder {
         Button btn_add = new Button("Add New Bookmark");
 
         btn_add.setOnAction(e -> {
-            var res = dB.handler.addNewBookmark(txt_add_title.getText(), txt_add_page.getText(), txt_add_link.getText());
+            var res = dB.getHandler().addNewBookmark(txt_add_title.getText(), txt_add_page.getText(), txt_add_link.getText());
             if (res) {
                 notification.notify("Added Bookmark for: " + txt_add_title.getText(), Alert.AlertType.INFORMATION);
 
-                dB.viewNodes.clear();
+                dB.getViewNodes().clear();
 
-                gridBuilder.setGrid(dB.gridMain, dB.handler.getBookmarks(), notification, dB);
-                dB.search.updateSearch(dB.gridSearch, gridBuilder, notification, dB);
+                gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
+                dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, notification, dB);
 
-                dB.handler.saveInFile();
+                dB.getHandler().saveInFile();
                 addStage.close();
             } else {
                 notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_add_link.getText() + " '!", Alert.AlertType.ERROR);
@@ -55,13 +55,13 @@ public class AddWindowBuilder {
         pane.add(txt_add_link, 1, 2);
         pane.add(btn_add, 0, 3);
 
-        dB.addNodes.addAll(List.of(btn_add, lbl_add_page, lbl_add_link, lbl_add_title, txt_add_title, txt_add_page, txt_add_link));
+        dB.getAddNodes().addAll(List.of(btn_add, lbl_add_page, lbl_add_link, lbl_add_title, txt_add_title, txt_add_page, txt_add_link));
 
         addStage.setTitle("Add Bookmark");
-        addStage.setScene(new Scene(pane, dB.fontUpdater.getPopupWidth(), dB.fontUpdater.getPopupHeight()));
+        addStage.setScene(new Scene(pane, dB.getFontUpdater().getPopupWidth(), dB.getFontUpdater().getPopupHeight()));
         addStage.getIcons().add(notification.getIcon());
         addStage.show();
 
-        dB.fontUpdater.updateFont(dB.addNodes);
+        dB.getFontUpdater().updateFont(dB.getAddNodes());
     }
 }

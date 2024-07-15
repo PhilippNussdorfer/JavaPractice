@@ -55,7 +55,7 @@ public class WindowCalc {
     }
 
     public void loadAndSetupWindowPosition(Stage stage, DependencyBundle dB) {
-        loadConfigProperties(dB.writerReader, dB.fontUpdater);
+        loadConfigProperties(dB.getWriterReader(), dB.getFontUpdater());
 
         if (!isFullscreen) {
             adjustWindowOnMonitor(getScreen());
@@ -184,8 +184,8 @@ public class WindowCalc {
             height = getCheckedHeight(screen, height);
             width = getWidth(stage, width);
 
-            dB.writerReader.saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
-                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.fontUpdater.getAppFont().getSize(), config);
+            dB.getWriterReader().saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
+                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.getFontUpdater().getAppFont().getSize(), config);
         });
     }
 }
