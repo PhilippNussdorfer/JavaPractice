@@ -22,7 +22,6 @@ public class Server {
             out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 
             serverLoop();
-
             closeConnection();
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
