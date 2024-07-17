@@ -2,7 +2,7 @@
 * This program is free software; you can redistribute it and/or
 * modify it.
  */
-package com.netconomy.encryption.suite;
+package server.encryption.suite;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;

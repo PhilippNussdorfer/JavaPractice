@@ -4,10 +4,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * used the website below as reference and help for this part of te application
- * https://www.geeksforgeeks.org/socket-programming-in-java/
- */
 public class Server {
     private Socket socket = null;
     private ServerSocket server = null;

@@ -3,7 +3,7 @@
  * msg-global.com
  * All rights reserved
  */
-package com.netconomy.encryption.suite;
+package server.encryption.suite;
 
 
 public class EncryptionSuite {
