@@ -5,18 +5,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private Socket socket = null;
-    private ServerSocket server = null;
-    private DataInputStream in = null;
-    private DataOutputStream out = null;
+    private final Socket SOCKET;
+    private final DataInputStream IN;
+    private final DataOutputStream OUT;
 
-    public Server(int port) {
+    public Server(Socket socket, DataInputStream in, DataOutputStream out) {
+        this.SOCKET = socket;
+        this.IN = in;
+        this.OUT = out;
+
         try {
-            serverStart(port);
-
-            in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-
             serverLoop();
             closeConnection();
         } catch (IOException exception) {
@@ -24,21 +22,11 @@ public class Server {
         }
     }
 
-    private void serverStart(int port) throws IOException {
-        server = new ServerSocket(port);
-
-        System.out.println("Server started");
-        System.out.println("Waiting for a client");
-
-        socket = server.accept();
-        System.out.println("Client accepted");
-    }
-
     private void serverLoop() {
         String line = "";
         while (!line.equals("Over")) {
             try {
-                line = in.readUTF();
+                line = IN.readUTF();
                 System.out.println(line);
             } catch (IOException exception) {
                 System.out.println(exception.getMessage());
@@ -49,8 +37,25 @@ public class Server {
     private void closeConnection() throws IOException {
         System.out.println("Closing connection");
 
-        this.socket.close();
-        this.in.close();
-        this.out.close();
+        this.SOCKET.close();
+        this.IN.close();
+        this.OUT.close();
+    }
+
+    public static Socket serverStart(int port) {
+        try {
+            ServerSocket server = new ServerSocket(port);
+
+            System.out.println("Server started");
+            System.out.println("Waiting for a client");
+
+            Socket socket = server.accept();
+            System.out.println("Client accepted");
+
+            return socket;
+        } catch (IOException | SecurityException | IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return null;
     }
 }
