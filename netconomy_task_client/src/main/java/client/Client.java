@@ -12,9 +12,7 @@ public class Client {
 
     public Client(String address, int port) {
         connectToServer(address, port);
-
         clientLoop();
-
         closeConnection();
     }
 
