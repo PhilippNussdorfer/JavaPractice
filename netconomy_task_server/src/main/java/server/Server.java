@@ -1,5 +1,8 @@
 package server;
 
+import lombok.Setter;
+import server.tool.InputHandler;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,11 +11,15 @@ public class Server {
     private final Socket SOCKET;
     private final DataInputStream IN;
     private final DataOutputStream OUT;
+    private String pathToDatabase;
+    private String pathToOutputDir;
 
-    public Server(Socket socket, DataInputStream in, DataOutputStream out) {
+    public Server(Socket socket, DataInputStream in, DataOutputStream out, String pathToDatabase, String pathToOutputDir) {
         this.SOCKET = socket;
         this.IN = in;
         this.OUT = out;
+        this.pathToDatabase = pathToDatabase;
+        this.pathToOutputDir = pathToOutputDir;
 
         try {
             serverLoop();
@@ -24,7 +31,7 @@ public class Server {
 
     private void serverLoop() {
         String line = "";
-        while (!line.equals("Over")) {
+        while (!line.equalsIgnoreCase("exit")) {
             try {
                 line = IN.readUTF();
                 System.out.println(line);
@@ -42,9 +49,9 @@ public class Server {
         this.OUT.close();
     }
 
-    public static Socket serverStart(int port) {
+    public static Socket serverStart(int portNumber) {
         try {
-            ServerSocket server = new ServerSocket(port);
+            ServerSocket server = new ServerSocket(portNumber);
 
             System.out.println("Server started");
             System.out.println("Waiting for a client");

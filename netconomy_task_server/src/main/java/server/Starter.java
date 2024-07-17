@@ -1,17 +1,17 @@
 package server;
 
-import server.encryption.suite.Encryptor;
-import server.filereader.FileReader;
-import server.filereader.TxtReader;
-import server.sqlite.SqlConnection;
-import server.sqlite.SqlConnector;
+import server.tool.InputHandler;
 
 import java.io.*;
 import java.net.Socket;
-import java.sql.ResultSet;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public class Starter {
+    private static InputHandler inputHandler = new InputHandler();
+
     public static void main(String[] args) throws SQLException {
         /*String key = "";
         SqlConnection sqlConnection = new SqlConnection(SqlConnector.connect("jdbc:sqlite:", "src/main/java/server/sqlite/database.sqlite3"));
@@ -22,16 +22,21 @@ public class Starter {
         sqlConnection.closeConnection();*/
 
         try {
-            Socket socket = Server.serverStart(5000);
+            int port = inputHandler.askForPort();
+            String pathToDatabase = inputHandler.fileOrDirExists("Please enter the Path to the Database", "Could not find the File \n");
+            String pathToOutputDir = inputHandler.fileOrDirExists("Please enter the directory path of the output", "Could not access the given path\n");
+
+            Socket socket = Server.serverStart(port);
+
             if (socket == null) {
                 System.out.println("The socket is null from the server start!");
                 return;
             }
 
-            DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             DataOutputStream out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            DataInputStream in = new DataInputStream(socket.getInputStream());
 
-            new Server(socket, in, out);
+            new Server(socket, in, out, pathToDatabase, pathToOutputDir);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
