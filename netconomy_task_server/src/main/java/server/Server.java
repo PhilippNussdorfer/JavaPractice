@@ -1,17 +1,22 @@
 package server;
 
-import lombok.Setter;
-import server.tool.InputHandler;
+import server.encryption.suite.Encryptor;
+import server.sqlite.SqlConnection;
+import server.sqlite.SqlConnector;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Server {
     private final Socket SOCKET;
     private final DataInputStream IN;
     private final DataOutputStream OUT;
-    private String pathToDatabase;
+    private final String pathToDatabase;
     private String pathToOutputDir;
 
     public Server(Socket socket, DataInputStream in, DataOutputStream out, String pathToDatabase, String pathToOutputDir) {
@@ -22,23 +27,42 @@ public class Server {
         this.pathToOutputDir = pathToOutputDir;
 
         try {
-            serverLoop();
+            serverOperation();
             closeConnection();
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
     }
 
-    private void serverLoop() {
-        String line = "";
-        while (!line.equalsIgnoreCase("exit")) {
-            try {
-                line = IN.readUTF();
-                System.out.println(line);
-            } catch (IOException exception) {
-                System.out.println(exception.getMessage());
+    private void serverOperation() {
+        SqlConnection sqlite = new SqlConnection(SqlConnector.connect("jdbc:sqlite:", pathToDatabase));
+
+        try {
+            StringBuilder builder = new StringBuilder();
+            String inputFile = IN.readUTF();
+            String[] splitString = inputFile.split(";");        // first should always be the file
+
+            Path path = Paths.get(splitString[0]);
+            ResultSet result = sqlite.getKeyFromFile(path.getFileName().toString());
+            String key = result.getString("KEY");
+
+            OUT.writeUTF("Starting Decrypting ...");
+
+            for (String str : splitString) {
+                if (!str.equals(splitString[0])) {
+                    builder.append(Encryptor.decrypt(key, str)).append(";");
+                }
             }
+
+            sqlite.writeLog("Decrypted " + path.getFileName() + ".");
+            OUT.writeUTF("Finished Decrypting!");
+            OUT.writeUTF(builder.substring(0, builder.length() - 1));
+            OUT.writeUTF("exit");
+
+        } catch (IOException | SQLException exception) {
+            System.out.println(exception.getMessage());
         }
+
     }
 
     private void closeConnection() throws IOException {

@@ -33,7 +33,7 @@ public class Starter {
                 return;
             }
 
-            DataOutputStream out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            DataOutputStream out = new DataOutputStream((socket.getOutputStream()));
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
             new Server(socket, in, out, pathToDatabase, pathToOutputDir);
