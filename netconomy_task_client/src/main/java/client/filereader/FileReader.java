@@ -1,4 +1,4 @@
-package server.filereader;
+package client.filereader;
 
 import java.util.List;
 import java.util.Map;

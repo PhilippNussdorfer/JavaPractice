@@ -1,36 +1,76 @@
 package client;
 
+import client.filereader.FileReader;
+import client.filereader.TxtReader;
+import client.filereader.XlsxReader;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.*;
 
 public class Client {
     private Socket socket = null;
     private DataInputStream in = null;
     private DataOutputStream out = null;
+    private final String serverAddress;
+    private final int port;
+    private final String pathToInputDir;
 
-    public Client(String address, int port) {
-        connectToServer(address, port);
+    public Client(int port, String serverAddress, String pathToInputDir) {
+        this.port = port;
+        this.serverAddress = serverAddress;
+        this.pathToInputDir = pathToInputDir;
+
+        connectToServer();
         clientLoop();
         closeConnection();
     }
 
-    private void clientLoop() {
-        String line = "";
-        while (!line.equals("Over")) {
-            try {
-                line = in.readLine();
-                out.writeUTF(line);
-            } catch (IOException exception) {
-                System.out.println(exception.getMessage());
+    private void clientLoop() throws MissingFormatArgumentException {
+        List<String> encryptedList = readEncryptedFile();
+        if (encryptedList.isEmpty())
+            throw new MissingFormatArgumentException("List is empty, check if the given input file was empty");
+
+        try {
+            String line = "";
+            out.writeUTF(pathToInputDir + ";" + String.join(";", encryptedList));
+
+            while (!line.equals("exit")) {
+
+                line = in.readUTF();
+                System.out.println(line);
             }
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
-    private void connectToServer(String address, int port) {
+    private List<String> readEncryptedFile() {
+        List<String> encryptedList = new ArrayList<>();
+
+        if (pathToInputDir.toLowerCase().endsWith(".xlsx")) {
+            FileReader<Map<Integer, List<String>>> fileReader = new XlsxReader();
+            Map<Integer, List<String>> result = fileReader.readFile(pathToInputDir);
+
+            for (Map.Entry<Integer, List<String>> entry : result.entrySet()) {
+                encryptedList.addAll(entry.getValue());
+            }
+        }
+
+        if (pathToInputDir.toLowerCase().endsWith(".txt")) {
+            FileReader<String> fileReader = new TxtReader();
+
+            encryptedList.add(fileReader.readFile(pathToInputDir));
+        }
+
+        return encryptedList;
+    }
+
+    private void connectToServer() {
         try {
-            socket = new Socket(address, port);
+            socket = new Socket(serverAddress, port);
             System.out.println("Connected");
 
             initOutAndInput();
@@ -40,7 +80,7 @@ public class Client {
     }
 
     private void initOutAndInput() throws IOException {
-        in = new DataInputStream(System.in);
+        in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
     }
 

@@ -1,4 +1,4 @@
-package server.filereader;
+package client.filereader;
 
 import java.io.*;
 import java.nio.file.Files;
