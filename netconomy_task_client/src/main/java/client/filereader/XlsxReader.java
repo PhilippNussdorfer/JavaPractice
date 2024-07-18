@@ -23,15 +23,15 @@ public class XlsxReader implements FileReader<Map<Integer, List<String>>> {
              ReadableWorkbook wb = new ReadableWorkbook(file)) {
 
             Sheet sheet = wb.getFirstSheet();
-            try (Stream<Row> rows = sheet.openStream()) {
-                rows.forEach(row -> {
-                    data.put(row.getRowNum(), new ArrayList<>());
+            Stream<Row> rows = sheet.openStream();
 
-                    for (Cell cell : row) {
-                        data.get(row.getRowNum()).add(cell.getRawValue());
-                    }
-                });
-            }
+            rows.forEach(row -> {
+                data.put(row.getRowNum(), new ArrayList<>());
+
+                for (Cell cell : row) {
+                    data.get(row.getRowNum()).add(cell.getRawValue());
+                }
+            });
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
