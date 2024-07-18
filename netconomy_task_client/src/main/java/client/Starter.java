@@ -12,8 +12,8 @@ public class Starter {
         String pathToInputFile = "";
 
         try {
-            port = inputHandler.askForPort();
             ServerAddress = inputHandler.askForInputs("Please enter the server address");
+            port = inputHandler.askForPort();
             pathToInputFile = inputHandler.fileOrDirExists("Please enter the path to the input file",
                                                             "Could not find the file");
         } catch (IOException exception) {
