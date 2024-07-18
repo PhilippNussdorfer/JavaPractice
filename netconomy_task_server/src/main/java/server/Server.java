@@ -49,13 +49,11 @@ public class Server {
             String key = result.getString("KEY");
 
             OUT.writeUTF("Starting Decrypting ...");
-
             decryptAndAppendOnStringBuilder(builder, splitString, key);
-
-            sqlite.writeLog("Decrypted " + path.getFileName() + " Saved the decrypted and zipped file in " + pathToOutputDir + " .");
             OUT.writeUTF("Finished Decrypting!");
 
             handleFileSavingAndZipping(splitString, builder.substring(0, builder.length() - 1));
+            sqlite.writeLog("Decrypted " + path.getFileName() + " Saved the decrypted and zipped file in " + pathToOutputDir + " .");
 
             OUT.writeUTF("exit");
 
