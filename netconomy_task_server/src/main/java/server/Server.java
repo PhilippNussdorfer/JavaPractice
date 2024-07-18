@@ -19,16 +19,16 @@ public class Server {
     private final Socket SOCKET;
     private final DataInputStream IN;
     private final DataOutputStream OUT;
-    private final String pathToDatabase;
     private final String pathToOutputDir;
     private final int EXCEL_COLUMNS = 3;
+    private final SqlConnection sqlite;
 
-    public Server(Socket socket, DataInputStream in, DataOutputStream out, String pathToDatabase, String pathToOutputDir) {
+    public Server(Socket socket, DataInputStream in, DataOutputStream out, String pathToOutputDir, SqlConnection sqlite) {
         this.SOCKET = socket;
         this.IN = in;
         this.OUT = out;
-        this.pathToDatabase = pathToDatabase;
         this.pathToOutputDir = pathToOutputDir;
+        this.sqlite = sqlite;
 
         try {
             serverOperation();
@@ -39,8 +39,6 @@ public class Server {
     }
 
     private void serverOperation() {
-        SqlConnection sqlite = new SqlConnection(SqlConnector.connect("jdbc:sqlite:", pathToDatabase));
-
         try {
             StringBuilder builder = new StringBuilder();
             String inputFile = IN.readUTF();

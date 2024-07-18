@@ -1,5 +1,7 @@
 package server;
 
+import server.sqlite.SqlConnection;
+import server.sqlite.SqlConnector;
 import server.tool.InputHandler;
 
 import java.io.*;
@@ -24,7 +26,7 @@ public class Starter {
             DataOutputStream out = new DataOutputStream((socket.getOutputStream()));
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
-            new Server(socket, in, out, pathToDatabase, pathToOutputDir);
+            new Server(socket, in, out, pathToOutputDir, new SqlConnection(SqlConnector.connect("jdbc:sqlite:", pathToDatabase)));
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
