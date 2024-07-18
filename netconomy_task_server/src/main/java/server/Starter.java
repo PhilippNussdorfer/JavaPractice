@@ -4,15 +4,11 @@ import server.tool.InputHandler;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
 
 public class Starter {
-    private static InputHandler inputHandler = new InputHandler();
+    private static final InputHandler inputHandler = new InputHandler();
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         /*String key = "";
         SqlConnection sqlConnection = new SqlConnection(SqlConnector.connect("jdbc:sqlite:", "src/main/java/server/sqlite/database.sqlite3"));
         ResultSet res = sqlConnection.getKeyFromFile("ExternalInput.txt");
