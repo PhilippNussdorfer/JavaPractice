@@ -35,13 +35,13 @@ class LoginControllerTest {
     @Mock
     UUIDProvider uuidProvider;
     @Mock
-    HashProvider hash;
+    HashProvider hashProvider;
     @Mock
     TokenGenerator tokenGenerator;
 
     @BeforeEach
     void setUp() {
-        loginController = new LoginController(loginChecker, systemWrapper, tokenGeneratorFactory, uuidProvider, hash);
+        loginController = new LoginController(loginChecker, systemWrapper, tokenGeneratorFactory, uuidProvider, hashProvider);
         Mockito.when(loginChecker.check(loginUser)).thenReturn(true);
     }
 
