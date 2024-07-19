@@ -3,6 +3,7 @@ package at.bbrz.spring_exercise.token;
 import at.bbrz.spring_exercise.entity.Player;
 import lombok.NonNull;
 import org.springframework.security.crypto.codec.Hex;
+import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -38,12 +39,14 @@ public class TokenGenerator {
                 + hash.hashFromString(player.getName() + timestamp + player.getId());
     }
 
+    @Service
     public static class UUIDWrapper implements UUIDProvider {
         public String generateRandomUUID() {
             return UUID.randomUUID().toString();
         }
     }
 
+    @Service
     public static class HashWrapper implements HashProvider {
         @Override
         public String hashFromString(String str) throws NoSuchAlgorithmException {
