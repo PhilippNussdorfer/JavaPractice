@@ -11,4 +11,9 @@ public class AlwaysTrueChecker implements LoginChecker {
     public boolean check(LoginUser loginUser) {
         return true;
     }
+
+    @Override
+    public int getUserId(LoginUser loginUser) {
+        return 0;
+    }
 }
