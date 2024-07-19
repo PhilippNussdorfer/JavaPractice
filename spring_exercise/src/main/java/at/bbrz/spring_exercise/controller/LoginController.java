@@ -4,6 +4,7 @@ import at.bbrz.spring_exercise.controller.model.*;
 import at.bbrz.spring_exercise.entity.Player;
 import at.bbrz.spring_exercise.exceptions.LoginFailedException;
 import at.bbrz.spring_exercise.token.HashProvider;
+import at.bbrz.spring_exercise.token.TokenGenerator;
 import at.bbrz.spring_exercise.token.UUIDProvider;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,12 +35,16 @@ public class LoginController {
         }
 
         var timeStamp = systemWrapper.timeStampMillis();
-        var generator = tokenFactory.assembleTokenGenerator(
+        TokenGenerator generator = assembleTokenGenerator(loginUser, timeStamp);
+
+        return new Token(generator.generate(), timeStamp, loginUser.getApplicationId());
+    }
+
+    private TokenGenerator assembleTokenGenerator(LoginUser loginUser, Long timeStamp) {
+        return tokenFactory.assembleTokenGenerator(
                             new Player(1L, loginUser.getUserName(), loginUser.getPsw()),
                             timeStamp,
                             UUID,
-                hash);
-
-        return new Token(generator.generate(), timeStamp, loginUser.getApplicationId());
+                            hash);
     }
 }
