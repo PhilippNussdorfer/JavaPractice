@@ -11,7 +11,7 @@ import java.util.List;
 @Profile("default")
 public class HardcodedLoginChecker implements LoginChecker {
 
-    private final List<LoginUser> users = new ArrayList<>(List.of(
+    private final List<DBUser> users = new ArrayList<>(List.of(
             new DBUser("Hans", "password", "Adventure", 1L),
             new DBUser("Stefan", "password123", "Browser", 2L),
             new DBUser("Christina", "psw", "Android", 3L)
@@ -24,11 +24,11 @@ public class HardcodedLoginChecker implements LoginChecker {
 
     @Override
     public Long getUserId(LoginUser loginUser) {
-        var foundLoginUser = users.stream().filter(searchLoginUser -> searchLoginUser.equals(loginUser)).findFirst().get();
-        if (foundLoginUser instanceof DBUser)
-            return ((DBUser) foundLoginUser).userId;
-        else
-            throw new RuntimeException("User not found.");
+        return users.stream()
+                .filter(searchLoginUser -> searchLoginUser.equals(loginUser))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("User not found"))
+                .getUserId();
     }
 
     @Getter
