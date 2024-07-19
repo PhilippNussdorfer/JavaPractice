@@ -10,7 +10,7 @@ import java.util.List;
 @Profile("default")
 public class HardcodedLoginChecker implements LoginChecker {
 
-    private List<LoginUser> users = new ArrayList<>(List.of(
+    private final List<LoginUser> users = new ArrayList<>(List.of(
             new LoginUser("Hans", "password", "Adventure"),
             new LoginUser("Stefan", "password123", "Browser"),
             new LoginUser("Christina", "psw", "Android")
