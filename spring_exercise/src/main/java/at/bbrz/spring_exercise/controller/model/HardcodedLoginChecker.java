@@ -32,7 +32,7 @@ public class HardcodedLoginChecker implements LoginChecker {
     }
 
     @Getter
-    public static class DBUser extends LoginUser {
+    private static class DBUser extends LoginUser {
         private final Long userId;
 
         public DBUser(String username, String userPsw, String appId, Long userId) {
