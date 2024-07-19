@@ -42,7 +42,7 @@ public class LoginController {
 
     private TokenGenerator assembleTokenGenerator(LoginUser loginUser, Long timeStamp) {
         return tokenFactory.assembleTokenGenerator(
-                            new Player(1L, loginUser.getUserName(), loginUser.getPsw()),
+                            new Player(loginChecker.getUserId(loginUser), loginUser.getUserName(), loginUser.getPsw()),
                             timeStamp,
                             UUID,
                             hash);

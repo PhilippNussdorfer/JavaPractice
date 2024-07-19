@@ -13,7 +13,7 @@ public class AlwaysTrueChecker implements LoginChecker {
     }
 
     @Override
-    public int getUserId(LoginUser loginUser) {
-        return 0;
+    public Long getUserId(LoginUser loginUser) {
+        return 0L;
     }
 }

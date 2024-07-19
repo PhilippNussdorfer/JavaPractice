@@ -12,9 +12,9 @@ import java.util.List;
 public class HardcodedLoginChecker implements LoginChecker {
 
     private final List<LoginUser> users = new ArrayList<>(List.of(
-            new DBUser("Hans", "password", "Adventure", 1),
-            new DBUser("Stefan", "password123", "Browser", 2),
-            new DBUser("Christina", "psw", "Android", 3)
+            new DBUser("Hans", "password", "Adventure", 1L),
+            new DBUser("Stefan", "password123", "Browser", 2L),
+            new DBUser("Christina", "psw", "Android", 3L)
     ));
 
     @Override
@@ -23,15 +23,19 @@ public class HardcodedLoginChecker implements LoginChecker {
     }
 
     @Override
-    public int getUserId(LoginUser loginUser) {
-        return 0;
+    public Long getUserId(LoginUser loginUser) {
+        var foundLoginUser = users.stream().filter(searchLoginUser -> searchLoginUser.equals(loginUser)).findFirst().get();
+        if (foundLoginUser instanceof DBUser)
+            return ((DBUser) foundLoginUser).userId;
+        else
+            throw new RuntimeException("User not found.");
     }
 
     @Getter
-    private static class DBUser extends LoginUser {
-        private int userId;
+    public static class DBUser extends LoginUser {
+        private final Long userId;
 
-        public DBUser(String username, String userPsw, String appId, int userId) {
+        public DBUser(String username, String userPsw, String appId, Long userId) {
             super(username, userPsw, appId);
             this.userId = userId;
         }

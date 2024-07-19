@@ -91,13 +91,14 @@ class LoginControllerTest {
     }
 
     @Test
-    void test() throws NoSuchAlgorithmException {
+    void playerForTokenGenerator() throws NoSuchAlgorithmException {
         Mockito.when(loginChecker.check(loginUser)).thenReturn(true);
         Mockito.when(systemWrapper.timeStampMillis()).thenReturn(CURRENT_TIME);
         Mockito.when(tokenGeneratorFactory.assembleTokenGenerator(playerCaptor.capture(), Mockito.anyLong(),
                 Mockito.any(UUIDProvider.class), Mockito.any(HashProvider.class))).thenReturn(tokenGenerator);
         Mockito.when(loginUser.getUserName()).thenReturn(USERNAME);
         Mockito.when(loginUser.getPsw()).thenReturn(PSW);
+        Mockito.when(loginChecker.getUserId(loginUser)).thenReturn(USER_ID);
 
         loginController.login(loginUser);
 
