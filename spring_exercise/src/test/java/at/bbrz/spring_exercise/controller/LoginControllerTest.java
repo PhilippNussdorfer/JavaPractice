@@ -21,8 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginControllerTest {
     public static final String BROWSER = "Browser";
     final Long CURRENT_TIME = 1L;
-    final String HASH = "0b121fa8f08165f6f30a133396b74678285762a06169b9020504d70b79f32a88";
-    final String UUID = "dba6977bf9f24234ab9f7f3f0129b122";
     final String TOKEN = "token";
     LoginController loginController;
 
