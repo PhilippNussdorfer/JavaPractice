@@ -57,7 +57,16 @@ class LoginControllerTest {
     }
 
     @Test
-    void test() throws NoSuchAlgorithmException {
+    void throwsNoSuchAlgorithmException() throws NoSuchAlgorithmException {
+        helper();
+        Mockito.when(tokenGenerator.generate()).thenThrow(new NoSuchAlgorithmException("Error"));
+
+        var exception = assertThrows(NoSuchAlgorithmException.class, ()-> loginController.login(loginUser));
+        assertEquals("Error", exception.getMessage());
+    }
+
+    @Test
+    void returnTokenWithCorrectValues() throws NoSuchAlgorithmException {
         helper();
         Mockito.when(tokenGenerator.generate()).thenReturn(TOKEN);
         Mockito.when(loginUser.getApplicationId()).thenReturn(BROWSER);
