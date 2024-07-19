@@ -19,9 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class LoginControllerTest {
+    public static final String BROWSER = "Browser";
     final Long CURRENT_TIME = 1L;
     final String HASH = "0b121fa8f08165f6f30a133396b74678285762a06169b9020504d70b79f32a88";
     final String UUID = "dba6977bf9f24234ab9f7f3f0129b122";
+    final String TOKEN = "token";
     LoginController loginController;
 
     @Mock
@@ -39,6 +41,7 @@ class LoginControllerTest {
     @Mock
     TokenGenerator tokenGenerator;
 
+
     @BeforeEach
     void setUp() {
         loginController = new LoginController(loginChecker, systemWrapper, tokenGeneratorFactory, uuidProvider, hashProvider);
@@ -54,19 +57,17 @@ class LoginControllerTest {
     }
 
     @Test
-    void tokenShouldContainTimestamp() throws NoSuchAlgorithmException {
+    void test() throws NoSuchAlgorithmException {
         helper();
+        Mockito.when(tokenGenerator.generate()).thenReturn(TOKEN);
+        Mockito.when(loginUser.getApplicationId()).thenReturn(BROWSER);
 
         Token token = loginController.login(loginUser);
-        assertEquals(CURRENT_TIME, token.getTimestamp());
-    }
 
-    @Test
-    void currentTimeShouldBeTakenFromSystemWrapper() throws NoSuchAlgorithmException {
-        helper();
-
-        loginController.login(loginUser);
         Mockito.verify(systemWrapper, Mockito.times(1)).timeStampMillis();
+        assertEquals(CURRENT_TIME, token.getTimestamp());
+        assertEquals(TOKEN, token.getLoginToken());
+        assertEquals(BROWSER, token.getApplicationId());
     }
 
     void helper() {
