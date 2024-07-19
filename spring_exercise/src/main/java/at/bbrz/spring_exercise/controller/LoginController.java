@@ -28,9 +28,6 @@ public class LoginController {
         this.hash = hash;
     }
 
-    @Autowired
-
-
     @PostMapping(path = "/login")
     public Token login(@RequestBody LoginUser loginUser) throws NoSuchAlgorithmException {
         if (!loginChecker.check(loginUser)) {
