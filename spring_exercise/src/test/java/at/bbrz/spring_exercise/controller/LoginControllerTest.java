@@ -85,7 +85,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void loginUserThrowsExceptionIfEmpty() throws NoSuchAlgorithmException {
+    void loginUserThrowsExceptionIfEmpty() {
         var exception = assertThrows(LoginFailedException.class, ()-> loginController.login(new LoginUser()));
         assertEquals("Login failed.", exception.getMessage());
     }
@@ -95,7 +95,7 @@ class LoginControllerTest {
         Mockito.when(loginChecker.check(loginUser)).thenReturn(true);
         Mockito.when(systemWrapper.timeStampMillis()).thenReturn(CURRENT_TIME);
         Mockito.when(tokenGeneratorFactory.assembleTokenGenerator(playerCaptor.capture(), Mockito.anyLong(),
-                Mockito.any(UUIDProvider.class), Mockito.any(HashProvider.class))).thenReturn(tokenGenerator);
+                     Mockito.any(UUIDProvider.class), Mockito.any(HashProvider.class))).thenReturn(tokenGenerator);
         Mockito.when(loginUser.getUserName()).thenReturn(USERNAME);
         Mockito.when(loginUser.getPsw()).thenReturn(PSW);
         Mockito.when(loginChecker.getUserId(loginUser)).thenReturn(USER_ID);
