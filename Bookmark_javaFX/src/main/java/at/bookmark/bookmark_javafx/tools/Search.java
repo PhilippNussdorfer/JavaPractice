@@ -17,19 +17,23 @@ public class Search {
         txt_search.setPrefWidth(860);
         txt_search.textProperty().addListener((observer, oldValue, newValue) -> {
 
-            if (newValue.equals("")) {
-                dB.getGridSearch().getChildren().clear();
-            } else {
-                var results = dB.getSearch().searchForBookmark(newValue, dB);
-
-                dB.getViewNodes().clear();
-
-                gridBuilder.setGrid(dB.getGridSearch(), results, notification, dB);
-                gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
-            }
+            updateViewAndSearchView(dB, notification, gridBuilder, newValue);
         });
 
         return txt_search;
+    }
+
+    private static void updateViewAndSearchView(DependencyBundle dB, Notification notification, GridBuilder gridBuilder, String newValue) {
+        if (newValue.equals("")) {
+            dB.getGridSearch().getChildren().clear();
+        } else {
+            var results = dB.getSearch().searchForBookmark(newValue, dB);
+
+            dB.getViewNodes().clear();
+
+            gridBuilder.setGrid(dB.getGridSearch(), results, notification, dB);
+            gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
+        }
     }
 
     private List<Bookmark> searchForBookmark(String input, DependencyBundle dB) {
