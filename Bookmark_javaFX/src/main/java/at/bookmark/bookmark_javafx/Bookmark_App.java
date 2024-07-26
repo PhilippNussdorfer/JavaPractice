@@ -124,20 +124,23 @@ public class Bookmark_App extends Application {
             MenuItem size = new MenuItem(i + "");
             int tmp = i;
 
-            size.setOnAction(t -> {
-                dependencyBundle.getFontUpdater().setAppFont(tmp);
-                dependencyBundle.getFontUpdater().updateFont(
-                        dependencyBundle.getViewNodes(), dependencyBundle.getEditNodes(),
-                        dependencyBundle.getEditNodes(), dependencyBundle.getAddNodes()
-                );
-            });
-
+            menuItemSetup(size, tmp);
             fontSizeMenu.getItems().add(size);
         }
 
         menu.getMenus().add(fontSizeMenu);
         menu.getMenus().add(fullscreen);
         return menu;
+    }
+
+    private void menuItemSetup(MenuItem size, int tmp) {
+        size.setOnAction(t -> {
+            dependencyBundle.getFontUpdater().setAppFont(tmp);
+            dependencyBundle.getFontUpdater().updateFont(
+                    dependencyBundle.getViewNodes(), dependencyBundle.getEditNodes(),
+                    dependencyBundle.getEditNodes(), dependencyBundle.getAddNodes()
+            );
+        });
     }
 
     private Menu createFullscreenMenu(Stage stage) {
