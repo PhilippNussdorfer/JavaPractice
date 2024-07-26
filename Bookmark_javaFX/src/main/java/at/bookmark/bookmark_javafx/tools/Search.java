@@ -15,10 +15,7 @@ public class Search {
     public TextField searchLogic(DependencyBundle dB, Notification notification, GridBuilder gridBuilder) {
         TextField txt_search = new TextField();
         txt_search.setPrefWidth(860);
-        txt_search.textProperty().addListener((observer, oldValue, newValue) -> {
-
-            updateViewAndSearchView(dB, notification, gridBuilder, newValue);
-        });
+        txt_search.textProperty().addListener((observer, oldValue, newValue) -> updateViewAndSearchView(dB, notification, gridBuilder, newValue));
 
         return txt_search;
     }
