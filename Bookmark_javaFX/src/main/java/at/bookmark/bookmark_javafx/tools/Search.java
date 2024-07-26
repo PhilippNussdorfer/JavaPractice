@@ -23,7 +23,7 @@ public class Search {
         return txt_search;
     }
 
-    private static void updateViewAndSearchView(DependencyBundle dB, Notification notification, GridBuilder gridBuilder, String newValue) {
+    private void updateViewAndSearchView(DependencyBundle dB, Notification notification, GridBuilder gridBuilder, String newValue) {
         if (newValue.equals("")) {
             dB.getGridSearch().getChildren().clear();
         } else {
