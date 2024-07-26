@@ -35,9 +35,8 @@ public class Bookmark_App extends Application {
 
         Label lbl_search = new Label("Search:");
         Button btn_add = new Button("Add Bookmark");
-        TextField txt_search = null;
 
-        txt_search = searchFieldSetup(txt_search);
+        TextField txt_search = searchFieldSetup();
         if (txt_search == null)
             notification.notify("txt_search element is null!", Alert.AlertType.ERROR);
 
@@ -48,7 +47,9 @@ public class Bookmark_App extends Application {
         dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
     }
 
-    private TextField searchFieldSetup(TextField txt_search) {
+    private TextField searchFieldSetup() {
+        TextField txt_search = null;
+
         try {
             gridSetup();
 
@@ -113,13 +114,13 @@ public class Bookmark_App extends Application {
         return scrollPane;
     }
 
-    private MenuBar createAndFillMenuBar(int fontsize, Stage stage) {
+    private MenuBar createAndFillMenuBar(int fontSize, Stage stage) {
         MenuBar menu = new MenuBar();
-        Menu fontSize = new Menu("Font Size");
+        Menu fontSizeMenu = new Menu("Font Size");
 
         Menu fullscreen = createFullscreenMenu(stage);
 
-        for (int i = 8; i < fontsize + 2; i += 2) {
+        for (int i = 8; i < fontSize + 2; i += 2) {
             MenuItem size = new MenuItem(i + "");
             int tmp = i;
 
@@ -131,10 +132,10 @@ public class Bookmark_App extends Application {
                 );
             });
 
-            fontSize.getItems().add(size);
+            fontSizeMenu.getItems().add(size);
         }
 
-        menu.getMenus().add(fontSize);
+        menu.getMenus().add(fontSizeMenu);
         menu.getMenus().add(fullscreen);
         return menu;
     }
