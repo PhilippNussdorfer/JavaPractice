@@ -37,6 +37,18 @@ public class Bookmark_App extends Application {
         Button btn_add = new Button("Add Bookmark");
         TextField txt_search = null;
 
+        txt_search = searchFieldSetup(txt_search);
+        if (txt_search == null)
+            notification.notify("txt_search element is null!", Alert.AlertType.ERROR);
+
+        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, dependencyBundle));
+        setStage(stage, lbl_search, btn_add, txt_search);
+
+        gridBuilder.setGrid(gridMain, dependencyBundle.getHandler().getBookmarks(), notification, dependencyBundle);
+        dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
+    }
+
+    private TextField searchFieldSetup(TextField txt_search) {
         try {
             gridSetup();
 
@@ -46,15 +58,7 @@ public class Bookmark_App extends Application {
         } catch (IsAlreadySetException exception) {
             notification.notify(exception.getMessage(), Alert.AlertType.ERROR);
         }
-
-        if (txt_search == null)
-            notification.notify("txt_search element is null!", Alert.AlertType.ERROR);
-
-        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, dependencyBundle));
-        setStage(stage, lbl_search, btn_add, txt_search);
-
-        gridBuilder.setGrid(gridMain, dependencyBundle.getHandler().getBookmarks(), notification, dependencyBundle);
-        dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
+        return txt_search;
     }
 
     private void gridSetup() throws IsAlreadySetException {
