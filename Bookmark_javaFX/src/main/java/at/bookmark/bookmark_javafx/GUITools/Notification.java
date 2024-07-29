@@ -16,6 +16,10 @@ public class Notification {
     private double x;
     private double y;
 
+    public Notification(Image icon) {
+        this.icon = icon;
+    }
+
     public double getX() {
         List<Window> open = Stage.getWindows().stream().filter(Window::isShowing).toList();
         x = open.get(0).getX();
@@ -26,10 +30,6 @@ public class Notification {
         List<Window> open = Stage.getWindows().stream().filter(Window::isShowing).toList();
         y = open.get(0).getY();
         return y;
-    }
-
-    public Notification(Image icon) {
-        this.icon = icon;
     }
 
     private void setAlertPosition(Alert alert) {
