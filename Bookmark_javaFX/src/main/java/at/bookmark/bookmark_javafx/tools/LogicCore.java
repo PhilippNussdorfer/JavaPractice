@@ -21,10 +21,10 @@ public class LogicCore {
         }
     }
 
-    public void refreshGridsAndSaveChangesAfterAdding(Notification notification, GridBuilder gridBuilder, DependencyBundle dB, Stage stage, TextField txt_add_title, TextField txt_add_page, TextField txt_add_link) {
-        var res = dB.getHandler().addNewBookmark(txt_add_title.getText(), txt_add_page.getText(), txt_add_link.getText());
+    public void refreshGridsAndSaveChangesAfterAdding(Notification notification, GridBuilder gridBuilder, DependencyBundle dB, Stage stage, String title, String page, String link) {
+        var res = dB.getHandler().addNewBookmark(title, page, link);
         if (res) {
-            notification.notify("Added Bookmark for: " + txt_add_title.getText(), Alert.AlertType.INFORMATION);
+            notification.notify("Added Bookmark for: " + title, Alert.AlertType.INFORMATION);
 
             dB.getViewNodes().clear();
             gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
@@ -33,7 +33,7 @@ public class LogicCore {
             dB.getHandler().saveInFile();
             stage.close();
         } else {
-            notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_add_link.getText() + " '!", Alert.AlertType.ERROR);
+            notification.notify("Please use a link that is usable, this link is invalid: ' " + link + " '!", Alert.AlertType.ERROR);
         }
     }
 

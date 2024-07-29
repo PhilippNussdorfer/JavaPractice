@@ -28,7 +28,7 @@ public class AddWindowBuilder {
 
         Button btn_add = new Button("Add New Bookmark");
 
-        btn_add.setOnAction(e -> dB.getLogic().refreshGridsAndSaveChangesAfterAdding(notification, gridBuilder, dB, addStage, txt_add_title, txt_add_page, txt_add_link));
+        btn_add.setOnAction(e -> dB.getLogic().refreshGridsAndSaveChangesAfterAdding(notification, gridBuilder, dB, addStage, txt_add_title.getText(), txt_add_page.getText(), txt_add_link.getText()));
 
         GridPane pane = new GridPane();
         pane.add(lbl_add_title, 0, 0);
