@@ -2,6 +2,7 @@ package at.bookmark.bookmark_javafx.GUITools;
 
 import at.bookmark.bookmark_javafx.Exceptions.IsAlreadySetException;
 import at.bookmark.bookmark_javafx.bookmark.BookmarkHandler;
+import at.bookmark.bookmark_javafx.tools.LogicCore;
 import at.bookmark.bookmark_javafx.tools.Search;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -27,6 +28,7 @@ public class DependencyBundle {
     private final WriterReader writerReader = new WriterReader();
     private final BookmarkHandler handler = new BookmarkHandler();
     private final Search search = new Search();
+    private final LogicCore logic = new LogicCore();
     private TextField searchField = null;
     private GridPane gridMain = null;
     private GridPane gridSearch = null;
