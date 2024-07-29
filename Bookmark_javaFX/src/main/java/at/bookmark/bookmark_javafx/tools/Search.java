@@ -33,6 +33,6 @@ public class Search {
     }
 
     public void updateSearch(GridPane grid, GridBuilder gridBuilder, Notification notification, DependencyBundle dB) {
-        gridBuilder.setGrid(grid, searchForBookmark(dB.getSearchField().getText(), dB), notification, dB);
+        gridBuilder.setGrid(grid, searchForBookmark(dB.getSearchFieldInput(), dB), notification, dB);
     }
 }

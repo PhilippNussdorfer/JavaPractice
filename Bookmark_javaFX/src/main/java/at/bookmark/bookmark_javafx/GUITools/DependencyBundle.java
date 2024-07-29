@@ -33,6 +33,10 @@ public class DependencyBundle {
     private GridPane gridMain = null;
     private GridPane gridSearch = null;
 
+    public String getSearchFieldInput() {
+        return this.searchField.getText();
+    }
+
     public void setSearchField(TextField field) throws IsAlreadySetException {
         if (this.searchField == null)
             this.searchField = field;
