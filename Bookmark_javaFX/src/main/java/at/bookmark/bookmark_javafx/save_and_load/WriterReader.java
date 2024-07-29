@@ -35,8 +35,7 @@ public class WriterReader {
                 bufferedWriter.close();
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 
@@ -62,7 +61,7 @@ public class WriterReader {
                 }
                 bufferedReader.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         }
         return bookmarks;
@@ -84,6 +83,7 @@ public class WriterReader {
         try (InputStream inputStream = new FileInputStream(path)) {
             prop.load(inputStream);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return null;
         }
 
@@ -105,7 +105,7 @@ public class WriterReader {
         try (OutputStream output = new FileOutputStream(path)) {
             prop.store(output, null);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
