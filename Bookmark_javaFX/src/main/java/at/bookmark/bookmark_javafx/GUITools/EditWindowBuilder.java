@@ -30,9 +30,7 @@ public class EditWindowBuilder {
 
         Button btn_edit = new Button("Save Changes");
 
-        btn_edit.setOnAction(e -> {
-            dB.getLogic().refreshGridsAndSaveChangesAfterEditing(id, notification, gridBuilder, dB, editStage, txt_edit_title, txt_edit_page, txt_edit_link);
-        });
+        btn_edit.setOnAction(e -> dB.getLogic().refreshGridsAndSaveChangesAfterEditing(id, notification, gridBuilder, dB, editStage, txt_edit_title, txt_edit_page, txt_edit_link));
 
         GridPane pane = new GridPane();
         pane.add(lbl_edit_title, 0, 0);
