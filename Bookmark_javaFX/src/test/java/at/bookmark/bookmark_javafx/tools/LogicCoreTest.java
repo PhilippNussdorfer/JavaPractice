@@ -133,6 +133,21 @@ class LogicCoreTest {
         Mockito.verify(stage, Mockito.times(1)).close();
     }
 
+    @Test
+    void deleteRefreshAndSave() {
+        mockitoInit();
+
+        logic.deleteOrganiseAndReload(INDEX, TITLE, gridBuilder, dependencyBundle, notification);
+
+        Mockito.verify(bookmarks, Mockito.times(1)).remove(INDEX);
+        Mockito.verify(handler, Mockito.times(1)).collapseBookmarks();
+        Mockito.verify(handler, Mockito.times(1)).saveInFile();
+        Mockito.verify(notification, Mockito.times(1)).notify("Deleted Some Book Title", Alert.AlertType.INFORMATION);
+        Mockito.verify(viewNodes, Mockito.times(1)).clear();
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBundle);
+        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBundle);
+    }
+
     private void mockitoInit() {
         Mockito.when(dependencyBundle.getHandler()).thenReturn(handler);
         Mockito.when(dependencyBundle.getViewNodes()).thenReturn(viewNodes);
