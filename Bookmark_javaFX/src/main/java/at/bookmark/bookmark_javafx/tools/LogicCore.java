@@ -4,7 +4,6 @@ import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
 import at.bookmark.bookmark_javafx.GUITools.GridBuilder;
 import at.bookmark.bookmark_javafx.GUITools.Notification;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LogicCore {
