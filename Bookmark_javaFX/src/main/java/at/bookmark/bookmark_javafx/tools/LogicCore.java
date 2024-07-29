@@ -53,4 +53,16 @@ public class LogicCore {
             notification.notify("Please use a link that is usable, this link is invalid: ' " + link + " '!", Alert.AlertType.ERROR);
         }
     }
+
+    public void deleteOrganiseAndReload(int id, String title, GridBuilder gridBuilder, DependencyBundle dB, Notification notification) {
+        dB.getHandler().getBookmarks().remove(id);
+        dB.getHandler().collapseBookmarks();
+        dB.getHandler().saveInFile();
+
+        notification.notify("Deleted " + title, Alert.AlertType.INFORMATION);
+        dB.getViewNodes().clear();
+
+        gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
+        dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, notification, dB);
+    }
 }

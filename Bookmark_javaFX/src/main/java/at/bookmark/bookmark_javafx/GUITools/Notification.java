@@ -54,19 +54,7 @@ public class Notification {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            deleteOrganiseAndReload(id, title, gridBuilder, dB);
+            dB.getLogic().deleteOrganiseAndReload(id, title, gridBuilder, dB, this);
         }
-    }
-
-    private void deleteOrganiseAndReload(int id, String title, GridBuilder gridBuilder, DependencyBundle dB) {
-        dB.getHandler().getBookmarks().remove(id);
-        dB.getHandler().collapseBookmarks();
-        dB.getHandler().saveInFile();
-
-        notify("Deleted " + title, Alert.AlertType.INFORMATION);
-        dB.getViewNodes().clear();
-
-        gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), this, dB);
-        dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, this, dB);
     }
 }
