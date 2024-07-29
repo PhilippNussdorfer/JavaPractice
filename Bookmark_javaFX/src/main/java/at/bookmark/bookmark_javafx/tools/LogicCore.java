@@ -1,13 +1,13 @@
 package at.bookmark.bookmark_javafx.tools;
 
-import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
+import at.bookmark.bookmark_javafx.GUITools.DependencyBuilder;
 import at.bookmark.bookmark_javafx.GUITools.GridBuilder;
 import at.bookmark.bookmark_javafx.GUITools.Notification;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class LogicCore {
-    public void updateViewAndSearchView(DependencyBundle dB, Notification notification, GridBuilder gridBuilder, String newValue) {
+    public void updateViewAndSearchView(DependencyBuilder dB, Notification notification, GridBuilder gridBuilder, String newValue) {
         if (newValue.equals("")) {
             dB.getGridSearch().getChildren().clear();
         } else {
@@ -20,7 +20,7 @@ public class LogicCore {
         }
     }
 
-    public void refreshGridsAndSaveChangesAfterAdding(Notification notification, GridBuilder gridBuilder, DependencyBundle dB, Stage stage, String title, String page, String link) {
+    public void refreshGridsAndSaveChangesAfterAdding(Notification notification, GridBuilder gridBuilder, DependencyBuilder dB, Stage stage, String title, String page, String link) {
         var res = dB.getHandler().addNewBookmark(title, page, link);
         if (res) {
             notification.notify("Added Bookmark for: " + title, Alert.AlertType.INFORMATION);
@@ -36,7 +36,7 @@ public class LogicCore {
         }
     }
 
-    public void refreshGridsAndSaveChangesAfterEditing(int id, Notification notification, GridBuilder gridBuilder, DependencyBundle dB,
+    public void refreshGridsAndSaveChangesAfterEditing(int id, Notification notification, GridBuilder gridBuilder, DependencyBuilder dB,
                                                        Stage stage, String title, String page, String link) {
 
         var res = dB.getHandler().editBookmark(id, title, page, link);
@@ -54,7 +54,7 @@ public class LogicCore {
         }
     }
 
-    public void deleteOrganiseAndReload(int id, String title, GridBuilder gridBuilder, DependencyBundle dB, Notification notification) {
+    public void deleteOrganiseAndReload(int id, String title, GridBuilder gridBuilder, DependencyBuilder dB, Notification notification) {
         dB.getHandler().getBookmarks().remove(id);
         dB.getHandler().collapseBookmarks();
         dB.getHandler().saveInFile();

@@ -1,6 +1,6 @@
 package at.bookmark.bookmark_javafx.tools;
 
-import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
+import at.bookmark.bookmark_javafx.GUITools.DependencyBuilder;
 import at.bookmark.bookmark_javafx.GUITools.GridBuilder;
 import at.bookmark.bookmark_javafx.GUITools.Notification;
 import at.bookmark.bookmark_javafx.bookmark.Bookmark;
@@ -29,7 +29,7 @@ class LogicCoreTest {
     private final int INDEX = 1;
 
     @Mock
-    private DependencyBundle dependencyBundle;
+    private DependencyBuilder dependencyBuilder;
     @Mock
     private Notification notification;
     @Mock
@@ -59,10 +59,10 @@ class LogicCoreTest {
     @Test
     void searchViewGetsCleared() {
         String EMPTY_INPUT = "";
-        Mockito.when(dependencyBundle.getGridSearch()).thenReturn(gridPane);
+        Mockito.when(dependencyBuilder.getGridSearch()).thenReturn(gridPane);
         Mockito.when(gridPane.getChildren()).thenReturn(nodes);
 
-        logic.updateViewAndSearchView(dependencyBundle, notification, gridBuilder, EMPTY_INPUT);
+        logic.updateViewAndSearchView(dependencyBuilder, notification, gridBuilder, EMPTY_INPUT);
 
         Mockito.verify(nodes, Mockito.times(1)).clear();
     }
@@ -71,22 +71,22 @@ class LogicCoreTest {
     void searchForItemsInBookmark() {
         String INPUT = "lE";
         mockitoInit();
-        Mockito.when(search.searchForBookmark(INPUT, dependencyBundle)).thenReturn(bookmarks);
-        Mockito.when(search.searchForBookmark(INPUT, dependencyBundle)).thenReturn(result);
+        Mockito.when(search.searchForBookmark(INPUT, dependencyBuilder)).thenReturn(bookmarks);
+        Mockito.when(search.searchForBookmark(INPUT, dependencyBuilder)).thenReturn(result);
 
-        logic.updateViewAndSearchView(dependencyBundle, notification, gridBuilder, INPUT);
+        logic.updateViewAndSearchView(dependencyBuilder, notification, gridBuilder, INPUT);
 
         Mockito.verify(viewNodes, Mockito.times(1)).clear();
-        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, result, notification, dependencyBundle);
-        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBundle);
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, result, notification, dependencyBuilder);
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBuilder);
     }
 
     @Test
     void failedAtAdding() {
-        Mockito.when(dependencyBundle.getHandler()).thenReturn(handler);
+        Mockito.when(dependencyBuilder.getHandler()).thenReturn(handler);
         Mockito.when(handler.addNewBookmark(TITLE, PAGE, LINK)).thenReturn(false);
 
-        logic.refreshGridsAndSaveChangesAfterAdding(notification, gridBuilder, dependencyBundle, stage, TITLE, PAGE, LINK);
+        logic.refreshGridsAndSaveChangesAfterAdding(notification, gridBuilder, dependencyBuilder, stage, TITLE, PAGE, LINK);
 
         Mockito.verify(notification, Mockito.times(1)).notify("Please use a link that is usable, this link is invalid: ' http://SOME/unsecure/Page '!", Alert.AlertType.ERROR);
     }
@@ -97,22 +97,22 @@ class LogicCoreTest {
         Mockito.when(handler.addNewBookmark(TITLE, PAGE, LINK)).thenReturn(true);
 
 
-        logic.refreshGridsAndSaveChangesAfterAdding(notification, gridBuilder, dependencyBundle, stage, TITLE, PAGE, LINK);
+        logic.refreshGridsAndSaveChangesAfterAdding(notification, gridBuilder, dependencyBuilder, stage, TITLE, PAGE, LINK);
 
         Mockito.verify(notification, Mockito.times(1)).notify("Added Bookmark for: Some Book Title", Alert.AlertType.INFORMATION);
         Mockito.verify(viewNodes, Mockito.times(1)).clear();
-        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBundle);
-        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBundle);
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBuilder);
+        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBuilder);
         Mockito.verify(handler, Mockito.times(1)).saveInFile();
         Mockito.verify(stage, Mockito.times(1)).close();
     }
 
     @Test
     void failedAtEditing() {
-        Mockito.when(dependencyBundle.getHandler()).thenReturn(handler);
+        Mockito.when(dependencyBuilder.getHandler()).thenReturn(handler);
         Mockito.when(handler.editBookmark(INDEX, TITLE, PAGE, LINK)).thenReturn(false);
 
-        logic.refreshGridsAndSaveChangesAfterEditing(INDEX, notification, gridBuilder, dependencyBundle, stage, TITLE, PAGE, LINK);
+        logic.refreshGridsAndSaveChangesAfterEditing(INDEX, notification, gridBuilder, dependencyBuilder, stage, TITLE, PAGE, LINK);
 
         Mockito.verify(notification, Mockito.times(1)).notify("Please use a link that is usable, this link is invalid: ' http://SOME/unsecure/Page '!", Alert.AlertType.ERROR);
     }
@@ -123,12 +123,12 @@ class LogicCoreTest {
         Mockito.when(handler.editBookmark(INDEX, TITLE, PAGE, LINK)).thenReturn(true);
 
 
-        logic.refreshGridsAndSaveChangesAfterEditing(INDEX, notification, gridBuilder, dependencyBundle, stage, TITLE, PAGE, LINK);
+        logic.refreshGridsAndSaveChangesAfterEditing(INDEX, notification, gridBuilder, dependencyBuilder, stage, TITLE, PAGE, LINK);
 
         Mockito.verify(notification, Mockito.times(1)).notify("Edited Bookmark for: Some Book Title", Alert.AlertType.INFORMATION);
         Mockito.verify(viewNodes, Mockito.times(1)).clear();
-        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBundle);
-        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBundle);
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBuilder);
+        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBuilder);
         Mockito.verify(handler, Mockito.times(1)).saveInFile();
         Mockito.verify(stage, Mockito.times(1)).close();
     }
@@ -137,23 +137,23 @@ class LogicCoreTest {
     void deleteRefreshAndSave() {
         mockitoInit();
 
-        logic.deleteOrganiseAndReload(INDEX, TITLE, gridBuilder, dependencyBundle, notification);
+        logic.deleteOrganiseAndReload(INDEX, TITLE, gridBuilder, dependencyBuilder, notification);
 
         Mockito.verify(bookmarks, Mockito.times(1)).remove(INDEX);
         Mockito.verify(handler, Mockito.times(1)).collapseBookmarks();
         Mockito.verify(handler, Mockito.times(1)).saveInFile();
         Mockito.verify(notification, Mockito.times(1)).notify("Deleted Some Book Title", Alert.AlertType.INFORMATION);
         Mockito.verify(viewNodes, Mockito.times(1)).clear();
-        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBundle);
-        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBundle);
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, bookmarks, notification, dependencyBuilder);
+        Mockito.verify(search, Mockito.times(1)).updateSearch(gridPane, gridBuilder, notification, dependencyBuilder);
     }
 
     private void mockitoInit() {
-        Mockito.when(dependencyBundle.getHandler()).thenReturn(handler);
-        Mockito.when(dependencyBundle.getViewNodes()).thenReturn(viewNodes);
-        Mockito.when(dependencyBundle.getGridMain()).thenReturn(gridPane);
-        Mockito.when(dependencyBundle.getGridSearch()).thenReturn(gridPane);
+        Mockito.when(dependencyBuilder.getHandler()).thenReturn(handler);
+        Mockito.when(dependencyBuilder.getViewNodes()).thenReturn(viewNodes);
+        Mockito.when(dependencyBuilder.getGridMain()).thenReturn(gridPane);
+        Mockito.when(dependencyBuilder.getGridSearch()).thenReturn(gridPane);
         Mockito.when(handler.getBookmarks()).thenReturn(bookmarks);
-        Mockito.when(dependencyBundle.getSearch()).thenReturn(search);
+        Mockito.when(dependencyBuilder.getSearch()).thenReturn(search);
     }
 }

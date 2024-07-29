@@ -1,6 +1,6 @@
 package window;
 
-import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
+import at.bookmark.bookmark_javafx.GUITools.DependencyBuilder;
 import at.bookmark.bookmark_javafx.GUITools.FontUpdater;
 import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.geometry.Rectangle2D;
@@ -54,7 +54,7 @@ public class WindowCalc {
         return height;
     }
 
-    public void loadAndSetupWindowPosition(Stage stage, DependencyBundle dB) {
+    public void loadAndSetupWindowPosition(Stage stage, DependencyBuilder dB) {
         loadConfigProperties(dB.getWriterReader(), dB.getFontUpdater());
 
         if (!isFullscreen) {
@@ -173,7 +173,7 @@ public class WindowCalc {
         return screenIndex;
     }
 
-    public void saveOnCloseAction(Stage stage, DependencyBundle dB) {
+    public void saveOnCloseAction(Stage stage, DependencyBuilder dB) {
         stage.setOnCloseRequest(event -> {
             var screen = getCurrentScreenFromStage(stage);
 

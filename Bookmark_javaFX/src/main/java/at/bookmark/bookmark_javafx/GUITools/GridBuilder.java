@@ -16,7 +16,7 @@ public class GridBuilder {
         this.services = services;
     }
 
-    public void setGrid(GridPane grid, List<Bookmark> bookmarks, Notification notification, DependencyBundle dB) {
+    public void setGrid(GridPane grid, List<Bookmark> bookmarks, Notification notification, DependencyBuilder dB) {
         grid.getChildren().clear();
         int count = 0;
 

@@ -1,6 +1,6 @@
 package at.bookmark.bookmark_javafx.tools;
 
-import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
+import at.bookmark.bookmark_javafx.GUITools.DependencyBuilder;
 import at.bookmark.bookmark_javafx.GUITools.GridBuilder;
 import at.bookmark.bookmark_javafx.GUITools.Notification;
 import at.bookmark.bookmark_javafx.bookmark.Bookmark;
@@ -23,7 +23,7 @@ class SearchTest {
 
     private Search search;
     @Mock
-    private DependencyBundle dependencyBundle;
+    private DependencyBuilder dependencyBuilder;
     @Mock
     private List<Bookmark> bookmarks;
     @Mock
@@ -50,7 +50,7 @@ class SearchTest {
 
     @Test
     void searchForBookmark() {
-        Mockito.when(dependencyBundle.getHandler()).thenReturn(handler);
+        Mockito.when(dependencyBuilder.getHandler()).thenReturn(handler);
         Mockito.when(handler.getBookmarks()).thenReturn(bookmarks);
         Mockito.when(bookmarks.iterator()).thenReturn(iterator);
         Mockito.when(iterator.hasNext()).thenReturn(true, true, true, false);
@@ -59,7 +59,7 @@ class SearchTest {
         Mockito.when(bookmarkSec.getTitle()).thenReturn("lego");
         Mockito.when(bookmarkTired.getTitle()).thenReturn("Hello");
 
-        var result = search.searchForBookmark("lE", dependencyBundle);
+        var result = search.searchForBookmark("lE", dependencyBuilder);
 
         assertEquals(result.get(0), bookmark);
         assertEquals(result.get(1), bookmarkSec);
@@ -68,14 +68,14 @@ class SearchTest {
     @Test
     void updateSearch() {
         String searchedWord = "no";
-        Mockito.when(dependencyBundle.getSearchFieldInput()).thenReturn(searchedWord);
-        Mockito.when(dependencyBundle.getHandler()).thenReturn(handler);
+        Mockito.when(dependencyBuilder.getSearchFieldInput()).thenReturn(searchedWord);
+        Mockito.when(dependencyBuilder.getHandler()).thenReturn(handler);
         Mockito.when(handler.getBookmarks()).thenReturn(bookmarks);
         Mockito.when(bookmarks.iterator()).thenReturn(iterator);
         Mockito.when(iterator.hasNext()).thenReturn(false);
 
-        search.updateSearch(gridPane, gridBuilder, notification, dependencyBundle);
+        search.updateSearch(gridPane, gridBuilder, notification, dependencyBuilder);
 
-        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, search.searchForBookmark(searchedWord, dependencyBundle), notification, dependencyBundle);
+        Mockito.verify(gridBuilder, Mockito.times(1)).setGrid(gridPane, search.searchForBookmark(searchedWord, dependencyBuilder), notification, dependencyBuilder);
     }
 }

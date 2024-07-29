@@ -18,7 +18,7 @@ import java.util.List;
  * Search and the two GridPane's need to be set as early as possible so to avoid anomaly's
  */
 @Getter
-public class DependencyBundle {
+public class DependencyBuilder {
     private final WindowCalc windowCalc = new WindowCalc();
     private final List<Node> startNodes = new ArrayList<>();
     private final List<Node> editNodes = new ArrayList<>();

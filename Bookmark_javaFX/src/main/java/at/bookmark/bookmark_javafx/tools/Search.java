@@ -1,6 +1,6 @@
 package at.bookmark.bookmark_javafx.tools;
 
-import at.bookmark.bookmark_javafx.GUITools.DependencyBundle;
+import at.bookmark.bookmark_javafx.GUITools.DependencyBuilder;
 import at.bookmark.bookmark_javafx.GUITools.GridBuilder;
 import at.bookmark.bookmark_javafx.GUITools.Notification;
 import at.bookmark.bookmark_javafx.bookmark.Bookmark;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Search {
 
-    public TextField searchLogic(DependencyBundle dB, Notification notification, GridBuilder gridBuilder) {
+    public TextField searchLogic(DependencyBuilder dB, Notification notification, GridBuilder gridBuilder) {
         TextField txt_search = new TextField();
         txt_search.setPrefWidth(860);
         txt_search.textProperty().addListener((observer, oldValue, newValue) -> dB.getLogic().updateViewAndSearchView(dB, notification, gridBuilder, newValue));
@@ -20,7 +20,7 @@ public class Search {
         return txt_search;
     }
 
-    public List<Bookmark> searchForBookmark(String input, DependencyBundle dB) {
+    public List<Bookmark> searchForBookmark(String input, DependencyBuilder dB) {
         List<Bookmark> results = new ArrayList<>();
 
         for (Bookmark bookmark : dB.getHandler().getBookmarks()) {
@@ -32,7 +32,7 @@ public class Search {
         return results;
     }
 
-    public void updateSearch(GridPane grid, GridBuilder gridBuilder, Notification notification, DependencyBundle dB) {
+    public void updateSearch(GridPane grid, GridBuilder gridBuilder, Notification notification, DependencyBuilder dB) {
         gridBuilder.setGrid(grid, searchForBookmark(dB.getSearchFieldInput(), dB), notification, dB);
     }
 }

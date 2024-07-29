@@ -23,7 +23,7 @@ public class Bookmark_App extends Application {
     private final Notification notification = new Notification(icon);
     private final GridBuilder gridBuilder = new GridBuilder(getHostServices());
     private final AddWindowBuilder addWindowBuilder = new AddWindowBuilder();
-    private final DependencyBundle dependencyBundle = new DependencyBundle();
+    private final DependencyBuilder dependencyBuilder = new DependencyBuilder();
 
     public void launch_app() {
         launch();
@@ -40,11 +40,11 @@ public class Bookmark_App extends Application {
         if (txt_search == null)
             notification.notify("txt_search element is null!", Alert.AlertType.ERROR);
 
-        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, dependencyBundle));
+        btn_add.setOnAction(e -> addWindowBuilder.addWindow(notification, gridBuilder, dependencyBuilder));
         setStage(stage, lbl_search, btn_add, txt_search);
 
-        gridBuilder.setGrid(gridMain, dependencyBundle.getHandler().getBookmarks(), notification, dependencyBundle);
-        dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
+        gridBuilder.setGrid(gridMain, dependencyBuilder.getHandler().getBookmarks(), notification, dependencyBuilder);
+        dependencyBuilder.getWindowCalc().saveOnCloseAction(stage, dependencyBuilder);
     }
 
     private TextField searchFieldSetup() {
@@ -53,8 +53,8 @@ public class Bookmark_App extends Application {
         try {
             gridSetup();
 
-            txt_search = dependencyBundle.getSearch().searchLogic(dependencyBundle, notification, gridBuilder);
-            dependencyBundle.setSearchField(txt_search);
+            txt_search = dependencyBuilder.getSearch().searchLogic(dependencyBuilder, notification, gridBuilder);
+            dependencyBuilder.setSearchField(txt_search);
 
         } catch (IsAlreadySetException exception) {
             notification.notify(exception.getMessage(), Alert.AlertType.ERROR);
@@ -66,30 +66,30 @@ public class Bookmark_App extends Application {
         gridMain.setHgap(10);
         gridMain.setVgap(10);
         gridMain.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
-        dependencyBundle.setGridMain(gridMain);
+        dependencyBuilder.setGridMain(gridMain);
 
         gridSearch.setHgap(10);
         gridSearch.setVgap(10);
         gridSearch.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), new Insets(-10, -10, -10, -10))));
-        dependencyBundle.setGridSearch(gridSearch);
+        dependencyBuilder.setGridSearch(gridSearch);
     }
 
     private void loadAndSetupForWindow(Stage stage) {
-        dependencyBundle.getWindowCalc().loadAndSetupWindowPosition(stage, dependencyBundle);
+        dependencyBuilder.getWindowCalc().loadAndSetupWindowPosition(stage, dependencyBuilder);
 
-        width = dependencyBundle.getWindowCalc().getWidth();
-        height = dependencyBundle.getWindowCalc().getHeight();
+        width = dependencyBuilder.getWindowCalc().getWidth();
+        height = dependencyBuilder.getWindowCalc().getHeight();
     }
 
     private void setStage(Stage stage, Label lbl_search, Button btn_add, TextField txt_search) {
-        dependencyBundle.getStartNodes().addAll(List.of(txt_search, btn_add, lbl_search));
+        dependencyBuilder.getStartNodes().addAll(List.of(txt_search, btn_add, lbl_search));
 
         ScrollPane scrollPane = getScrollPane(lbl_search, btn_add, txt_search);
 
         MenuBar menu = createAndFillMenuBar(32, stage);
         VBox vbox = new VBox(menu, scrollPane);
 
-        Scene scene = new Scene(vbox, width - dependencyBundle.getWindowCalc().getAdjustScreen(), height);
+        Scene scene = new Scene(vbox, width - dependencyBuilder.getWindowCalc().getAdjustScreen(), height);
         scene.setFill(Color.LIGHTGRAY);
 
         stage.setTitle("Bookmark");
@@ -135,10 +135,10 @@ public class Bookmark_App extends Application {
 
     private void menuItemSetup(MenuItem size, int tmp) {
         size.setOnAction(t -> {
-            dependencyBundle.getFontUpdater().setAppFont(tmp);
-            dependencyBundle.getFontUpdater().updateFont(
-                    dependencyBundle.getViewNodes(), dependencyBundle.getEditNodes(),
-                    dependencyBundle.getEditNodes(), dependencyBundle.getAddNodes()
+            dependencyBuilder.getFontUpdater().setAppFont(tmp);
+            dependencyBuilder.getFontUpdater().updateFont(
+                    dependencyBuilder.getViewNodes(), dependencyBuilder.getEditNodes(),
+                    dependencyBuilder.getEditNodes(), dependencyBuilder.getAddNodes()
             );
         });
     }
