@@ -2,7 +2,6 @@ package at.bookmark.bookmark_javafx.GUITools;
 
 import window.WindowCalc;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,7 +29,7 @@ public class AddWindowBuilder {
         Button btn_add = new Button("Add New Bookmark");
 
         btn_add.setOnAction(e -> {
-            refreshAfterAdding(notification, gridBuilder, dB, addStage, txt_add_title, txt_add_page, txt_add_link);
+            dB.getLogic().refreshGridsAfterAdding(notification, gridBuilder, dB, addStage, txt_add_title, txt_add_page, txt_add_link);
         });
 
         GridPane pane = new GridPane();
@@ -50,22 +49,5 @@ public class AddWindowBuilder {
         addStage.show();
 
         dB.getFontUpdater().updateFont(dB.getAddNodes());
-    }
-
-    private void refreshAfterAdding(Notification notification, GridBuilder gridBuilder, DependencyBundle dB, Stage addStage, TextField txt_add_title, TextField txt_add_page, TextField txt_add_link) {
-        var res = dB.getHandler().addNewBookmark(txt_add_title.getText(), txt_add_page.getText(), txt_add_link.getText());
-        if (res) {
-            notification.notify("Added Bookmark for: " + txt_add_title.getText(), Alert.AlertType.INFORMATION);
-
-            dB.getViewNodes().clear();
-
-            gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
-            dB.getSearch().updateSearch(dB.getGridSearch(), gridBuilder, notification, dB);
-
-            dB.getHandler().saveInFile();
-            addStage.close();
-        } else {
-            notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_add_link.getText() + " '!", Alert.AlertType.ERROR);
-        }
     }
 }
