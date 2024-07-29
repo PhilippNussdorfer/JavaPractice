@@ -38,11 +38,11 @@ public class LogicCore {
     }
 
     public void refreshGridsAndSaveChangesAfterEditing(int id, Notification notification, GridBuilder gridBuilder, DependencyBundle dB,
-                                                       Stage stage, TextField txt_edit_title, TextField txt_edit_page, TextField txt_edit_link) {
+                                                       Stage stage, String title, String page, String link) {
 
-        var res = dB.getHandler().editBookmark(id, txt_edit_title.getText(), txt_edit_page.getText(), txt_edit_link.getText());
+        var res = dB.getHandler().editBookmark(id, title, page, link);
         if (res) {
-            notification.notify("Edited Bookmark for: " + txt_edit_title.getText(), Alert.AlertType.INFORMATION);
+            notification.notify("Edited Bookmark for: " + title, Alert.AlertType.INFORMATION);
 
             dB.getViewNodes().clear();
             gridBuilder.setGrid(dB.getGridMain(), dB.getHandler().getBookmarks(), notification, dB);
@@ -51,7 +51,7 @@ public class LogicCore {
             dB.getHandler().saveInFile();
             stage.close();
         } else {
-            notification.notify("Please use a link that is usable, this link is invalid: ' " + txt_edit_link.getText() + " '!", Alert.AlertType.ERROR);
+            notification.notify("Please use a link that is usable, this link is invalid: ' " + link + " '!", Alert.AlertType.ERROR);
         }
     }
 }
