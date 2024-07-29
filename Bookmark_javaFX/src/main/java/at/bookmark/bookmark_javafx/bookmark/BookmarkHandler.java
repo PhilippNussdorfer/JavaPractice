@@ -29,7 +29,7 @@ public class BookmarkHandler {
             URL url = URI.create(link).toURL();
             url.toURI();
             return true;
-        } catch (MalformedURLException | URISyntaxException e) {
+        } catch (MalformedURLException | URISyntaxException | IllegalArgumentException e) {
             return false;
         }
     }
