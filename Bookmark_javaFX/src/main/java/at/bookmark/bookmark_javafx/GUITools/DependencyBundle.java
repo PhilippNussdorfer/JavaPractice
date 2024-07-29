@@ -26,7 +26,7 @@ public class DependencyBundle {
     private final List<Node> viewNodes = new ArrayList<>();
     private final FontUpdater fontUpdater = new FontUpdater();
     private final WriterReader writerReader = new WriterReader();
-    private final BookmarkHandler handler = new BookmarkHandler();
+    private final BookmarkHandler handler = new BookmarkHandler(new WriterReader());
     private final Search search = new Search();
     private final LogicCore logic = new LogicCore();
     private TextField searchField = null;

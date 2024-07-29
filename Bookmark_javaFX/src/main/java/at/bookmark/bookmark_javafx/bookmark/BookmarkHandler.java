@@ -13,9 +13,10 @@ import java.util.List;
 public class BookmarkHandler {
     @Getter
     private List<Bookmark> bookmarks = new ArrayList<>();
-    private final WriterReader writerReader = new WriterReader();
+    private final WriterReader writerReader;
 
-    public BookmarkHandler() {
+    public BookmarkHandler(WriterReader writerReader) {
+        this.writerReader = writerReader;
         initBookmarks();
     }
 
