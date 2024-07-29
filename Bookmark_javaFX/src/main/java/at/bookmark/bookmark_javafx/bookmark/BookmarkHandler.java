@@ -4,6 +4,7 @@ import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import lombok.Getter;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class BookmarkHandler {
 
     private boolean isLink(String link) {
         try {
-            URL url = new URL(link);
+            URL url = URI.create(link).toURL();
             url.toURI();
             return true;
         } catch (MalformedURLException | URISyntaxException e) {
