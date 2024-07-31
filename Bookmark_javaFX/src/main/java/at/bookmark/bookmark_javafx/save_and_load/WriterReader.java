@@ -76,9 +76,7 @@ public class WriterReader {
         }
     }
 
-    public Properties loadConfig(InputStream inputStream) {
-        Properties prop = new Properties();
-
+    public Properties loadConfig(Properties prop, InputStream inputStream) {
         try {
             prop.load(inputStream);
         } catch (IOException e) {
@@ -88,8 +86,7 @@ public class WriterReader {
         return prop;
     }
 
-    public void saveConfig(double x,  double y, int width, int height, int screenIndex, boolean isFullscreen, double fontSize, OutputStream output) {
-        Properties prop = new Properties();
+    public void saveConfig(double x,  double y, int width, int height, int screenIndex, boolean isFullscreen, double fontSize, Properties prop, OutputStream output) {
 
         prop.setProperty("x", String.valueOf(x));
         prop.setProperty("y", String.valueOf(y));

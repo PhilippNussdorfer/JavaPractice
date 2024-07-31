@@ -130,7 +130,7 @@ public class WindowCalc {
         Properties prop;
 
         try {
-            prop = writerReader.loadConfig(new FileInputStream(path));
+            prop = writerReader.loadConfig(new Properties(), new FileInputStream(path));
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
             return;
@@ -206,7 +206,7 @@ public class WindowCalc {
             width = getWidth(stage, width);
 
             dB.getWriterReader().saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
-                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.getFontUpdater().getAppFont().getSize(), fileOutputStream);
+                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.getFontUpdater().getAppFont().getSize(), new Properties(), fileOutputStream);
         });
     }
 }
