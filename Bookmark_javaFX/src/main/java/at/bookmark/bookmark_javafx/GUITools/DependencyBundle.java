@@ -3,6 +3,7 @@ package at.bookmark.bookmark_javafx.GUITools;
 import at.bookmark.bookmark_javafx.Exceptions.IsAlreadySetException;
 import at.bookmark.bookmark_javafx.bookmark.BookmarkHandler;
 import at.bookmark.bookmark_javafx.tools.LogicCore;
+import at.bookmark.bookmark_javafx.tools.OutputWrapper;
 import at.bookmark.bookmark_javafx.tools.Search;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -37,7 +38,7 @@ public class DependencyBundle {
     public DependencyBundle(String dir, String pathToFile) {
         BookmarkHandler handler = null;
 
-        var tmp = new WriterReader(new File(pathToFile), new File(dir));
+        var tmp = new WriterReader(new File(pathToFile), new File(dir), new OutputWrapper());
         this.writerReader = tmp;
 
         try {

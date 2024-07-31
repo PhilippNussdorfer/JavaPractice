@@ -1,6 +1,7 @@
 package at.bookmark.bookmark_javafx.save_and_load;
 
 import at.bookmark.bookmark_javafx.bookmark.Bookmark;
+import at.bookmark.bookmark_javafx.tools.OutputWrapper;
 import lombok.Getter;
 
 import java.io.*;
@@ -12,10 +13,12 @@ public class WriterReader {
     @Getter
     private final File file;
     private final File directory;
+    private final OutputWrapper wrapper;
 
-    public WriterReader(File file, File directory) {
+    public WriterReader(File file, File directory, OutputWrapper wrapper) {
         this.file = file;
         this.directory = directory;
+        this.wrapper = wrapper;
     }
 
     public void writeFile(List<Bookmark> bookmarkList, BufferedWriter bufferedWriter) {
@@ -23,7 +26,7 @@ public class WriterReader {
 
             if (directory.mkdirs()) {
                 if (file.createNewFile()) {
-                    System.out.println("File created: " + file.getName());
+                    wrapper.printOutLine("File created: " + file.getName());
                 }
             }
 
@@ -35,7 +38,7 @@ public class WriterReader {
                 bufferedWriter.close();
             }
         } catch (IOException e) {
-            System.out.println("An error occurred: " + e.getMessage());
+            wrapper.printOutLine("An error occurred: " + e.getMessage());
         }
     }
 
@@ -58,7 +61,7 @@ public class WriterReader {
                 }
                 bufferedReader.close();
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                wrapper.printOutLine(e.getMessage());
             }
         }
         return bookmarks;
@@ -79,8 +82,7 @@ public class WriterReader {
         try {
             prop.load(inputStream);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            return null;
+            wrapper.printOutLine(e.getMessage());
         }
 
         return prop;
@@ -100,7 +102,7 @@ public class WriterReader {
         try {
             prop.store(output, null);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            wrapper.printOutLine(e.getMessage());
         }
     }
 }
