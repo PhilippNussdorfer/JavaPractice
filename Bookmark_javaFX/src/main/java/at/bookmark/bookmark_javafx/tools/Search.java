@@ -28,7 +28,6 @@ public class Search {
         for (Bookmark bookmark : dB.getHandler().getBookmarks()) {
             if (bookmark.getTitle().toLowerCase().contains(input.toLowerCase())) {
                 results.add(bookmark);
-                System.out.println(bookmark.getTitle());
             }
         }
 
