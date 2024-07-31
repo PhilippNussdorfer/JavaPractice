@@ -20,8 +20,6 @@ public class WriterReader {
 
     public void writeFile(List<Bookmark> bookmarkList, BufferedWriter bufferedWriter) {
         try {
-            //File directory = new File(dir);
-            //File file = new File(pathToFile);
 
             if (directory.mkdirs()) {
                 if (file.createNewFile()) {
@@ -30,9 +28,6 @@ public class WriterReader {
             }
 
             if (file.exists()) {
-                //FileWriter fileWriter = new FileWriter(file);
-                //BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
                 for (Bookmark bookmark : bookmarkList) {
                     bufferedWriter.write(bookmark.getNum() + "|" + bookmark.getTitle() + "|" + bookmark.getPage() + "|" + bookmark.getLink() + "\n");
                 }
@@ -45,14 +40,11 @@ public class WriterReader {
     }
 
     public List<Bookmark> loadFile(BufferedReader bufferedReader) {
-        //File file = new File(pathToFile);
         List<Bookmark> bookmarks = new ArrayList<>();
         int count = 0;
 
         if (file.exists()) {
             try {
-                //FileReader fileReader = new FileReader(file);
-                //BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String currentLine;
 
                 while((currentLine = bufferedReader.readLine()) != null) {
@@ -84,7 +76,7 @@ public class WriterReader {
     public Properties loadConfig(InputStream inputStream) {
         Properties prop = new Properties();
 
-        try /*(InputStream inputStream = new FileInputStream(path))*/ {
+        try {
             prop.load(inputStream);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -105,7 +97,7 @@ public class WriterReader {
         prop.setProperty("isFullscreen", String.valueOf(isFullscreen));
         prop.setProperty("fontSize", String.valueOf(fontSize));
 
-        try /*(OutputStream output = new FileOutputStream(path))*/ {
+        try {
             prop.store(output, null);
         } catch (IOException e) {
             System.out.println(e.getMessage());
