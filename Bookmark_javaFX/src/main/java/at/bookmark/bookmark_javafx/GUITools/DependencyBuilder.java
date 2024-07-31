@@ -11,6 +11,7 @@ import window.WindowCalc;
 import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.scene.Node;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +26,19 @@ public class DependencyBuilder {
     private final List<Node> addNodes = new ArrayList<>();
     private final List<Node> viewNodes = new ArrayList<>();
     private final FontUpdater fontUpdater = new FontUpdater();
-    private final WriterReader writerReader = new WriterReader();
-    private final BookmarkHandler handler = new BookmarkHandler(new WriterReader());
+    private final WriterReader writerReader;
+    private final BookmarkHandler handler;
     private final Search search = new Search();
     private final LogicCore logic = new LogicCore();
     private TextField searchField = null;
     private GridPane gridMain = null;
     private GridPane gridSearch = null;
+
+    public DependencyBuilder(String dir, String pathToFile) {
+        var tmp = new WriterReader(new File(pathToFile), new File(dir));
+        this.writerReader = tmp;
+        handler = new BookmarkHandler(tmp);
+    }
 
     public String getSearchFieldInput() {
         return this.searchField.getText();

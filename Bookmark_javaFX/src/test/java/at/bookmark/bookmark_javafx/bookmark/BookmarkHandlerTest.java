@@ -8,7 +8,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +21,10 @@ class BookmarkHandlerTest {
     WriterReader writerReader;
     @Mock
     Bookmark bookmark;
+    @Mock
+    BufferedReader reader;
+    @Mock
+    BufferedWriter writer;
 
 
     @BeforeEach
@@ -32,8 +37,8 @@ class BookmarkHandlerTest {
     void saveInFileAndLoadFile() {
         handler.saveInFile();
 
-        Mockito.verify(writerReader, Mockito.times(1)).writeFile(handler.getBookmarks());
-        Mockito.verify(writerReader, Mockito.times(1)).loadFile();
+        Mockito.verify(writerReader, Mockito.times(1)).writeFile(handler.getBookmarks(), writer);
+        Mockito.verify(writerReader, Mockito.times(1)).loadFile(reader);
     }
 
     @Test

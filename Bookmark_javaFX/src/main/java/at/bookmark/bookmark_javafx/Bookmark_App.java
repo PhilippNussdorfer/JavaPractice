@@ -12,9 +12,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
+import java.nio.file.FileSystems;
 import java.util.*;
 
 public class Bookmark_App extends Application {
+    private final String fileSeparator = FileSystems.getDefault().getSeparator();
+    private final String pathToFile = "C:"+ fileSeparator +"Java Programs"+ fileSeparator +"Bookmark"+ fileSeparator +"Bookmarks.txt";
+    private final String dir = "C:"+ fileSeparator +"Java Programs"+ fileSeparator +"Bookmark";
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
     private double width = 1280;
@@ -23,7 +27,7 @@ public class Bookmark_App extends Application {
     private final Notification notification = new Notification(icon);
     private final GridBuilder gridBuilder = new GridBuilder(getHostServices());
     private final AddWindowBuilder addWindowBuilder = new AddWindowBuilder();
-    private final DependencyBuilder dependencyBuilder = new DependencyBuilder();
+    private final DependencyBuilder dependencyBuilder = new DependencyBuilder(dir, pathToFile);
 
     public void launch_app() {
         launch();
@@ -122,9 +126,8 @@ public class Bookmark_App extends Application {
 
         for (int i = 8; i < fontSize + 2; i += 2) {
             MenuItem size = new MenuItem(i + "");
-            int tmp = i;
 
-            menuItemSetup(size, tmp);
+            menuItemSetup(size, i);
             fontSizeMenu.getItems().add(size);
         }
 

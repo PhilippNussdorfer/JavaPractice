@@ -3,6 +3,7 @@ package at.bookmark.bookmark_javafx.bookmark;
 import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import lombok.Getter;
 
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,7 +22,11 @@ public class BookmarkHandler {
     }
 
     private void initBookmarks() {
-        bookmarks = writerReader.loadFile();
+        try {
+            bookmarks = writerReader.loadFile(new BufferedReader(new BufferedReader(new FileReader(writerReader.getFile()))));
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     private boolean isLink(String link) {
@@ -35,7 +40,11 @@ public class BookmarkHandler {
     }
 
     public void saveInFile() {
-        writerReader.writeFile(bookmarks);
+        try {
+            writerReader.writeFile(bookmarks, new BufferedWriter(new FileWriter(writerReader.getFile())));
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     public boolean editBookmark(int id, String title, String page, String link) {

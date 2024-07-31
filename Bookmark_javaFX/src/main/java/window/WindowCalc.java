@@ -8,11 +8,15 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.Getter;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.Properties;
 
 public class WindowCalc {
-
-    private final String config = "config.prop";
+    private final String fileSeparator = FileSystems.getDefault().getSeparator();
+    String path = "C:" + fileSeparator + "Java Programs" + fileSeparator + "Bookmark" + fileSeparator + "config.prop";
     @Getter
     private double width;
     @Getter
@@ -123,7 +127,15 @@ public class WindowCalc {
     }
 
     private void loadConfigProperties(WriterReader writerReader, FontUpdater fontUpdater) {
-        Properties prop = writerReader.loadConfig(config);
+        Properties prop;
+
+        try {
+            prop = writerReader.loadConfig(new FileInputStream(path));
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+            return;
+        }
+
         if (prop != null) {
             try {
                 x = Double.parseDouble(prop.getProperty("x"));
@@ -175,6 +187,15 @@ public class WindowCalc {
 
     public void saveOnCloseAction(Stage stage, DependencyBuilder dB) {
         stage.setOnCloseRequest(event -> {
+            FileOutputStream fileOutputStream;
+
+            try {
+                fileOutputStream = new FileOutputStream(path);
+            } catch (IOException exception) {
+                System.out.println(exception.getMessage());
+                return;
+            }
+
             var screen = getCurrentScreenFromStage(stage);
 
             double width = screen.getBounds().getWidth();
@@ -185,7 +206,7 @@ public class WindowCalc {
             width = getWidth(stage, width);
 
             dB.getWriterReader().saveConfig(stage.getX(), stage.getY(), (int) width, (int) height,
-                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.getFontUpdater().getAppFont().getSize(), config);
+                    getScreenIndex(stage.getX(), stage.getY(), (int) width, (int) height), stage.isFullScreen(), dB.getFontUpdater().getAppFont().getSize(), fileOutputStream);
         });
     }
 }
