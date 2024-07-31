@@ -22,10 +22,13 @@ public class Search {
 
     public List<Bookmark> searchForBookmark(String input, DependencyBundle dB) {
         List<Bookmark> results = new ArrayList<>();
+        if (input.isEmpty())
+            return results;
 
         for (Bookmark bookmark : dB.getHandler().getBookmarks()) {
             if (bookmark.getTitle().toLowerCase().contains(input.toLowerCase())) {
                 results.add(bookmark);
+                System.out.println(bookmark.getTitle());
             }
         }
 
