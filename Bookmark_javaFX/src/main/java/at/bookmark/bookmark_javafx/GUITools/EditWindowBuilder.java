@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EditWindowBuilder {
 
-    public void editWindow(int id, Notification notification, GridBuilder gridBuilder, DependencyBuilder dB) {
+    public void editWindow(int id, Notification notification, GridBuilder gridBuilder, DependencyBundle dB) {
         dB.getEditNodes().clear();
 
         Stage editStage = new Stage();

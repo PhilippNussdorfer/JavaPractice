@@ -47,7 +47,7 @@ public class Notification {
         stage.show();
     }
 
-    public void deleteNotify(int id, String title, GridBuilder gridBuilder, DependencyBuilder dB) {
+    public void deleteNotify(int id, String title, GridBuilder gridBuilder, DependencyBundle dB) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         setAlertPosition(alert);
         alert.setContentText("Are you sure want to delete: " + title);

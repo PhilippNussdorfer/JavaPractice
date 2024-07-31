@@ -29,13 +29,13 @@ class BookmarkHandlerTest {
 
     @BeforeEach
     void setUp() {
-        handler = new BookmarkHandler(writerReader);
+        handler = new BookmarkHandler(writerReader, reader);
         handler.getBookmarks().add(bookmark);
     }
 
     @Test
     void saveInFileAndLoadFile() {
-        handler.saveInFile();
+        handler.saveInFile(writer);
 
         Mockito.verify(writerReader, Mockito.times(1)).writeFile(handler.getBookmarks(), writer);
         Mockito.verify(writerReader, Mockito.times(1)).loadFile(reader);

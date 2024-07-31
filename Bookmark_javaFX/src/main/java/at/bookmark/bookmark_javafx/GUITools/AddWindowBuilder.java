@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AddWindowBuilder {
 
-    public void addWindow(Notification notification, GridBuilder gridBuilder, DependencyBuilder dB) {
+    public void addWindow(Notification notification, GridBuilder gridBuilder, DependencyBundle dB) {
         dB.getAddNodes().clear();
 
         Stage addStage = new Stage();

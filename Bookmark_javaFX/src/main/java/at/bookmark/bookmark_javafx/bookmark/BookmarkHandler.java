@@ -16,17 +16,13 @@ public class BookmarkHandler {
     private List<Bookmark> bookmarks = new ArrayList<>();
     private final WriterReader writerReader;
 
-    public BookmarkHandler(WriterReader writerReader) {
+    public BookmarkHandler(WriterReader writerReader, BufferedReader reader) {
         this.writerReader = writerReader;
-        initBookmarks();
+        initBookmarks(reader);
     }
 
-    private void initBookmarks() {
-        try {
-            bookmarks = writerReader.loadFile(new BufferedReader(new BufferedReader(new FileReader(writerReader.getFile()))));
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
+    private void initBookmarks(BufferedReader reader) {
+        bookmarks = writerReader.loadFile(reader);
     }
 
     private boolean isLink(String link) {
@@ -39,12 +35,8 @@ public class BookmarkHandler {
         }
     }
 
-    public void saveInFile() {
-        try {
-            writerReader.writeFile(bookmarks, new BufferedWriter(new FileWriter(writerReader.getFile())));
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
+    public void saveInFile(BufferedWriter writer) {
+        writerReader.writeFile(bookmarks, writer);
     }
 
     public boolean editBookmark(int id, String title, String page, String link) {

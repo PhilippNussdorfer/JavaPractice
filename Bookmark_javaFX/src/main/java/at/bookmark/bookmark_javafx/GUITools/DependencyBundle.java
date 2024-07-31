@@ -11,7 +11,7 @@ import window.WindowCalc;
 import at.bookmark.bookmark_javafx.save_and_load.WriterReader;
 import javafx.scene.Node;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * Search and the two GridPane's need to be set as early as possible so to avoid anomaly's
  */
 @Getter
-public class DependencyBuilder {
+public class DependencyBundle {
     private final WindowCalc windowCalc = new WindowCalc();
     private final List<Node> startNodes = new ArrayList<>();
     private final List<Node> editNodes = new ArrayList<>();
@@ -34,10 +34,19 @@ public class DependencyBuilder {
     private GridPane gridMain = null;
     private GridPane gridSearch = null;
 
-    public DependencyBuilder(String dir, String pathToFile) {
+    public DependencyBundle(String dir, String pathToFile) {
+        BookmarkHandler handler = null;
+
         var tmp = new WriterReader(new File(pathToFile), new File(dir));
         this.writerReader = tmp;
-        handler = new BookmarkHandler(tmp);
+
+        try {
+            handler = new BookmarkHandler(tmp, new BufferedReader(new FileReader(writerReader.getFile())));
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        this.handler = handler;
     }
 
     public String getSearchFieldInput() {
@@ -66,5 +75,15 @@ public class DependencyBuilder {
 
         else
             throw new IsAlreadySetException("The gridSearch object can only be set once!");
+    }
+
+    public BufferedWriter assemblyBufferedWriter() {
+        try {
+            return new BufferedWriter(new FileWriter(writerReader.getFile()));
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        return null;
     }
 }
