@@ -66,6 +66,13 @@ class SearchTest {
     }
 
     @Test
+    void inputIsEmpty() {
+        var result = search.searchForBookmark("", dependencyBundle);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
     void updateSearch() {
         String searchedWord = "no";
         Mockito.when(dependencyBundle.getSearchFieldInput()).thenReturn(searchedWord);
