@@ -15,8 +15,8 @@ public class Starter {
             new KruskalNode("4"),
             new KruskalNode("5"),
             new KruskalNode("6"),
-            new KruskalNode("8"),
-            new KruskalNode("9")
+            new KruskalNode("7"),
+            new KruskalNode("8")
     ));
 
     public static void main(String[] args) {

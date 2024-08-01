@@ -12,6 +12,10 @@ public class KruskalEdge {
 
     @Override
     public String toString() {
-        return nodeA.getName() + " - " + weight + " - " + nodeB.getName();
+        return "node " + nodeA.getName() + " - " + weight + " - node " + nodeB.getName();
+    }
+
+    public boolean hasNode(KruskalNode node) {
+        return nodeA.getName().equals(node.getName()) || nodeB.getName().equals(node.getName());
     }
 }
