@@ -1,5 +1,7 @@
 package kruskal;
 
+import kruskal.QuickSort.QuickSort;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,12 @@ public class Starter {
 
     public static void main(String[] args) {
         initKruskalEdges();
+        QuickSort quickSort = new QuickSort();
+        Kruskal kruskal = new Kruskal(quickSort.sortEdges(EDGES), NODES.size() - 1);
 
+        for (KruskalEdge edge : kruskal.getFinishedTree()) {
+            System.out.println(edge.toString());
+        }
     }
 
     private static void initKruskalEdges() {
