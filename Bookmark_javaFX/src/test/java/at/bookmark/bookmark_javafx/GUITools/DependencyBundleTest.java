@@ -1,7 +1,6 @@
 package at.bookmark.bookmark_javafx.GUITools;
 
 import at.bookmark.bookmark_javafx.Exceptions.IsAlreadySetException;
-import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
