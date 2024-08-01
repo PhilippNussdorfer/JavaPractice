@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class KruskalEdges {
+public class KruskalEdge {
     private final int weight;
     private final KruskalNode nodeA;
     private final KruskalNode nodeB;
