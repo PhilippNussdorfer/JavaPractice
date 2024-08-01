@@ -2,6 +2,7 @@ package at.bookmark.bookmark_javafx;
 
 import at.bookmark.bookmark_javafx.Exceptions.IsAlreadySetException;
 import at.bookmark.bookmark_javafx.GUITools.*;
+import at.bookmark.bookmark_javafx.tools.OutputWrapper;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -12,13 +13,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
+import java.io.*;
 import java.nio.file.FileSystems;
 import java.util.*;
 
 public class Bookmark_App extends Application {
     private final String fileSeparator = FileSystems.getDefault().getSeparator();
-    private final String pathToFile = "C:"+ fileSeparator +"Java Programs"+ fileSeparator +"Bookmark"+ fileSeparator +"Bookmarks.txt";
-    private final String dir = "C:"+ fileSeparator +"Java Programs"+ fileSeparator +"Bookmark";
+    private final File file = new File("C:"+ fileSeparator +"Java Programs"+ fileSeparator +"Bookmark"+ fileSeparator +"Bookmarks.txt");
+    private final File dir = new File("C:"+ fileSeparator +"Java Programs"+ fileSeparator +"Bookmark");
     private final GridPane gridSearch = new GridPane();
     private final GridPane gridMain = new GridPane();
     private double width = 1280;
@@ -27,7 +29,7 @@ public class Bookmark_App extends Application {
     private final Notification notification = new Notification(icon);
     private final GridBuilder gridBuilder = new GridBuilder(getHostServices());
     private final AddWindowBuilder addWindowBuilder = new AddWindowBuilder();
-    private final DependencyBundle dependencyBundle = new DependencyBundle(dir, pathToFile);
+    private DependencyBundle dependencyBundle;
 
     public void launch_app() {
         launch();
@@ -35,6 +37,7 @@ public class Bookmark_App extends Application {
 
     @Override
     public void start(Stage stage) {
+        initDependencyBundle();
         loadAndSetupForWindow(stage);
 
         Label lbl_search = new Label("Search:");
@@ -49,6 +52,14 @@ public class Bookmark_App extends Application {
 
         gridBuilder.setGrid(gridMain, dependencyBundle.getHandler().getBookmarks(), notification, dependencyBundle);
         dependencyBundle.getWindowCalc().saveOnCloseAction(stage, dependencyBundle);
+    }
+
+    private void initDependencyBundle() {
+        try {
+            this.dependencyBundle = new DependencyBundle(file, dir, new BufferedReader(new FileReader(file)));
+        } catch (IOException exception) {
+            new OutputWrapper().printOutLine(exception.getMessage());
+        }
     }
 
     private TextField searchFieldSetup() {

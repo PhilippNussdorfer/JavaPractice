@@ -35,19 +35,10 @@ public class DependencyBundle {
     private GridPane gridMain = null;
     private GridPane gridSearch = null;
 
-    public DependencyBundle(String dir, String pathToFile) {
-        BookmarkHandler handler = null;
-
-        var tmp = new WriterReader(new File(pathToFile), new File(dir), new OutputWrapper());
+    public DependencyBundle(File file, File dir, BufferedReader reader) {
+        var tmp = new WriterReader(file, dir, new OutputWrapper());
         this.writerReader = tmp;
-
-        try {
-            handler = new BookmarkHandler(tmp, new BufferedReader(new FileReader(writerReader.getFile())));
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
-
-        this.handler = handler;
+        this.handler = new BookmarkHandler(tmp, reader);
     }
 
     public String getSearchFieldInput() {
