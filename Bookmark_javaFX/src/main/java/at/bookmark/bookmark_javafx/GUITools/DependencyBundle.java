@@ -83,8 +83,7 @@ public class DependencyBundle {
             return new BufferedWriter(new FileWriter(writerReader.getFile()));
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
+            return null;
         }
-
-        return null;
     }
 }
