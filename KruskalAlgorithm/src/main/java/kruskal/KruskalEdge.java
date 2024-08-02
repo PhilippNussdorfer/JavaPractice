@@ -1,14 +1,17 @@
 package kruskal;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class KruskalEdge {
     private final int weight;
     private final KruskalNode nodeA;
     private final KruskalNode nodeB;
+    @Setter
+    private boolean marked = false;
 
     @Override
     public String toString() {

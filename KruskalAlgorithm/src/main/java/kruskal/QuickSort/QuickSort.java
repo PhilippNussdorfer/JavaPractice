@@ -12,6 +12,9 @@ public class QuickSort {
 
         int index = (edges.size() / 2) - 1;
 
+        if (index < 0)
+            index = 0;
+
         var pointer = edges.get(index);
         edges.remove(index);
 
