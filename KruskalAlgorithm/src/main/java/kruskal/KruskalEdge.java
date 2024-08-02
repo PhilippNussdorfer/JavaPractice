@@ -18,7 +18,8 @@ public class KruskalEdge {
         return "node " + nodeA.getName() + " - " + weight + " - node " + nodeB.getName();
     }
 
-    public boolean hasNode(KruskalNode node) {
-        return nodeA.getName().equals(node.getName()) || nodeB.getName().equals(node.getName());
+    public boolean hasNode(KruskalEdge edge) {
+        return     (nodeA.getName().equals(edge.getNodeA().getName()) || nodeA.getName().equals(edge.getNodeB().getName()))
+                || (nodeB.getName().equals(edge.getNodeA().getName()) || nodeB.getName().equals(edge.getNodeB().getName()));
     }
 }
