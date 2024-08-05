@@ -1,12 +1,12 @@
 package kruskal;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @EqualsAndHashCode
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class KruskalNode {
     private final String name;
+    @Setter
+    private boolean marked = false;
 }
